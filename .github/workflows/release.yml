@@ -52,7 +52,7 @@ jobs:
       - name: Create Release Pull Request or Publish
         uses: changesets/action@v1
         with:
-          publish: pnpm release
+          publish: pnpm --filter=@mp-lb/mdkit publish --no-git-checks --provenance --tag latest
           title: "chore: release"
           commit: "chore: release"
         env:
