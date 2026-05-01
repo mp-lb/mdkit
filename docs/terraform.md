@@ -53,14 +53,14 @@ Manual deployment is available through the workflow dispatch button in GitHub Ac
 
 ## Publishing
 
-`.github/workflows/publish.yml` publishes `@mp-lb/mdkit` to npm on relevant pushes to `main`.
+`.github/workflows/release.yml` publishes `@mp-lb/mdkit` to npm through Changesets.
 
-The workflow sets a prerelease version using the GitHub run number, then runs:
+The workflow verifies the package, then `changesets/action` either opens a release PR or publishes the versioned package:
 
 ```bash
 pnpm --filter=@mp-lb/mdkit typecheck
 pnpm --filter=@mp-lb/mdkit test
 pnpm --filter=@mp-lb/mdkit build
 pnpm --filter=@mp-lb/mdkit docs:build
-pnpm --filter=@mp-lb/mdkit publish --no-git-checks --provenance --tag main
+pnpm release
 ```

@@ -4,9 +4,7 @@ Runbook for publishing `@mp-lb/mdkit` to npm.
 
 ## Current State
 
-The package has npm metadata and `publishConfig.access = "public"`, but this repo does not yet have a dedicated Changesets release workflow for `mdkit`.
-
-Until that exists, releases are manual and should be treated carefully.
+The package uses Changesets for versioning and release PRs. The release workflow publishes `@mp-lb/mdkit` after a Changesets version PR lands on `main`.
 
 ## Release Requirements
 
@@ -65,17 +63,17 @@ Confirm it does not contain:
 - VitePress cache or dist output
 - app testbench files
 
-## Manual Publish
+## Changesets Release
 
-Use manual publish only while this package has no automated release workflow.
+Create a changeset for every public API or behavior change:
 
 ```bash
-cd packages/mdkit
-pnpm build
-npm publish --access public
+pnpm changeset
 ```
 
-Then verify npm:
+On `main`, the release workflow opens or updates a release PR. Merging that PR publishes the package to npm.
+
+Then verify npm after the release workflow succeeds:
 
 ```bash
 npm view @mp-lb/mdkit version
@@ -94,23 +92,6 @@ Run the consumer app and verify:
 - stylesheet import works
 - editor renders
 - hydration test cases from manual QA still behave as expected
-
-## Future Automated Release
-
-The target release setup should use Changesets and GitHub Actions, similar to the Zapper release process:
-
-- changeset files for version intent
-- CI verification before release
-- GitHub Actions release workflow
-- npm trusted publishing through GitHub Actions OIDC when possible
-- `NPM_TOKEN` fallback only if trusted publishing is not available
-
-Before enabling this, add:
-
-- Changesets config
-- release workflow
-- package repository metadata aligned with the canonical GitHub repo
-- documented npm trusted publishing setup
 
 ## Release Blockers
 

@@ -43,4 +43,4 @@ npm view @mp-lb/mdkit dist-tags
 npm view @mp-lb/mdkit versions --json
 ```
 
-The workflow publishes run-numbered prereleases under the `main` npm tag.
+Normal package releases go through Changesets. Push a changeset to `main`, merge the generated release PR, then verify npm.
