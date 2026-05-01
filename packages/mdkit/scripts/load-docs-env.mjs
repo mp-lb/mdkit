@@ -15,7 +15,7 @@ dotenvExpand.expand(
 );
 
 const command = process.argv[2] ?? "dev";
-const port = process.env.MDKIT_DOCS_PORT || "4314";
+const port = process.env.DOCS_PORT || "4314";
 
 const vitepressCli = JSON.parse(
   readFileSync(

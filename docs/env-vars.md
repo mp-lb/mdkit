@@ -82,13 +82,13 @@ Optional:
 Each app validates its env vars at startup:
 
 ```typescript
-// apps/backend/src/config.ts
+// apps/api/src/config.ts
 import { z } from 'zod';
 
 const envSchema = z.object({
   APP_ENV: z.enum(["development", "production"]).default("production"),
-  BACKEND_PORT: z.string().transform(Number),
-  FRONTEND_URL: z.string().url(),
+  API_PORT: z.string().transform(Number),
+  PUBLIC_APP_URL: z.string().url(),
 });
 
 export const env = envSchema.parse(process.env);

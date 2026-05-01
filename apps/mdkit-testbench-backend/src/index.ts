@@ -1,6 +1,6 @@
 import { createTestbenchApp } from "./app.js";
 
-const port = Number(process.env.MDKIT_TESTBENCH_API_PORT ?? 4312);
+const port = Number(process.env.TESTBENCH_API_PORT ?? 4312);
 const host = "127.0.0.1";
 
 const { app } = await createTestbenchApp({

@@ -9,18 +9,18 @@ serialization, focus, hitbox, persistence, versioning, or conflict handling.
 Use Zapper when possible:
 
 ```bash
-zap start mdkit-testbench
-zap start mdkit-testbench-backend
+zap start testbench
+zap start testbench-api
 ```
 
 If zap is unavailable:
 
 ```bash
-MDKIT_TESTBENCH_API_PORT=4312 pnpm --filter=@mp-lb/mdkit-testbench-backend dev
+TESTBENCH_API_PORT=4312 pnpm --filter=@mp-lb/mdkit-testbench-backend dev
 pnpm --filter=@mp-lb/mdkit-testbench dev
 ```
 
-Find the frontend and backend URLs with `zap ps`. The frontend examples below
+Find the testbench and API URLs with `zap ps`. The testbench examples below
 assume `http://localhost:60573`; replace that with the current testbench URL.
 
 ## What Is Under QA

@@ -5,15 +5,15 @@ import { defineConfig, loadEnv } from "vite";
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, path.resolve(__dirname, "../.."), "");
-  const testbenchPort = env.MDKIT_TESTBENCH_PORT || "4311";
+  const testbenchPort = env.TESTBENCH_PORT || "4311";
 
   return {
     define: {
-      "import.meta.env.VITE_MDKIT_DOCS_URL": JSON.stringify(
-        env.VITE_MDKIT_DOCS_URL || "http://localhost:4314",
+      "import.meta.env.VITE_DOCS_URL": JSON.stringify(
+        env.VITE_DOCS_URL || "http://localhost:4314",
       ),
-      "import.meta.env.VITE_MDKIT_TESTBENCH_API_URL": JSON.stringify(
-        env.VITE_MDKIT_TESTBENCH_API_URL || "http://localhost:4312",
+      "import.meta.env.VITE_TESTBENCH_API_URL": JSON.stringify(
+        env.VITE_TESTBENCH_API_URL || "http://localhost:4312",
       ),
     },
     plugins: [react(), tailwindcss()],

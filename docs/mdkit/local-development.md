@@ -27,12 +27,12 @@ zap start mdkit
 
 `mdkit` starts the Vite testbench and its in-memory backend. The backend exposes
 HTTP document/version APIs and a Hocuspocus websocket route on the
-Zapper-assigned `MDKIT_TESTBENCH_API_PORT`.
+Zapper-assigned `TESTBENCH_API_PORT`.
 
 If zap is unavailable:
 
 ```bash
-MDKIT_TESTBENCH_API_PORT=4312 pnpm --filter=@mp-lb/mdkit-testbench-backend dev
+TESTBENCH_API_PORT=4312 pnpm --filter=@mp-lb/mdkit-testbench-backend dev
 pnpm --filter=@mp-lb/mdkit-testbench dev
 ```
 
@@ -47,13 +47,13 @@ pnpm --filter=@mp-lb/mdkit-testbench-backend test
 Run the publishable docs site locally:
 
 ```bash
-zap start mdkit-docs
+zap start docs
 ```
 
 If zap is unavailable:
 
 ```bash
-MDKIT_DOCS_PORT=4314 pnpm --filter=@mp-lb/mdkit docs:dev
+DOCS_PORT=4314 pnpm --filter=@mp-lb/mdkit docs:dev
 ```
 
 ## Test A Local Build In Another Project

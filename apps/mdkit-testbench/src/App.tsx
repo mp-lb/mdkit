@@ -45,8 +45,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
 import { Textarea } from "./components/ui/textarea";
 
 const storageKey = "mdkit-testbench:basic-markdown";
-const docsUrl = import.meta.env.VITE_MDKIT_DOCS_URL;
-const apiUrl = import.meta.env.VITE_MDKIT_TESTBENCH_API_URL;
+const docsUrl = import.meta.env.VITE_DOCS_URL;
+const apiUrl = import.meta.env.VITE_TESTBENCH_API_URL;
 const connectedDocumentId = "docs/example.md";
 
 const sampleMarkdown = `# mdkit testbench

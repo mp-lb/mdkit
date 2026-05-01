@@ -2,43 +2,32 @@ project: mdkit
 env_files:
   - .env.local
   - .env
-homepage: http://localhost:${FRONTEND_PORT}
+homepage: http://localhost:${TESTBENCH_PORT}
 ports:
   [
-    BACKEND_PORT,
-    FRONTEND_PORT,
-    MDKIT_DOCS_PORT,
-    MDKIT_TESTBENCH_API_PORT,
-    MDKIT_TESTBENCH_PORT,
+    DOCS_PORT,
+    TESTBENCH_API_PORT,
+    TESTBENCH_PORT,
   ]
 links:
-  - name: mdkit-testbench
-    url: http://localhost:${MDKIT_TESTBENCH_PORT}
-  - name: mdkit-testbench-api
-    url: http://localhost:${MDKIT_TESTBENCH_API_PORT}/health
-  - name: mdkit-docs
-    url: http://localhost:${MDKIT_DOCS_PORT}
+  - name: testbench
+    url: http://localhost:${TESTBENCH_PORT}
+  - name: testbench-api
+    url: http://localhost:${TESTBENCH_API_PORT}/health
+  - name: docs
+    url: http://localhost:${DOCS_PORT}
 native:
-  backend:
-    cmd: pnpm --filter=@fssstack/mdkit-backend dev
-    env: "*"
-  frontend:
-    cmd: pnpm --filter=@fssstack/mdkit-frontend dev
-    env: "*"
-    depends_on:
-      - backend
-  mdkit-testbench:
-    aliases: [mdkit, testbench, tb]
+  testbench:
+    aliases: [mdkit, tb]
     cmd: pnpm --filter=@mp-lb/mdkit-testbench dev
     env: "*"
     depends_on:
-      - mdkit-testbench-backend
-  mdkit-testbench-backend:
-    aliases: [mdkit-api, testbench-api, tb-api]
+      - testbench-api
+  testbench-api:
+    aliases: [mdkit-api, tb-api]
     cmd: pnpm --filter=@mp-lb/mdkit-testbench-backend dev
     env: "*"
-  mdkit-docs:
-    aliases: [docs]
+  docs:
     cmd: pnpm --filter=@mp-lb/mdkit docs:dev
     env: "*"
 tasks:
