@@ -11,6 +11,12 @@ on:
       - "pnpm-workspace.yaml"
       - "turbo.json"
   workflow_dispatch:
+    inputs:
+      stable:
+        description: "Publish the package.json version to latest instead of a main prerelease"
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   publish:
@@ -41,6 +47,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Set publish version
+        if: ${{ github.event_name != 'workflow_dispatch' || !inputs.stable }}
         run: |
           node <<'NODE'
           const fs = require("node:fs");
@@ -65,6 +72,12 @@ jobs:
         run: pnpm --filter=@mp-lb/mdkit docs:build
 
       - name: Publish
-        run: pnpm --filter=@mp-lb/mdkit publish --no-git-checks --provenance --tag main
+        run: |
+          tag=main
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.stable }}" = "true" ]; then
+            tag=latest
+          fi
+
+          pnpm --filter=@mp-lb/mdkit publish --no-git-checks --provenance --tag "$tag"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
