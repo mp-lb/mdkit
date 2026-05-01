@@ -192,7 +192,7 @@ importers:
         version: 1.1.6(react@19.2.0)
       '@mp-lb/mdkit':
         specifier: workspace:*
-        version: link:../../packages/client-kit
+        version: link:../../packages/mdkit
       '@tailwindcss/vite':
         specifier: ^4.2.4
         version: 4.2.4(vite@7.2.4(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.20.6))
@@ -262,7 +262,7 @@ importers:
         version: 2.15.3(y-protocols@1.0.7(yjs@13.6.30))(yjs@13.6.30)
       '@mp-lb/mdkit':
         specifier: workspace:*
-        version: link:../../packages/client-kit
+        version: link:../../packages/mdkit
       '@trpc/server':
         specifier: ^11.7.1
         version: 11.7.1(typescript@5.9.3)
@@ -292,7 +292,9 @@ importers:
         specifier: 4.1.5
         version: 4.1.5(@types/node@20.19.39)(jsdom@29.1.1(@noble/hashes@1.8.0))(msw@2.14.2(@types/node@20.19.39)(typescript@5.9.3))(vite@7.2.4(@types/node@20.19.39)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.20.6))
 
-  packages/client-kit:
+  packages/core: {}
+
+  packages/mdkit:
     dependencies:
       '@hocuspocus/provider':
         specifier: ^2.15.0
@@ -373,8 +375,6 @@ importers:
       vitest:
         specifier: 4.1.5
         version: 4.1.5(@types/node@25.6.0)(jsdom@29.1.1(@noble/hashes@1.8.0))(msw@2.14.2(@types/node@25.6.0)(typescript@6.0.3))(vite@7.2.4(@types/node@25.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.20.6))
-
-  packages/core: {}
 
   packages/server:
     dependencies:

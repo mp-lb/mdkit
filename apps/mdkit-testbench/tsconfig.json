@@ -7,13 +7,13 @@
         "./src/*"
       ],
       "@mp-lb/mdkit": [
-        "../../packages/client-kit/src/index.ts"
+        "../../packages/mdkit/src/index.ts"
       ],
       "@mp-lb/mdkit/trpc": [
-        "../../packages/client-kit/src/trpc.ts"
+        "../../packages/mdkit/src/trpc.ts"
       ],
       "@mp-lb/mdkit/trpc/client": [
-        "../../packages/client-kit/src/trpc/client.ts"
+        "../../packages/mdkit/src/trpc/client.ts"
       ]
     },
     "types": [

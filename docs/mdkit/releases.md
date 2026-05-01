@@ -4,7 +4,7 @@ Runbook for publishing `@mp-lb/mdkit` to npm.
 
 ## Current State
 
-The package has npm metadata and `publishConfig.access = "public"`, but this repo does not yet have a dedicated Changesets release workflow for `client-kit`.
+The package has npm metadata and `publishConfig.access = "public"`, but this repo does not yet have a dedicated Changesets release workflow for `mdkit`.
 
 Until that exists, releases are manual and should be treated carefully.
 
@@ -26,19 +26,19 @@ If any command fails, fix it before publishing.
 
 Before publishing, check the package docs:
 
-- `packages/client-kit/docs/index.md`
-- `packages/client-kit/docs/architecture.md`
-- `packages/client-kit/docs/api.md`
+- `packages/mdkit/docs/index.md`
+- `packages/mdkit/docs/architecture.md`
+- `packages/mdkit/docs/api.md`
 
 Also check internal project notes when behavior or process changes:
 
-- `docs/client-kit/serialization-and-hydration.md`
-- `docs/client-kit/adapters.md`
-- `docs/client-kit/automated-testing.md`
-- `docs/client-kit/distribution.md`
-- `docs/client-kit/manual-qa.md`
-- `docs/client-kit/local-development.md`
-- `docs/client-kit/releases.md`
+- `docs/mdkit/serialization-and-hydration.md`
+- `docs/mdkit/adapters.md`
+- `docs/mdkit/automated-testing.md`
+- `docs/mdkit/distribution.md`
+- `docs/mdkit/manual-qa.md`
+- `docs/mdkit/local-development.md`
+- `docs/mdkit/releases.md`
 
 Any behavior or public API change should update docs in the same release.
 
@@ -70,7 +70,7 @@ Confirm it does not contain:
 Use manual publish only while this package has no automated release workflow.
 
 ```bash
-cd packages/client-kit
+cd packages/mdkit
 pnpm build
 npm publish --access public
 ```

@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "packages/client-kit/**"
+      - "packages/mdkit/**"
       - "infra/**"
       - ".github/workflows/deploy-docs.yml"
       - "package.json"
@@ -85,7 +85,7 @@ jobs:
           fi
 
       - name: Deploy docs to Vercel
-        run: npx vercel deploy packages/client-kit/docs/.vitepress/dist --prod --yes --token=${{ secrets.VERCEL_API_TOKEN }}
+        run: npx vercel deploy packages/mdkit/docs/.vitepress/dist --prod --yes --token=${{ secrets.VERCEL_API_TOKEN }}
         env:
           VERCEL_PROJECT_ID: ${{ steps.vercel.outputs.project_id }}
           VERCEL_ORG_ID: ${{ steps.vercel.outputs.org_id }}

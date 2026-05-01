@@ -47,7 +47,7 @@ The workflow:
 2. Runs `terraform apply` in `infra/`.
 3. Installs dependencies.
 4. Runs `pnpm --filter=@mp-lb/mdkit docs:build`.
-5. Deploys `packages/client-kit/docs/.vitepress/dist` to Vercel.
+5. Deploys `packages/mdkit/docs/.vitepress/dist` to Vercel.
 
 Manual deployment is available through the workflow dispatch button in GitHub Actions.
 

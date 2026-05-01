@@ -129,4 +129,4 @@ package in unconnected and connected modes.
 ## Package Docs
 
 Published library docs live in [`docs/index.md`](./docs/index.md). Internal
-project notes live in the repository under [`../../docs/client-kit`](../../docs/client-kit).
+project notes live in the repository under [`../../docs/mdkit`](../../docs/mdkit).

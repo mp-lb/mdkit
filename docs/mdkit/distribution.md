@@ -22,7 +22,7 @@ The npm package should contain:
 
 ## VitePress Docs
 
-`packages/client-kit/docs` is the source for the public library documentation site. These docs explain how to use the package and why it behaves the way it does.
+`packages/mdkit/docs` is the source for the public library documentation site. These docs explain how to use the package and why it behaves the way it does.
 
 They are distinct from repo-level internal docs under `docs/`, which document mdkit as a project.
 

@@ -1,7 +1,7 @@
-# Client Kit Project Notes
+# mdkit Project Notes
 
 These docs are internal mdkit project documentation for the markdown editor
-package in `packages/client-kit`.
+package in `packages/mdkit`.
 
 They are not part of the published library documentation site. Keep implementation
 tradeoffs, serialization edge cases, local workflows, release notes, and QA

@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "packages/client-kit/**"
+      - "packages/mdkit/**"
       - ".github/workflows/publish.yml"
       - "package.json"
       - "pnpm-lock.yaml"
@@ -44,7 +44,7 @@ jobs:
         run: |
           node <<'NODE'
           const fs = require("node:fs");
-          const path = "packages/client-kit/package.json";
+          const path = "packages/mdkit/package.json";
           const pkg = JSON.parse(fs.readFileSync(path, "utf8"));
           const baseVersion = String(pkg.version).replace(/-.+$/, "");
           pkg.version = `${baseVersion}-main.${process.env.GITHUB_RUN_NUMBER}.${process.env.GITHUB_RUN_ATTEMPT}`;

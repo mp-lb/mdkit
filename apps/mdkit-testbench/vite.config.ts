@@ -30,28 +30,28 @@ export default defineConfig(({ mode }) => {
           find: "@mp-lb/mdkit/styles.css",
           replacement: path.resolve(
             __dirname,
-            "../../packages/client-kit/src/styles.css",
+            "../../packages/mdkit/src/styles.css",
           ),
         },
         {
           find: "@mp-lb/mdkit/trpc/client",
           replacement: path.resolve(
             __dirname,
-            "../../packages/client-kit/src/trpc/client.ts",
+            "../../packages/mdkit/src/trpc/client.ts",
           ),
         },
         {
           find: "@mp-lb/mdkit/trpc",
           replacement: path.resolve(
             __dirname,
-            "../../packages/client-kit/src/trpc.ts",
+            "../../packages/mdkit/src/trpc.ts",
           ),
         },
         {
           find: "@mp-lb/mdkit",
           replacement: path.resolve(
             __dirname,
-            "../../packages/client-kit/src/index.ts",
+            "../../packages/mdkit/src/index.ts",
           ),
         },
       ],

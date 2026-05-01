@@ -106,7 +106,7 @@ Use tarballs first. Link-based testing is faster but less representative of what
 If you do use a link:
 
 ```bash
-cd /Users/felixsebastian/Code/mdkit/packages/client-kit
+cd /Users/felixsebastian/Code/mdkit/packages/mdkit
 pnpm build
 pnpm link --global
 
@@ -121,7 +121,7 @@ cd /path/to/consumer-app
 pnpm unlink @mp-lb/mdkit
 pnpm add @mp-lb/mdkit
 
-cd /Users/felixsebastian/Code/mdkit/packages/client-kit
+cd /Users/felixsebastian/Code/mdkit/packages/mdkit
 pnpm unlink --global
 ```
 
