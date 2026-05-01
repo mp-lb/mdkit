@@ -154,11 +154,11 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
               provider: collaborationProvider,
               render: (user) => {
                 const cursor = document.createElement("span");
-                cursor.classList.add("hsk-collaboration-caret");
+                cursor.classList.add("mp-lb-mdkit-collaboration-caret");
                 cursor.style.borderColor = user.color;
 
                 const label = document.createElement("div");
-                label.classList.add("hsk-collaboration-caret-label");
+                label.classList.add("mp-lb-mdkit-collaboration-caret-label");
                 label.style.backgroundColor = user.color;
                 label.textContent = user.name;
                 cursor.appendChild(label);
@@ -187,7 +187,7 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
       editable: !readOnly,
       editorProps: {
         attributes: {
-          class: "hsk-tiptap",
+          class: "mp-lb-mdkit-tiptap",
           spellcheck: "false",
         },
       },
@@ -306,8 +306,8 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
 
   if (!editor) {
     return (
-      <div className="hsk-editor-shell">
-        <div className="hsk-editor-empty">
+      <div className="mp-lb-mdkit-editor-shell">
+        <div className="mp-lb-mdkit-editor-empty">
           {collaboration
             ? "Connecting collaboration session..."
             : "Loading editor..."}
@@ -633,10 +633,10 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
   };
 
   return (
-    <div className="hsk-editor-shell">
+    <div className="mp-lb-mdkit-editor-shell">
       <div
         ref={editorSurfaceRef}
-        className="hsk-editor-surface"
+        className="mp-lb-mdkit-editor-surface"
         onPointerDownCapture={focusEditorBackgroundOnPointerDown}
         onPointerUpCapture={focusEditorBackgroundOnPointerUp}
       >

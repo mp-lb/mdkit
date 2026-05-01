@@ -107,7 +107,7 @@ If you do not use shadcn, use the base panels from the npm package:
 - `VersionHistoryPanel`
 - `MdKitConflictPanel`
 
-They render plain semantic HTML with stable `mdkit-*` classes. Import
+They render plain semantic HTML with stable `mp-lb-mdkit-*` classes. Import
 `@mp-lb/mdkit/styles.css` for generic fallback styling, or
 replace the CSS entirely. See [Styling](./styling.md#component-styling).
 

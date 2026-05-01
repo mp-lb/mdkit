@@ -107,7 +107,7 @@ The public React layers should be:
 2. Headless workflow controller. This composes document, versions,
    collaboration, autosave, and conflict state into one ergonomic contract.
 3. Base panels. These render raw semantic HTML for toolbar, version history,
-   and conflict details, with stable mdkit-prefixed classes and optional mdkit
+   and conflict details, with stable mp-lb-mdkit-prefixed classes and optional mdkit
    CSS.
 4. Shadcn plugin/registry components. These are copied into the consuming app
    the shadcn way and can own dialogs, drawers, buttons, and polished layout.
@@ -127,7 +127,7 @@ systems. They are not shadcn components and they are not meant to look polished.
 They should:
 
 - render inline, not through portals
-- use semantic HTML and stable `mdkit-*` class names
+- use semantic HTML and stable `mp-lb-mdkit-*` class names
 - be usable as raw HTML when no stylesheet is imported
 - work acceptably when the package `styles.css` is imported
 - be easy to override with plain CSS, CSS modules, Tailwind, styled-components,

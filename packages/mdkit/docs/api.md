@@ -51,7 +51,7 @@ end. Leave it off when the host application owns sizing and scrolling.
 
 The package stylesheet includes reset-resistant markdown rules for headings,
 lists, code blocks, blockquotes, and links. Styling is controlled with CSS
-variables on `.mdkit-markdown-editor`. See [Styling](./styling.md) for setup,
+variables on `.mp-lb-mdkit-markdown-editor`. See [Styling](./styling.md) for setup,
 dark mode, fonts, sizing, and theme customization.
 
 ## Document Persistence

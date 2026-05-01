@@ -21,7 +21,7 @@ export const MdKitThemeEditor = ({
   };
 
   return (
-    <div className={["hsk-theme-editor", className].filter(Boolean).join(" ")}>
+    <div className={["mp-lb-mdkit-theme-editor", className].filter(Boolean).join(" ")}>
       <label>
         <span>Background</span>
         <input

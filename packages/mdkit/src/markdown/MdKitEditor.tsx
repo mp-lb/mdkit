@@ -42,8 +42,8 @@ export const MdKitEditor = (props: MdKitEditorProps) => {
   return (
     <div
       className={joinClassNames(
-        "mdkit-markdown-editor",
-        fillHeight && "mdkit-markdown-editor-fill-height",
+        "mp-lb-mdkit-markdown-editor",
+        fillHeight && "mp-lb-mdkit-markdown-editor-fill-height",
         className,
       )}
       data-read-only={readOnly ? "true" : undefined}

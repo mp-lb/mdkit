@@ -376,11 +376,11 @@ svg {
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.75rem;
-  --hsk-background: #ffffff;
-  --hsk-foreground: #111827;
-  --hsk-muted-foreground: #64748b;
-  --hsk-border: #e5e7eb;
-  --hsk-link: #2563eb;
+  --mp-lb-mdkit-background: #ffffff;
+  --mp-lb-mdkit-foreground: #111827;
+  --mp-lb-mdkit-muted-foreground: #64748b;
+  --mp-lb-mdkit-border: #e5e7eb;
+  --mp-lb-mdkit-link: #2563eb;
 }
 
 .testbench-config {
@@ -621,7 +621,7 @@ svg {
   max-width: min(620px, calc(100vw - 2rem));
 }
 
-.testbench-panel-dialog .mdkit-version-history-panel {
+.testbench-panel-dialog .mp-lb-mdkit-version-history-panel {
   min-height: min(34rem, calc(100vh - 12rem));
   overflow: hidden;
 }

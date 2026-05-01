@@ -56,18 +56,18 @@ export const MdKitConflictPanel = ({
     previewOptions[0];
 
   return (
-    <section className={joinClassNames("mdkit-conflict-panel", className)}>
-      <div className="mdkit-conflict-panel-content">
+    <section className={joinClassNames("mp-lb-mdkit-conflict-panel", className)}>
+      <div className="mp-lb-mdkit-conflict-panel-content">
         <h2>{title}</h2>
         <p>
           Remote changes conflict with local edits. Choose the remote document,
           or keep your local document by overwriting the remote copy.
         </p>
         {document.error ? (
-          <p className="mdkit-conflict-panel-error">{document.error}</p>
+          <p className="mp-lb-mdkit-conflict-panel-error">{document.error}</p>
         ) : null}
         {conflictDetails ? (
-          <p className="mdkit-conflict-panel-meta">
+          <p className="mp-lb-mdkit-conflict-panel-meta">
             Remote version {String(conflictDetails.remoteVersion ?? "none")}
             {conflictDetails.remoteUpdatedAt
               ? ` saved ${new Date(
@@ -77,8 +77,8 @@ export const MdKitConflictPanel = ({
           </p>
         ) : null}
       </div>
-      <div className="mdkit-conflict-panel-preview">
-        <div className="mdkit-conflict-panel-tabs" role="tablist">
+      <div className="mp-lb-mdkit-conflict-panel-preview">
+        <div className="mp-lb-mdkit-conflict-panel-tabs" role="tablist">
           {previewOptions.map((option) => (
             <button
               key={option.id}
@@ -86,8 +86,8 @@ export const MdKitConflictPanel = ({
               aria-selected={activePreviewOption.id === option.id}
               className={
                 activePreviewOption.id === option.id
-                  ? "mdkit-conflict-panel-tab mdkit-conflict-panel-tab-active"
-                  : "mdkit-conflict-panel-tab"
+                  ? "mp-lb-mdkit-conflict-panel-tab mp-lb-mdkit-conflict-panel-tab-active"
+                  : "mp-lb-mdkit-conflict-panel-tab"
               }
               role="tab"
               onClick={() => setActivePreview(option.id)}
@@ -102,10 +102,10 @@ export const MdKitConflictPanel = ({
           value={activePreviewOption.value}
         />
       </div>
-      <div className="mdkit-conflict-panel-action-row">
+      <div className="mp-lb-mdkit-conflict-panel-action-row">
         <button
           type="button"
-          className="mdkit-panel-secondary-action"
+          className="mp-lb-mdkit-panel-secondary-action"
           disabled={isBusy}
           onClick={() => void runAction("reload", document.resync)}
         >
@@ -113,7 +113,7 @@ export const MdKitConflictPanel = ({
         </button>
         <button
           type="button"
-          className="mdkit-panel-secondary-action"
+          className="mp-lb-mdkit-panel-secondary-action"
           disabled={isBusy}
           onClick={() => void runAction("overwrite", document.forceSave)}
         >

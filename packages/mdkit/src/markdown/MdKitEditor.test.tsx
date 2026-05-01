@@ -54,7 +54,7 @@ describe("MdKitEditor", () => {
 
     await waitFor(() => {
       expect(
-        container.querySelector(".mdkit-markdown-editor-fill-height"),
+        container.querySelector(".mp-lb-mdkit-markdown-editor-fill-height"),
       ).toBeTruthy();
 
       expect(editorText(container)).toContain("Stored document");
@@ -64,7 +64,7 @@ describe("MdKitEditor", () => {
   it("keeps the editor root full-width without fill-height", async () => {
     const css = readFileSync(resolve(__dirname, "../styles.css"), "utf8");
 
-    expect(css).toMatch(/\.mdkit-markdown-editor\s*{[^}]*width:\s*100%;/);
+    expect(css).toMatch(/\.mp-lb-mdkit-markdown-editor\s*{[^}]*width:\s*100%;/);
   });
 
   it("can render the editor as read-only", async () => {
@@ -85,7 +85,7 @@ describe("MdKitEditor", () => {
     expect(editor.getAttribute("contenteditable")).toBe("false");
     expect(
       container
-        .querySelector(".mdkit-markdown-editor")
+        .querySelector(".mp-lb-mdkit-markdown-editor")
         ?.getAttribute("data-read-only"),
     ).toBe("true");
   });
@@ -183,7 +183,7 @@ describe("MdKitEditor", () => {
     );
 
     const surface = await waitFor(() => {
-      const element = container.querySelector(".hsk-editor-surface");
+      const element = container.querySelector(".mp-lb-mdkit-editor-surface");
 
       if (!(element instanceof HTMLElement)) {
         throw new Error("Expected editor surface to render.");

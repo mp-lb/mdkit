@@ -15,7 +15,7 @@ blockquotes, code blocks, spacing, and focus areas are left to your app's CSS.
 
 Many app frameworks include CSS resets. Tailwind Preflight, for example, removes
 default margins and list styling. The package stylesheet restores markdown
-editor defaults under `.mdkit-markdown-editor`, including:
+editor defaults under `.mp-lb-mdkit-markdown-editor`, including:
 
 - heading sizes and spacing
 - paragraph spacing
@@ -65,21 +65,21 @@ can override them with a class:
 
 ```css
 .my-markdown-editor {
-  --hsk-background: #ffffff;
-  --hsk-foreground: #172033;
-  --hsk-muted: #eef1f4;
-  --hsk-muted-foreground: #5b6472;
-  --hsk-border: #d8dee8;
-  --hsk-link: #4f46e5;
-  --hsk-font-family: Inter, system-ui, sans-serif;
-  --hsk-font-size: 16px;
-  --hsk-line-height: 1.7;
-  --hsk-surface-padding: 1rem;
-  --hsk-block-gap: 0.75rem;
-  --hsk-list-item-gap: 0.125rem;
-  --hsk-code-background: #eef1f4;
-  --hsk-code-radius: 0.35rem;
-  --hsk-code-block-radius: 0.75rem;
+  --mp-lb-mdkit-background: #ffffff;
+  --mp-lb-mdkit-foreground: #172033;
+  --mp-lb-mdkit-muted: #eef1f4;
+  --mp-lb-mdkit-muted-foreground: #5b6472;
+  --mp-lb-mdkit-border: #d8dee8;
+  --mp-lb-mdkit-link: #4f46e5;
+  --mp-lb-mdkit-font-family: Inter, system-ui, sans-serif;
+  --mp-lb-mdkit-font-size: 16px;
+  --mp-lb-mdkit-line-height: 1.7;
+  --mp-lb-mdkit-surface-padding: 1rem;
+  --mp-lb-mdkit-block-gap: 0.75rem;
+  --mp-lb-mdkit-list-item-gap: 0.125rem;
+  --mp-lb-mdkit-code-background: #eef1f4;
+  --mp-lb-mdkit-code-radius: 0.35rem;
+  --mp-lb-mdkit-code-block-radius: 0.75rem;
 }
 ```
 
@@ -97,9 +97,9 @@ runtime:
 ```tsx
 <MdKitEditor
   style={{
-    "--hsk-font-family": "ui-serif, Georgia, serif",
-    "--hsk-font-size": "18px",
-    "--hsk-line-height": "1.8",
+    "--mp-lb-mdkit-font-family": "ui-serif, Georgia, serif",
+    "--mp-lb-mdkit-font-size": "18px",
+    "--mp-lb-mdkit-line-height": "1.8",
   }}
   value={markdown}
   onChange={setMarkdown}
@@ -109,21 +109,65 @@ runtime:
 See [`MdKitEditorProps`](./api.md#mdkiteditorprops) for the full component
 props.
 
-## Component Styling
+## Class Hooks
 
-Editor styling and workflow component styling are separate.
+The package uses stable `mp-lb-mdkit-*` class names for all package-owned
+markup. These classes are a supported integration point for product-specific
+styling. Prefer CSS variables for theme-level changes, and use class hooks when
+you need structural changes, component-specific spacing, or state styling.
 
-`MdKitEditor` is styled through CSS variables on `.mdkit-markdown-editor`.
-Workflow panels such as `MdKitDocumentToolbar`, `MdKitConflictPanel`, and
-`VersionHistoryPanel` are intentionally design-system agnostic. They render raw
-semantic markup with stable `mdkit-*` class names. Without this stylesheet they
-are plain HTML; with this stylesheet they get generic fallback styling: square
-corners, one-pixel borders, clear spacing, and basic buttons.
+### Editor
 
-Style them in your app when you want them to match your product:
+`MdKitEditor` renders the markdown editing surface and the selection bubble
+toolbar.
+
+- `.mp-lb-mdkit-markdown-editor`: root element rendered by `MdKitEditor`
+- `.mp-lb-mdkit-markdown-editor-fill-height`: added to the root when
+  `fillHeight` is enabled
+- `.mp-lb-mdkit-editor-shell`: internal editor layout wrapper
+- `.mp-lb-mdkit-editor-surface`: scroll and background surface around the
+  ProseMirror editor
+- `.mp-lb-mdkit-editor-empty`: loading or connecting placeholder
+- `.mp-lb-mdkit-tiptap`: ProseMirror editable element
+- `.mp-lb-mdkit-toolbar`: selection bubble toolbar
+- `.mp-lb-mdkit-toolbar-button`: toolbar button
+- `.mp-lb-mdkit-toolbar-button-active`: added to active toolbar buttons
+- `.mp-lb-mdkit-toolbar-divider`: toolbar divider
+- `.mp-lb-mdkit-collaboration-caret`: remote collaboration caret
+- `.mp-lb-mdkit-collaboration-caret-label`: remote collaborator label
+
+The editor root exposes `data-read-only="true"` when `readOnly` is enabled.
+
+### Theme Editor
+
+`MdKitThemeEditor` renders controls for editing a theme object.
+
+- `.mp-lb-mdkit-theme-editor`: root element rendered by `MdKitThemeEditor`
+
+### Document Toolbar
+
+`MdKitDocumentToolbar` renders document save, restore, and conflict controls.
+
+- `.mp-lb-mdkit-document-toolbar`: root element
+- `.mp-lb-mdkit-document-toolbar-status`: status text group
+- `.mp-lb-mdkit-document-toolbar-error`: non-conflict error message
+- `.mp-lb-mdkit-document-toolbar-actions`: action button group
+- `.mp-lb-mdkit-document-toolbar-conflict-trigger`: button that opens external
+  conflict UI
+- `.mp-lb-mdkit-document-toolbar-conflict`: inline conflict action row
+
+The root exposes these state attributes:
+
+- `data-conflict`: `"true"` when a document conflict exists
+- `data-dirty`: `"true"` when local edits are unsaved
+- `data-save-status`: raw save status from the document controller
+- `data-status`: display status normalized for CSS selectors, such as
+  `"saved"`, `"unsaved-changes"`, `"autosave-pending"`, or `"conflict"`
+
+Example:
 
 ```css
-.mdkit-document-toolbar {
+.mp-lb-mdkit-document-toolbar {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -131,42 +175,117 @@ Style them in your app when you want them to match your product:
   padding: 0.5rem 0;
 }
 
-.mdkit-document-toolbar-status,
-.mdkit-document-toolbar-actions,
-.mdkit-document-toolbar-conflict {
+.mp-lb-mdkit-document-toolbar-status,
+.mp-lb-mdkit-document-toolbar-actions,
+.mp-lb-mdkit-document-toolbar-conflict {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.mdkit-document-toolbar[data-conflict="true"] {
+.mp-lb-mdkit-document-toolbar[data-conflict="true"] {
   color: #991b1b;
 }
 ```
 
-The toolbar class hooks are:
+### Conflict Panel
 
-- `.mdkit-document-toolbar`
-- `.mdkit-document-toolbar-status`
-- `.mdkit-document-toolbar-actions`
-- `.mdkit-document-toolbar-error`
-- `.mdkit-document-toolbar-conflict`
+`MdKitConflictPanel` renders conflict details, previews, and conflict actions.
 
-It also exposes `data-conflict`, `data-dirty`, and `data-save-status`
-attributes for state-based styling.
+- `.mp-lb-mdkit-conflict-panel`: root element
+- `.mp-lb-mdkit-conflict-panel-content`: title, explanatory text, and metadata
+- `.mp-lb-mdkit-conflict-panel-error`: error text
+- `.mp-lb-mdkit-conflict-panel-meta`: remote version metadata
+- `.mp-lb-mdkit-conflict-panel-preview`: preview area
+- `.mp-lb-mdkit-conflict-panel-tabs`: preview tab list
+- `.mp-lb-mdkit-conflict-panel-tab`: preview tab button
+- `.mp-lb-mdkit-conflict-panel-tab-active`: active preview tab button
+- `.mp-lb-mdkit-conflict-panel-action-row`: action button row
+- `.mp-lb-mdkit-panel-secondary-action`: secondary panel action button
 
-Version history and conflict panels use the same fallback panel CSS and expose:
+The preview tabs also use `aria-selected` for state-aware styling.
 
-- `.mdkit-version-history-panel`
-- `.mdkit-version-history-header`
-- `.mdkit-version-history-list`
-- `.mdkit-version-history-item`
-- `.mdkit-version-history-preview`
-- `.mdkit-conflict-panel`
-- `.mdkit-conflict-panel-content`
-- `.mdkit-conflict-panel-action-row`
-- `.mdkit-panel-primary-action`
-- `.mdkit-panel-secondary-action`
+### Version History Panel
+
+`VersionHistoryPanel` renders a version list, selected version preview, restore
+action, and empty/error states.
+
+- `.mp-lb-mdkit-version-history-panel`: root element
+- `.mp-lb-mdkit-version-history-header`: panel header
+- `.mp-lb-mdkit-version-history-title`: panel title
+- `.mp-lb-mdkit-version-history-subtitle`: panel subtitle
+- `.mp-lb-mdkit-version-history-layout`: list and preview layout
+- `.mp-lb-mdkit-version-history-list`: version list
+- `.mp-lb-mdkit-version-history-item`: version list item button
+- `.mp-lb-mdkit-version-history-item-active`: selected version list item
+- `.mp-lb-mdkit-version-history-item-title`: list item title
+- `.mp-lb-mdkit-version-history-item-meta`: list item or selected version metadata
+- `.mp-lb-mdkit-version-history-preview`: selected version preview area
+- `.mp-lb-mdkit-version-history-preview-header`: preview header
+- `.mp-lb-mdkit-version-history-preview-title`: preview title
+- `.mp-lb-mdkit-version-history-code`: markdown preview code block
+- `.mp-lb-mdkit-version-history-empty`: empty state text
+- `.mp-lb-mdkit-version-history-error`: error state text
+- `.mp-lb-mdkit-version-history-meta`: footer metadata
+- `.mp-lb-mdkit-panel-primary-action`: primary panel action button
+
+### Shared Panel Actions
+
+Conflict and version panels share generic action classes:
+
+- `.mp-lb-mdkit-panel-primary-action`: primary action button
+- `.mp-lb-mdkit-panel-secondary-action`: secondary action button
+
+## CSS Variables
+
+The package stylesheet defines variables on component roots so consumers can
+override broad styling without depending on internal element structure.
+
+### Editor Variables
+
+Set these on `.mp-lb-mdkit-markdown-editor`, a custom `className` passed to
+`MdKitEditor`, or the inline `style` prop:
+
+- `--mp-lb-mdkit-background`
+- `--mp-lb-mdkit-foreground`
+- `--mp-lb-mdkit-muted`
+- `--mp-lb-mdkit-muted-foreground`
+- `--mp-lb-mdkit-border`
+- `--mp-lb-mdkit-accent`
+- `--mp-lb-mdkit-accent-foreground`
+- `--mp-lb-mdkit-link`
+- `--mp-lb-mdkit-font-family`
+- `--mp-lb-mdkit-font-size`
+- `--mp-lb-mdkit-line-height`
+- `--mp-lb-mdkit-surface-padding`
+- `--mp-lb-mdkit-block-gap`
+- `--mp-lb-mdkit-list-item-gap`
+- `--mp-lb-mdkit-heading-font-weight`
+- `--mp-lb-mdkit-heading-1-size`
+- `--mp-lb-mdkit-heading-2-size`
+- `--mp-lb-mdkit-code-background`
+- `--mp-lb-mdkit-code-radius`
+- `--mp-lb-mdkit-code-block-radius`
+- `--mp-lb-mdkit-code-font-family`
+- `--mp-lb-mdkit-quote-border-color`
+
+### Panel Variables
+
+Set these on `.mp-lb-mdkit-document-toolbar`,
+`.mp-lb-mdkit-conflict-panel`, `.mp-lb-mdkit-version-history-panel`, or a
+wrapper around those components:
+
+- `--mp-lb-mdkit-panel-background`
+- `--mp-lb-mdkit-panel-surface`
+- `--mp-lb-mdkit-panel-foreground`
+- `--mp-lb-mdkit-panel-muted`
+- `--mp-lb-mdkit-panel-muted-foreground`
+- `--mp-lb-mdkit-panel-border`
+- `--mp-lb-mdkit-panel-strong-border`
+- `--mp-lb-mdkit-panel-danger`
+- `--mp-lb-mdkit-panel-success`
+- `--mp-lb-mdkit-panel-action-background`
+- `--mp-lb-mdkit-panel-action-foreground`
 
 ## Theme Helpers
 
@@ -197,23 +316,23 @@ For class-based dark mode, scope variable overrides to your dark selector:
 
 ```css
 .my-markdown-editor {
-  --hsk-background: #ffffff;
-  --hsk-foreground: #172033;
-  --hsk-muted: #eef1f4;
-  --hsk-muted-foreground: #5b6472;
-  --hsk-border: #d8dee8;
-  --hsk-link: #4f46e5;
-  --hsk-code-background: #eef1f4;
+  --mp-lb-mdkit-background: #ffffff;
+  --mp-lb-mdkit-foreground: #172033;
+  --mp-lb-mdkit-muted: #eef1f4;
+  --mp-lb-mdkit-muted-foreground: #5b6472;
+  --mp-lb-mdkit-border: #d8dee8;
+  --mp-lb-mdkit-link: #4f46e5;
+  --mp-lb-mdkit-code-background: #eef1f4;
 }
 
 .dark .my-markdown-editor {
-  --hsk-background: #0b1220;
-  --hsk-foreground: #e5edf7;
-  --hsk-muted: #172033;
-  --hsk-muted-foreground: #94a3b8;
-  --hsk-border: #314158;
-  --hsk-link: #38bdf8;
-  --hsk-code-background: #111827;
+  --mp-lb-mdkit-background: #0b1220;
+  --mp-lb-mdkit-foreground: #e5edf7;
+  --mp-lb-mdkit-muted: #172033;
+  --mp-lb-mdkit-muted-foreground: #94a3b8;
+  --mp-lb-mdkit-border: #314158;
+  --mp-lb-mdkit-link: #38bdf8;
+  --mp-lb-mdkit-code-background: #111827;
 }
 ```
 
@@ -240,7 +359,7 @@ const style = createMdKitEditorThemeStyle(
 ## What Not To Customize First
 
 Prefer changing CSS variables before overriding internal selectors like
-`.hsk-tiptap p` or `.hsk-editor-surface`. Direct selector overrides are still an
+`.mp-lb-mdkit-tiptap p` or `.mp-lb-mdkit-editor-surface`. Direct selector overrides are still an
 escape hatch, but they couple your app to mdkit's internal DOM.
 
 Use `MdKitThemeEditor` for theme builders, documentation, and debug tooling. It

@@ -17,7 +17,7 @@ export type MdKitEditorTheme = {
 };
 
 export type MdKitEditorThemeStyle = CSSProperties &
-  Record<`--hsk-${string}`, string>;
+  Record<`--mp-lb-mdkit-${string}`, string>;
 
 export const defaultMdKitEditorTheme: MdKitEditorTheme = {
   background: "#ffffff",
@@ -54,20 +54,20 @@ export const darkMdKitEditorTheme: MdKitEditorTheme = {
 export const createMdKitEditorThemeStyle = (
   theme: MdKitEditorTheme,
 ): MdKitEditorThemeStyle => ({
-  "--hsk-background": theme.background,
-  "--hsk-block-gap": theme.blockGap,
-  "--hsk-border": theme.border,
-  "--hsk-code-background": theme.codeBackground,
-  "--hsk-code-radius": theme.codeRadius,
-  "--hsk-code-block-radius": theme.codeRadius,
-  "--hsk-font-family": theme.fontFamily,
-  "--hsk-font-size": theme.fontSize,
-  "--hsk-foreground": theme.foreground,
-  "--hsk-line-height": theme.lineHeight,
-  "--hsk-link": theme.link,
-  "--hsk-muted": theme.muted,
-  "--hsk-muted-foreground": theme.mutedForeground,
-  "--hsk-quote-border-color": theme.border,
-  "--hsk-surface-padding": theme.surfacePadding,
+  "--mp-lb-mdkit-background": theme.background,
+  "--mp-lb-mdkit-block-gap": theme.blockGap,
+  "--mp-lb-mdkit-border": theme.border,
+  "--mp-lb-mdkit-code-background": theme.codeBackground,
+  "--mp-lb-mdkit-code-radius": theme.codeRadius,
+  "--mp-lb-mdkit-code-block-radius": theme.codeRadius,
+  "--mp-lb-mdkit-font-family": theme.fontFamily,
+  "--mp-lb-mdkit-font-size": theme.fontSize,
+  "--mp-lb-mdkit-foreground": theme.foreground,
+  "--mp-lb-mdkit-line-height": theme.lineHeight,
+  "--mp-lb-mdkit-link": theme.link,
+  "--mp-lb-mdkit-muted": theme.muted,
+  "--mp-lb-mdkit-muted-foreground": theme.mutedForeground,
+  "--mp-lb-mdkit-quote-border-color": theme.border,
+  "--mp-lb-mdkit-surface-padding": theme.surfacePadding,
 });
 

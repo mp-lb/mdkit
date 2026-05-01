@@ -49,28 +49,28 @@ export const VersionHistoryPanel = ({
   };
 
   return (
-    <aside className={joinClassNames("mdkit-version-history-panel", className)}>
-      <div className="mdkit-version-history-header">
+    <aside className={joinClassNames("mp-lb-mdkit-version-history-panel", className)}>
+      <div className="mp-lb-mdkit-version-history-header">
         <div>
-          <h2 className="mdkit-version-history-title">{title}</h2>
-          <p className="mdkit-version-history-subtitle">
+          <h2 className="mp-lb-mdkit-version-history-title">{title}</h2>
+          <p className="mp-lb-mdkit-version-history-subtitle">
             Browse saved revisions and restore one when you need it.
           </p>
         </div>
       </div>
       {!controller.hasVersioning ? (
-        <div className="mdkit-version-history-empty">
+        <div className="mp-lb-mdkit-version-history-empty">
           This adapter does not expose version history.
         </div>
       ) : null}
       {controller.error ? (
-        <div className="mdkit-version-history-error">{controller.error}</div>
+        <div className="mp-lb-mdkit-version-history-error">{controller.error}</div>
       ) : null}
       {controller.hasVersioning ? (
-        <div className="mdkit-version-history-layout">
-          <div className="mdkit-version-history-list" role="list">
+        <div className="mp-lb-mdkit-version-history-layout">
+          <div className="mp-lb-mdkit-version-history-list" role="list">
             {controller.versions.length === 0 ? (
-              <div className="mdkit-version-history-empty">
+              <div className="mp-lb-mdkit-version-history-empty">
                 No revisions have been recorded for this document yet.
               </div>
             ) : (
@@ -79,31 +79,31 @@ export const VersionHistoryPanel = ({
                   key={version.id}
                   type="button"
                   className={joinClassNames(
-                    "mdkit-version-history-item",
+                    "mp-lb-mdkit-version-history-item",
                     controller.selectedVersionId === version.id &&
-                      "mdkit-version-history-item-active",
+                      "mp-lb-mdkit-version-history-item-active",
                   )}
                   onClick={() => void controller.openVersion(version.id)}
                 >
-                  <span className="mdkit-version-history-item-title">
+                  <span className="mp-lb-mdkit-version-history-item-title">
                     {getVersionLabel(version)}
                   </span>
-                  <span className="mdkit-version-history-item-meta">
+                  <span className="mp-lb-mdkit-version-history-item-meta">
                     {new Date(version.createdAt).toLocaleString()}
                   </span>
                 </button>
               ))
             )}
           </div>
-          <div className="mdkit-version-history-preview">
+          <div className="mp-lb-mdkit-version-history-preview">
             {controller.selectedVersion ? (
               <>
-                <div className="mdkit-version-history-preview-header">
+                <div className="mp-lb-mdkit-version-history-preview-header">
                   <div>
-                    <h3 className="mdkit-version-history-preview-title">
+                    <h3 className="mp-lb-mdkit-version-history-preview-title">
                       {getVersionLabel(controller.selectedVersion)}
                     </h3>
-                    <p className="mdkit-version-history-item-meta">
+                    <p className="mp-lb-mdkit-version-history-item-meta">
                       {new Date(
                         controller.selectedVersion.createdAt,
                       ).toLocaleString()}
@@ -112,7 +112,7 @@ export const VersionHistoryPanel = ({
                   {onRestoreVersion ? (
                     <button
                       type="button"
-                      className="mdkit-panel-primary-action"
+                      className="mp-lb-mdkit-panel-primary-action"
                       disabled={isRestoring}
                       onClick={() => void restoreSelectedVersion()}
                     >
@@ -120,12 +120,12 @@ export const VersionHistoryPanel = ({
                     </button>
                   ) : null}
                 </div>
-                <pre className="mdkit-version-history-code">
+                <pre className="mp-lb-mdkit-version-history-code">
                   {controller.selectedVersion.content}
                 </pre>
               </>
             ) : (
-              <div className="mdkit-version-history-empty">
+              <div className="mp-lb-mdkit-version-history-empty">
                 Select a saved revision to preview it here.
               </div>
             )}
@@ -133,7 +133,7 @@ export const VersionHistoryPanel = ({
         </div>
       ) : null}
       {controller.isLoading ? (
-        <div className="mdkit-version-history-meta">
+        <div className="mp-lb-mdkit-version-history-meta">
           Loading version data...
         </div>
       ) : null}

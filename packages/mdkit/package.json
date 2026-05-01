@@ -1,13 +1,17 @@
 {
   "name": "@mp-lb/mdkit",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
     "docs",
-    "src/styles.css"
+    "src/styles.css",
+    "!dist/**/*.test.d.ts",
+    "!dist/**/*.test.js",
+    "!dist/test",
+    "!docs/.vitepress/dist"
   ],
   "exports": {
     ".": {

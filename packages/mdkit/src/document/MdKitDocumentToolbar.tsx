@@ -62,13 +62,13 @@ export const MdKitDocumentToolbar = ({
 
   return (
     <div
-      className={joinClassNames("mdkit-document-toolbar", className)}
+      className={joinClassNames("mp-lb-mdkit-document-toolbar", className)}
       data-conflict={document.conflict ? "true" : undefined}
       data-dirty={document.isDirty ? "true" : undefined}
       data-save-status={document.saveStatus}
       data-status={status.toLowerCase().replace(/\s+/g, "-")}
     >
-      <div className="mdkit-document-toolbar-status">
+      <div className="mp-lb-mdkit-document-toolbar-status">
         <strong>{status}</strong>
         <span>{formatUpdatedAt(document.updatedAt)}</span>
         <span>
@@ -76,9 +76,9 @@ export const MdKitDocumentToolbar = ({
         </span>
       </div>
       {document.error && !document.conflict ? (
-        <div className="mdkit-document-toolbar-error">{document.error}</div>
+        <div className="mp-lb-mdkit-document-toolbar-error">{document.error}</div>
       ) : null}
-      <div className="mdkit-document-toolbar-actions">
+      <div className="mp-lb-mdkit-document-toolbar-actions">
         <button
           type="button"
           disabled={
@@ -102,7 +102,7 @@ export const MdKitDocumentToolbar = ({
         {document.conflict && onOpenConflict ? (
           <button
             type="button"
-            className="mdkit-document-toolbar-conflict-trigger"
+            className="mp-lb-mdkit-document-toolbar-conflict-trigger"
             disabled={isBusy}
             onClick={() =>
               void runAction("conflict", async () => {
@@ -115,7 +115,7 @@ export const MdKitDocumentToolbar = ({
         ) : null}
       </div>
       {document.conflict && showConflictActions ? (
-        <div className="mdkit-document-toolbar-conflict">
+        <div className="mp-lb-mdkit-document-toolbar-conflict">
           <span>Remote changes conflict with local edits.</span>
           <button
             type="button"
