@@ -1,0 +1,31 @@
+project: mdkit
+env_files:
+  - .env.local
+  - .env
+homepage: http://localhost:${FRONTEND_PORT}
+ports: [BACKEND_PORT, FRONTEND_PORT]
+native:
+  backend:
+    cmd: pnpm --filter=@fssstack/mdkit-backend dev
+    env: "*"
+  frontend:
+    cmd: pnpm --filter=@fssstack/mdkit-frontend dev
+    env: "*"
+    depends_on:
+      - backend
+tasks:
+  lint:
+    cmds:
+      - pnpm lint
+  check:
+    cmds:
+      - pnpm turbo run typecheck
+  build:
+    cmds:
+      - pnpm turbo run build
+  vitest:
+    cmds:
+      - pnpm test
+  worktree_setup:
+    cmds:
+      - pnpm install
