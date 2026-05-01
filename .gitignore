@@ -2,5 +2,6 @@ node_modules/
 dist/
 .turbo/
 .zap/
+.vitepress/cache/
 .env
 .DS_Store

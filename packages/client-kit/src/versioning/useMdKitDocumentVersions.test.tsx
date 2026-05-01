@@ -1,0 +1,56 @@
+import { act, renderHook, waitFor } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+import type { MdKitDocumentAdapter } from "../document/documentTypes";
+import { useMdKitDocumentVersions } from "./useMdKitDocumentVersions";
+
+describe("useMdKitDocumentVersions", () => {
+  it("keeps the selected version preview open after loading it", async () => {
+    const adapter: Pick<
+      MdKitDocumentAdapter,
+      "listDocumentVersions" | "readDocumentVersion"
+    > = {
+      listDocumentVersions: vi.fn(async () => [
+        {
+          createdAt: "2026-01-01T00:00:00.000Z",
+          id: "1",
+          label: "Version 1",
+          version: 1,
+        },
+      ]),
+      readDocumentVersion: vi.fn(async () => ({
+        content: "Version one content",
+        createdAt: "2026-01-01T00:00:00.000Z",
+        id: "1",
+        label: "Version 1",
+        updatedAt: "2026-01-01T00:00:00.000Z",
+        version: 1,
+      })),
+    };
+
+    const { result } = renderHook(() =>
+      useMdKitDocumentVersions({
+        adapter,
+        documentId: "docs/example.md",
+      }),
+    );
+
+    await waitFor(() => {
+      expect(result.current.versions).toHaveLength(1);
+    });
+
+    await act(async () => {
+      await result.current.openVersion("1");
+    });
+
+    await waitFor(() => {
+      expect(result.current.selectedVersionId).toBe("1");
+      expect(result.current.selectedVersion?.content).toBe(
+        "Version one content",
+      );
+
+      expect(result.current.isLoading).toBe(false);
+    });
+
+    expect(adapter.listDocumentVersions).toHaveBeenCalledTimes(1);
+  });
+});

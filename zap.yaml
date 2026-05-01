@@ -3,7 +3,21 @@ env_files:
   - .env.local
   - .env
 homepage: http://localhost:${FRONTEND_PORT}
-ports: [BACKEND_PORT, FRONTEND_PORT]
+ports:
+  [
+    BACKEND_PORT,
+    FRONTEND_PORT,
+    MDKIT_DOCS_PORT,
+    MDKIT_TESTBENCH_API_PORT,
+    MDKIT_TESTBENCH_PORT,
+  ]
+links:
+  - name: mdkit-testbench
+    url: http://localhost:${MDKIT_TESTBENCH_PORT}
+  - name: mdkit-testbench-api
+    url: http://localhost:${MDKIT_TESTBENCH_API_PORT}/health
+  - name: mdkit-docs
+    url: http://localhost:${MDKIT_DOCS_PORT}
 native:
   backend:
     cmd: pnpm --filter=@fssstack/mdkit-backend dev
@@ -13,6 +27,20 @@ native:
     env: "*"
     depends_on:
       - backend
+  mdkit-testbench:
+    aliases: [mdkit, testbench, tb]
+    cmd: pnpm --filter=@mp-lb/mdkit-testbench dev
+    env: "*"
+    depends_on:
+      - mdkit-testbench-backend
+  mdkit-testbench-backend:
+    aliases: [mdkit-api, testbench-api, tb-api]
+    cmd: pnpm --filter=@mp-lb/mdkit-testbench-backend dev
+    env: "*"
+  mdkit-docs:
+    aliases: [docs]
+    cmd: pnpm --filter=@mp-lb/mdkit docs:dev
+    env: "*"
 tasks:
   lint:
     cmds:

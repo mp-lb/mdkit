@@ -62,15 +62,20 @@ Treat configuration as part of your deployment contract: use environment variabl
 
 ## GitHub Secrets Baseline
 
-**Org-level secrets (inherited by all private repos):** `GCP_PROJECT_ID`, `GCP_SA_KEY`, `GCP_REGION`, `VERCEL_API_TOKEN`, `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ZONE_ID`
+mdkit's production automation only deploys the docs site and publishes the npm package.
 
-Note: We use **Secrets**, not Actions variables, for these org-level values.
+Required secrets:
 
-**Repo-level secrets (add per-project):**
-- `PRODUCTION_SECRETS` — app-specific secrets as KEY=value pairs, one per line. The deploy workflow appends this to `.env.production` at build time.
-- `UPSTASH_EMAIL` — Upstash account email (Terraform)
-- `UPSTASH_API_KEY` — Upstash API key (Terraform)
-- `UPSTASH_REDIS_URL` — Optional override if your Upstash account already has a Redis DB (Terraform)
+- `GCP_PROJECT_ID`
+- `GCP_SA_KEY`
+- `VERCEL_API_TOKEN`
+- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_ZONE_ID`
+- `NPM_TOKEN`
+
+Optional:
+
+- `VERCEL_ORG_ID` — set when deploying to a Vercel team.
 
 ## Config Validation
 

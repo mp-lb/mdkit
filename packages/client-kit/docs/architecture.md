@@ -1,0 +1,67 @@
+# Architecture
+
+The editor package should keep UI concerns separate from persistence, versioning, and collaboration infrastructure.
+
+## Layers
+
+### Editor
+
+`MdKitEditor` is the public editor component.
+
+For local editing, it accepts:
+
+- `value: string`
+- `onChange?: (markdown: string) => void`
+- `onFocusChange?: (focused: boolean) => void`
+- `instanceKey?: string | number`
+
+It should behave like a fancy textarea from the consumer's point of view. It must not know about storage, versions, auth, servers, Hocuspocus, MongoDB, or the host application.
+
+For collaborative editing, the same component accepts:
+
+- `collaboration: MdKitCollaborationSession`
+- `onFocusChange?: (focused: boolean) => void`
+
+Collaboration needs a different editor engine internally because it is backed by
+Yjs state and remote cursors, but consumers should not need a separate editor
+component.
+
+### Headless Hooks
+
+Storage, versioning, and collaboration controls should come from hooks and
+consumer-owned UI. A product can render those controls in a header, toolbar,
+side panel, command menu, or nowhere at all.
+
+Hooks should expose enough state for consumers to decide which UI features are
+visible based on available adapters:
+
+- storage adapter present: load/save UI and autosave can exist
+- version adapter present: version history UI can exist
+- collaboration adapter present: collaborative state and presence can exist
+
+Missing adapters should remove functionality, not break the editor.
+
+### Reference Integrations
+
+Reference integrations should provide plug-and-play adapters for supported backends. The editor UI should depend on adapter interfaces, not implementation details.
+
+Examples:
+
+- JSON document storage
+- MongoDB-backed document storage
+- JSON or MongoDB version history
+- Hocuspocus/Yjs collaboration
+
+## Ownership Rule
+
+The frontend editor owns rendering and local editing state. Adapters own durable state and transport. The editor should never import database clients, server framework code, or backend-specific SDKs.
+
+## Package Boundaries
+
+Packages should expose:
+
+- pure types for adapter contracts
+- React hooks/components for UI behavior
+- optional adapter factories in separate entrypoints when we add reference integrations
+
+Reference adapters should be optional dependencies or split entrypoints so a basic consumer does not install server-only or backend-specific code.

@@ -1,37 +1,46 @@
 # Deployment Runbook
 
-Everything is automated. Push to `main` and it deploys.
+Everything is automated through GitHub Actions.
 
 ## URLs
 
-| Service | URL |
+| Surface | URL |
 |---------|-----|
-| Frontend | https://helloworld.maplab.dev |
-| Backend | https://api.helloworld.maplab.dev |
+| Docs | `https://mdkit.mp-lb.dev` by default, unless `docs_domain` is overridden |
+| npm | `@mp-lb/mdkit` |
 
-## Production Secrets
+## Required Secrets
 
-Secrets must be set in **GitHub Secrets** as a single repo-level secret named `PRODUCTION_SECRETS`.
-Each line is `KEY=value`. CI appends these to `.env.production` at deploy time.
+GitHub Actions needs these secrets:
 
-Required entries for Hello World (if used):
-- `MONGODB_URL` (backend)
+- `GCP_PROJECT_ID`
+- `GCP_SA_KEY`
+- `VERCEL_API_TOKEN`
+- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_ZONE_ID`
+- `NPM_TOKEN`
 
-Terraform-specific secrets (set as GitHub Secrets, not in `PRODUCTION_SECRETS`):
-- `UPSTASH_EMAIL`
-- `UPSTASH_API_KEY`
-- `UPSTASH_REDIS_URL` (optional if your Upstash account already has a Redis DB)
+Optional:
 
-Non-secret prod config belongs in `.env.production` (committed).
+- `VERCEL_ORG_ID` for Vercel team projects
 
-`REDIS_URL` is provisioned by Terraform (Upstash) and injected into the backend and worker. Do not include it in `PRODUCTION_SECRETS`.
+There is no `PRODUCTION_SECRETS` requirement because mdkit does not deploy a backend.
 
-## Verify
+## Verify Docs Deploy
 
-After deploy:
-- Frontend loads at https://helloworld.maplab.dev
-- Backend responds at https://api.helloworld.maplab.dev/health
+After `Deploy Docs` succeeds:
 
-## Related
+1. Open the docs URL.
+2. Confirm the Quick Start page renders.
+3. Confirm Terraform output includes `docs_url`.
 
-- [env-vars.md](./env-vars.md) - Environment variable management
+## Verify npm Publish
+
+After `Publish Package` succeeds:
+
+```bash
+npm view @mp-lb/mdkit dist-tags
+npm view @mp-lb/mdkit versions --json
+```
+
+The workflow publishes run-numbered prereleases under the `main` npm tag.

@@ -6,7 +6,7 @@ Guide for adding/modifying services in Orb0 infrastructure.
 
 * **`zap.yaml`** - Local services (`bare_metal` for Node.js apps, `docker` for containers)
 
-* **`infra/`** **(Terraform)** - Production deployment (Cloud Run, GCE, Vercel, Cloudflare)
+* **`infra/`** **(Terraform)** - Docs deployment infrastructure (Vercel and optional Cloudflare DNS)
 
 * **`.env`/`.env.local`** - Environment variables for local dev
 
@@ -48,17 +48,9 @@ docker:
 
 In `.env`, then whitelist in the service's `env:` array in `zap.yaml`.
 
-### 4. Add to Terraform
+### 4. Add deployment infrastructure if needed
 
-Add the service to `infra/` as a new Terraform resource. Key things to configure:
-
-* Compute target (Cloud Run vs GCE vs Vercel)
-
-* Container image and environment variables
-
-* Networking, IAM, and DNS if needed
-
-* Outputs for URLs or connection strings
+The current production setup only deploys the docs site. Add Terraform resources only when the service truly needs production infrastructure.
 
 ### 5. Create package.json
 
