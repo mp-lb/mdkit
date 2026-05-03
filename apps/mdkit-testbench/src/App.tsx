@@ -1050,19 +1050,6 @@ export const App = () => {
                 type="button"
                 variant="ghost"
                 className={
-                  activeTab === "read-only"
-                    ? "testbench-tab testbench-tab-active"
-                    : "testbench-tab"
-                }
-                onClick={() => setActiveTab("read-only")}
-              >
-                <Eye />
-                Read-only
-              </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                className={
                   activeTab === "connected-base"
                     ? "testbench-tab testbench-tab-active"
                     : "testbench-tab"
@@ -1084,6 +1071,19 @@ export const App = () => {
               >
                 <GitBranch />
                 Connected (shadcn)
+              </Button>
+              <Button
+                type="button"
+                variant="ghost"
+                className={
+                  activeTab === "read-only"
+                    ? "testbench-tab testbench-tab-active"
+                    : "testbench-tab"
+                }
+                onClick={() => setActiveTab("read-only")}
+              >
+                <Eye />
+                Read-only
               </Button>
             </nav>
             {docsUrl ? (
