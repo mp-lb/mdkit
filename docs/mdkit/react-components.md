@@ -31,6 +31,11 @@ blockquotes, and code blocks render correctly inside Tailwind, shadcn, and other
 CSS-reset-heavy environments. Consumers can override variables on the editor root
 or parent scope instead of needing bespoke React props for every visual token.
 
+`MdKitView` is the read-only companion surface. It keeps the same markdown
+shell, `fillHeight` sizing contract, and CSS-variable styling hooks as
+`MdKitEditor`, but renders markdown with `react-markdown` and does not mount a
+Tiptap/ProseMirror editor.
+
 ### Hooks And Workflow Logic
 
 The core React product is the hooks and workflow logic:
@@ -267,6 +272,7 @@ Current implementation is not there yet.
 We have:
 
 - `MdKitEditor`
+- `MdKitView`
 - `useMdKitDocument`
 - `useMdKitDocumentVersions`
 - `useMdKitCollaboration`
@@ -284,4 +290,3 @@ Missing or incomplete:
 - shadcn registry packaging for the testbench workflow reference component
 - conflict details/diff component
 - backend/core conflict helpers integrated into hooks
-- read-only markdown viewer

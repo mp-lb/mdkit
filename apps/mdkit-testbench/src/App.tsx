@@ -3,6 +3,7 @@ import {
   BookOpen,
   Database,
   Download,
+  Eye,
   GitBranch,
   RotateCcw,
   TerminalSquare,
@@ -18,6 +19,7 @@ import {
   MdKitDocumentToolbar,
   MdKitEditor,
   MdKitThemeEditor,
+  MdKitView,
   VersionHistoryPanel,
   useMdKitCollaboration,
   useMdKitDocument,
@@ -65,8 +67,27 @@ There should be two blank lines above this paragraph in the raw textarea.
 
 Edit either pane and the other one should stay in sync.`;
 
+const readOnlySampleMarkdown = `# Read-only view
+
+This pane renders markdown without mounting Tiptap or ProseMirror.
+
+- Uses the same mdkit shell and markdown styling
+- Supports the same \`fillHeight\` sizing mode
+- Keeps links opening in a new tab: [mdkit docs](https://example.com)
+
+| Feature | Expected |
+| --- | --- |
+| Tables | Render with borders |
+| GFM | Enabled |
+
+> Use the State tab to type arbitrary markdown and inspect rendering.`;
+
 type ConnectedVariant = "base" | "shadcn";
-type ActiveTab = "connected-base" | "connected-shadcn" | "unconnected";
+type ActiveTab =
+  | "connected-base"
+  | "connected-shadcn"
+  | "read-only"
+  | "unconnected";
 
 type TestbenchRoute = {
   connectedVariant: ConnectedVariant;
@@ -101,6 +122,14 @@ const readTestbenchRoute = (): TestbenchRoute => {
     return {
       connectedVariant: "base",
       initialTab: "unconnected",
+      qaMode: true,
+    };
+  }
+
+  if (route === "/qa-read-only") {
+    return {
+      connectedVariant: "base",
+      initialTab: "read-only",
       qaMode: true,
     };
   }
@@ -626,6 +655,79 @@ const UnconnectedTab = ({
   );
 };
 
+const ReadOnlyTab = ({
+  editorFillHeight,
+  editorStyle,
+  editorTheme,
+  onEditorThemeChange,
+  onFillHeightChange,
+  showInspector = true,
+}: {
+  editorFillHeight: boolean;
+  editorStyle: MdKitEditorThemeStyle;
+  editorTheme: MdKitEditorTheme;
+  onEditorThemeChange: (theme: MdKitEditorTheme) => void;
+  onFillHeightChange: (fillHeight: boolean) => void;
+  showInspector?: boolean;
+}) => {
+  const [markdown, setMarkdown] = useState(readOnlySampleMarkdown);
+  const [focusedPane, setFocusedPane] = useState<"textarea" | null>(null);
+
+  const inspectorTabs: InspectorTab[] = [
+    {
+      id: "controls",
+      label: "Controls",
+      content: (
+        <>
+          <BehaviorPanel
+            fillHeight={editorFillHeight}
+            onFillHeightChange={onFillHeightChange}
+          />
+          <StylingPanel
+            editorTheme={editorTheme}
+            onEditorThemeChange={onEditorThemeChange}
+          />
+        </>
+      ),
+    },
+    {
+      id: "state",
+      label: "State",
+      content: (
+        <MarkdownStatePanel
+          focusedPane={focusedPane}
+          markdown={markdown}
+          onBlur={() => setFocusedPane(null)}
+          onChange={setMarkdown}
+          onFocus={() => setFocusedPane("textarea")}
+        />
+      ),
+    },
+  ];
+
+  return (
+    <section className="testbench-preview-section">
+      <div
+        className={
+          showInspector ? "testbench-split-layout" : "testbench-qa-layout"
+        }
+      >
+        <EditorWorkbench components="MdKitView">
+          <EditorSurface fillHeight={editorFillHeight}>
+            <MdKitView
+              className={editorClassName(editorFillHeight)}
+              fillHeight={editorFillHeight}
+              style={editorStyle}
+              value={markdown}
+            />
+          </EditorSurface>
+        </EditorWorkbench>
+        {showInspector ? <Inspector tabs={inspectorTabs} /> : null}
+      </div>
+    </section>
+  );
+};
+
 const ConnectedTab = ({
   connectedVariant,
   documentDebounceMs = 450,
@@ -948,6 +1050,19 @@ export const App = () => {
                 type="button"
                 variant="ghost"
                 className={
+                  activeTab === "read-only"
+                    ? "testbench-tab testbench-tab-active"
+                    : "testbench-tab"
+                }
+                onClick={() => setActiveTab("read-only")}
+              >
+                <Eye />
+                Read-only
+              </Button>
+              <Button
+                type="button"
+                variant="ghost"
+                className={
                   activeTab === "connected-base"
                     ? "testbench-tab testbench-tab-active"
                     : "testbench-tab"
@@ -984,6 +1099,15 @@ export const App = () => {
       )}
       {activeTab === "unconnected" ? (
         <UnconnectedTab
+          editorFillHeight={editorFillHeight}
+          editorStyle={editorStyle}
+          editorTheme={editorTheme}
+          onEditorThemeChange={setEditorTheme}
+          onFillHeightChange={setEditorFillHeight}
+          showInspector={!route.qaMode}
+        />
+      ) : activeTab === "read-only" ? (
+        <ReadOnlyTab
           editorFillHeight={editorFillHeight}
           editorStyle={editorStyle}
           editorTheme={editorTheme}

@@ -88,6 +88,8 @@
     "@tiptap/react": "^3.14.0",
     "@tiptap/starter-kit": "^3.14.0",
     "lucide-react": "^0.554.0",
+    "react-markdown": "10.1.0",
+    "remark-gfm": "4.0.1",
     "yjs": "^13.6.24",
     "zod": "^4.1.12"
   },

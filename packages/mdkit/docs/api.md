@@ -54,6 +54,26 @@ lists, code blocks, blockquotes, and links. Styling is controlled with CSS
 variables on `.mp-lb-mdkit-markdown-editor`. See [Styling](./styling.md) for setup,
 dark mode, fonts, sizing, and theme customization.
 
+### `MdKitView`
+
+Read-only markdown view that uses the same shell, sizing, and markdown styling
+as `MdKitEditor`, but renders with `react-markdown` instead of Tiptap.
+
+```tsx
+<MdKitView value={markdown} />
+<MdKitView fillHeight value={markdown} />
+```
+
+Props:
+
+- `value: string`
+- `placeholder?: string`
+- `fillHeight?: boolean`
+- `className?: string`
+- `style?: CSSProperties`
+
+`fillHeight` uses the same full-pane sizing contract as `MdKitEditor`.
+
 ## Document Persistence
 
 ### `useMdKitDocument`

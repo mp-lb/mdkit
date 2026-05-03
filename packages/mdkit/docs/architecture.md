@@ -26,6 +26,12 @@ Collaboration needs a different editor engine internally because it is backed by
 Yjs state and remote cursors, but consumers should not need a separate editor
 component.
 
+`MdKitView` is the read-only companion surface. It accepts a markdown `value`
+and uses the same package styling and full-height layout contract as
+`MdKitEditor`, but it renders markdown without Tiptap or ProseMirror. Use it
+when consumers need previews, version snapshots, or readonly document views that
+visually match the editor without paying the editor runtime cost.
+
 ### Headless Hooks
 
 Storage, versioning, and collaboration controls should come from hooks and
