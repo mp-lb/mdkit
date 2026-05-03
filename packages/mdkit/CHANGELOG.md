@@ -1,5 +1,11 @@
 # @mp-lb/mdkit
 
+## 0.2.0
+
+### Minor Changes
+
+- 279fac7: Add `MdKitView`, a read-only markdown rendering surface that shares the editor styling and fill-height sizing contract without mounting Tiptap.
+
 ## 0.1.0
 
 ### Minor Changes
