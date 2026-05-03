@@ -38,6 +38,24 @@ export function MarkdownEditorExample() {
 
 Use this when you want a local editor, a form field, or a debug surface.
 
+## Read-only View
+
+`MdKitView` renders markdown with the same package stylesheet, CSS variables,
+and `fillHeight` sizing contract as `MdKitEditor`, but it does not mount Tiptap
+or ProseMirror.
+
+```tsx
+import { MdKitView } from "@mp-lb/mdkit";
+import "@mp-lb/mdkit/styles.css";
+
+export function MarkdownPreview({ markdown }: { markdown: string }) {
+  return <MdKitView fillHeight value={markdown} />;
+}
+```
+
+Use this for document previews, restored-version views, or any readonly markdown
+surface that should visually match the editor.
+
 ## Connected Editor
 
 The connected workflow combines:

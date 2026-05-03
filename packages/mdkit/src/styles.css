@@ -70,6 +70,10 @@
   cursor: default;
 }
 
+.mp-lb-mdkit-markdown-view .mp-lb-mdkit-view-content {
+  overflow-wrap: anywhere;
+}
+
 .mp-lb-mdkit-markdown-editor-fill-height {
   display: flex;
   height: 100%;
@@ -222,6 +226,37 @@
   padding-left: 0.875rem;
   border-left: 3px solid var(--mp-lb-mdkit-quote-border-color);
   color: var(--mp-lb-mdkit-muted-foreground);
+}
+
+.mp-lb-mdkit-tiptap hr {
+  height: 1px;
+  border: 0;
+  background: var(--mp-lb-mdkit-border);
+  margin: var(--mp-lb-mdkit-block-gap) 0;
+}
+
+.mp-lb-mdkit-tiptap img {
+  max-width: 100%;
+  height: auto;
+}
+
+.mp-lb-mdkit-tiptap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 var(--mp-lb-mdkit-block-gap);
+}
+
+.mp-lb-mdkit-tiptap th,
+.mp-lb-mdkit-tiptap td {
+  border: 1px solid var(--mp-lb-mdkit-border);
+  padding: 0.35rem 0.5rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.mp-lb-mdkit-tiptap th {
+  background: var(--mp-lb-mdkit-muted);
+  font-weight: 650;
 }
 
 .mp-lb-mdkit-tiptap p.is-editor-empty:first-child::before {
