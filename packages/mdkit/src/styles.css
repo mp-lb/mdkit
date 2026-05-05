@@ -142,6 +142,26 @@
   flex: 1 1 auto;
 }
 
+.mp-lb-mdkit-markdown-view.mp-lb-mdkit-markdown-editor-fill-height
+  .mp-lb-mdkit-editor-shell {
+  height: auto;
+  min-height: 100%;
+  overflow: visible;
+}
+
+.mp-lb-mdkit-markdown-view.mp-lb-mdkit-markdown-editor-fill-height
+  .mp-lb-mdkit-editor-surface {
+  overflow: visible;
+}
+
+.mp-lb-mdkit-markdown-view.mp-lb-mdkit-markdown-editor-fill-height
+  .mp-lb-mdkit-view-content {
+  display: block;
+  height: auto;
+  min-height: 100%;
+  flex: 0 0 auto;
+}
+
 .mp-lb-mdkit-tiptap > * + * {
   margin-top: var(--mp-lb-mdkit-block-gap);
 }

@@ -1,4 +1,6 @@
 import { render, screen } from "@testing-library/react";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import { MdKitView } from "./MdKitView";
 
@@ -54,5 +56,19 @@ describe("MdKitView", () => {
     render(<MdKitView placeholder="**No content yet.**" value="" />);
 
     expect(screen.getByText("No content yet.")).toBeTruthy();
+  });
+
+  it("lets fill-height read-only content grow instead of clipping code blocks", () => {
+    const css = readFileSync(resolve(__dirname, "../styles.css"), "utf8");
+
+    expect(css).toMatch(
+      /\.mp-lb-mdkit-markdown-view\.mp-lb-mdkit-markdown-editor-fill-height\s+\.mp-lb-mdkit-editor-shell\s*{[^}]*overflow:\s*visible;/,
+    );
+    expect(css).toMatch(
+      /\.mp-lb-mdkit-markdown-view\.mp-lb-mdkit-markdown-editor-fill-height\s+\.mp-lb-mdkit-editor-surface\s*{[^}]*overflow:\s*visible;/,
+    );
+    expect(css).toMatch(
+      /\.mp-lb-mdkit-markdown-view\.mp-lb-mdkit-markdown-editor-fill-height\s+\.mp-lb-mdkit-view-content\s*{[^}]*display:\s*block;[^}]*flex:\s*0 0 auto;/,
+    );
   });
 });
