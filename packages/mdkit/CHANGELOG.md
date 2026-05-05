@@ -1,5 +1,11 @@
 # @mp-lb/mdkit
 
+## 0.2.1
+
+### Patch Changes
+
+- eb126fb: Keep read-only code blocks from shrinking into nested scroll areas in fill-height views.
+
 ## 0.2.0
 
 ### Minor Changes
