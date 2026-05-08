@@ -1,5 +1,11 @@
 # @mp-lb/mdkit
 
+## 0.2.3
+
+### Patch Changes
+
+- a02af5d: Hide the markdown formatting bubble menu when clicking non-focusable page chrome outside the editor.
+
 ## 0.2.2
 
 ### Patch Changes
