@@ -277,6 +277,47 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
       return;
     }
 
+    const blurEditorOnExternalPointerDown = (event: globalThis.PointerEvent) => {
+      if (editor.isDestroyed) {
+        return;
+      }
+
+      const target = event.target;
+
+      if (!(target instanceof Element)) {
+        return;
+      }
+
+      if (
+        editorSurfaceRef.current?.contains(target) ||
+        target.closest(".mp-lb-mdkit-toolbar")
+      ) {
+        return;
+      }
+
+      editor.commands.blur();
+    };
+
+    document.addEventListener("pointerdown", blurEditorOnExternalPointerDown, {
+      capture: true,
+    });
+
+    return () => {
+      document.removeEventListener(
+        "pointerdown",
+        blurEditorOnExternalPointerDown,
+        {
+          capture: true,
+        },
+      );
+    };
+  }, [editor]);
+
+  useEffect(() => {
+    if (!editor) {
+      return;
+    }
+
     if (markdownValue === currentMarkdownRef.current) {
       pendingControlledEchoesRef.current.clear();
       return;

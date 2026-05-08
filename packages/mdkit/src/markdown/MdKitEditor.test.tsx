@@ -207,4 +207,43 @@ describe("MdKitEditor", () => {
       expect(onFocusChange).toHaveBeenCalledWith(true);
     });
   });
+
+  it("blurs the editor when non-focusable page chrome is clicked", async () => {
+    const onFocusChange = vi.fn();
+
+    const { container } = render(
+      <div>
+        <div data-testid="page-chrome" />
+        <MdKitEditor
+          value="Text that can be selected"
+          onChange={() => {}}
+          onFocusChange={onFocusChange}
+        />
+      </div>,
+    );
+
+    const editor = await waitFor(() => {
+      const element = container.querySelector(".ProseMirror");
+
+      if (!(element instanceof HTMLElement)) {
+        throw new Error("Expected TipTap to render a ProseMirror editor.");
+      }
+
+      return element;
+    });
+
+    await act(async () => {
+      editor.focus();
+    });
+
+    await waitFor(() => {
+      expect(onFocusChange).toHaveBeenCalledWith(true);
+    });
+
+    fireEvent.pointerDown(screen.getByTestId("page-chrome"));
+
+    await waitFor(() => {
+      expect(onFocusChange).toHaveBeenCalledWith(false);
+    });
+  });
 });
