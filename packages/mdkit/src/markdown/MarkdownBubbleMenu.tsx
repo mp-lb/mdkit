@@ -1,6 +1,6 @@
 import type { MouseEvent, PointerEvent, ReactNode } from "react";
 import { useEditorState, type Editor } from "@tiptap/react";
-import { BubbleMenu } from "@tiptap/react/menus";
+import { BubbleMenu, type BubbleMenuProps } from "@tiptap/react/menus";
 import {
   Bold,
   Code2,
@@ -18,6 +18,10 @@ import { joinClassNames } from "../ui/joinClassNames";
 type MarkdownBubbleMenuProps = {
   editor: Editor;
 };
+
+type BubbleMenuShouldShowProps = Parameters<
+  NonNullable<BubbleMenuProps["shouldShow"]>
+>[0];
 
 type ToolbarActiveState = {
   blockquote: boolean;
@@ -71,6 +75,27 @@ const useToolbarActiveState = (editor: Editor) =>
     }),
     equalityFn: toolbarActiveStateIsEqual,
   });
+
+export const shouldShowMarkdownBubbleMenu = ({
+  editor,
+  element,
+  from,
+  state,
+  to,
+  view,
+}: BubbleMenuShouldShowProps) => {
+  const editorHasFocus =
+    view.hasFocus() || element.contains(document.activeElement);
+
+  const selectedText = state.doc.textBetween(from, to);
+
+  return (
+    editor.isEditable &&
+    editorHasFocus &&
+    !state.selection.empty &&
+    selectedText.length > 0
+  );
+};
 
 const setLink = (editor: Editor) => {
   const previousUrl = editor.getAttributes("link").href;
@@ -149,10 +174,7 @@ export const MarkdownBubbleMenu = ({ editor }: MarkdownBubbleMenuProps) => {
       options={{
         placement: "top",
       }}
-      shouldShow={({ editor: currentEditor, state }) => {
-        const { empty } = state.selection;
-        return currentEditor.isEditable && !empty;
-      }}
+      shouldShow={shouldShowMarkdownBubbleMenu}
     >
       <ToolbarButton
         ariaLabel="Bold"

@@ -119,7 +119,8 @@ you need structural changes, component-specific spacing, or state styling.
 ### Editor
 
 `MdKitEditor` renders the markdown editing surface and the selection bubble
-toolbar.
+toolbar. The toolbar appears for non-empty text selections while the editor or
+toolbar has focus.
 
 - `.mp-lb-mdkit-markdown-editor`: root element rendered by `MdKitEditor`
 - `.mp-lb-mdkit-markdown-editor-fill-height`: added to the root when
