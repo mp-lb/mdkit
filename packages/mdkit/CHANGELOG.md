@@ -1,5 +1,11 @@
 # @mp-lb/mdkit
 
+## 0.2.2
+
+### Patch Changes
+
+- de6c879: Hide the markdown formatting bubble menu when the editor loses focus.
+
 ## 0.2.1
 
 ### Patch Changes
