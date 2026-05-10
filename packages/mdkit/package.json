@@ -34,6 +34,11 @@
       "import": "./dist/trpc.js",
       "types": "./dist/trpc.d.ts"
     },
+    "./yjs": {
+      "source": "./src/yjs/index.ts",
+      "import": "./dist/yjs/index.js",
+      "types": "./dist/yjs/index.d.ts"
+    },
     "./styles.css": "./src/styles.css",
     "./trpc/client": {
       "source": "./src/trpc/client.ts",
@@ -52,7 +57,7 @@
   },
   "scripts": {
     "dev": "tsc --watch --project tsconfig.json",
-    "build": "tsc --project tsconfig.json",
+    "build": "tsc --project tsconfig.json && node scripts/add-js-extensions.mjs",
     "docs:build": "vitepress build docs",
     "docs:dev": "node scripts/load-docs-env.mjs dev",
     "docs:preview": "node scripts/load-docs-env.mjs preview",
@@ -80,13 +85,16 @@
   },
   "dependencies": {
     "@hocuspocus/provider": "^2.15.0",
+    "@tiptap/core": "^3.14.0",
     "@tiptap/extension-collaboration": "^3.14.0",
     "@tiptap/extension-collaboration-caret": "^3.14.0",
     "@tiptap/extension-link": "^3.14.0",
     "@tiptap/extension-placeholder": "^3.14.0",
     "@tiptap/markdown": "^3.20.1",
+    "@tiptap/pm": "^3.14.0",
     "@tiptap/react": "^3.14.0",
     "@tiptap/starter-kit": "^3.14.0",
+    "@tiptap/y-tiptap": "^3.0.2",
     "lucide-react": "^0.554.0",
     "react-markdown": "10.1.0",
     "remark-gfm": "4.0.1",

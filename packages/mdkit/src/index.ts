@@ -20,6 +20,7 @@ export {
 } from "./theme/editorTheme";
 export { VersionHistoryPanel } from "./versioning/VersionHistoryPanel";
 export { useMdKitDocumentVersions } from "./versioning/useMdKitDocumentVersions";
+export { yjs } from "./yjs/index";
 
 export type {
   CreateMdKitDocumentRecordInput,
@@ -62,3 +63,4 @@ export type {
   UseMdKitDocumentVersionsOptions,
 } from "./versioning/useMdKitDocumentVersions";
 export type { VersionHistoryPanelProps } from "./versioning/VersionHistoryPanel";
+export type { MdKitMarkdownYjsOptions } from "./yjs/index";

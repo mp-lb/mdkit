@@ -302,6 +302,9 @@ importers:
       '@hocuspocus/provider':
         specifier: ^2.15.0
         version: 2.15.3(y-protocols@1.0.7(yjs@13.6.30))(yjs@13.6.30)
+      '@tiptap/core':
+        specifier: ^3.14.0
+        version: 3.22.5(@tiptap/pm@3.22.5)
       '@tiptap/extension-collaboration':
         specifier: ^3.14.0
         version: 3.22.5(@tiptap/core@3.22.5(@tiptap/pm@3.22.5))(@tiptap/pm@3.22.5)(@tiptap/y-tiptap@3.0.3(prosemirror-model@1.25.4)(prosemirror-state@1.4.4)(prosemirror-view@1.41.8)(y-protocols@1.0.7(yjs@13.6.30))(yjs@13.6.30))(yjs@13.6.30)
@@ -317,12 +320,18 @@ importers:
       '@tiptap/markdown':
         specifier: ^3.20.1
         version: 3.22.5(@tiptap/core@3.22.5(@tiptap/pm@3.22.5))(@tiptap/pm@3.22.5)
+      '@tiptap/pm':
+        specifier: ^3.14.0
+        version: 3.22.5
       '@tiptap/react':
         specifier: ^3.14.0
         version: 3.22.5(@floating-ui/dom@1.7.6)(@tiptap/core@3.22.5(@tiptap/pm@3.22.5))(@tiptap/pm@3.22.5)(@types/react-dom@19.2.3(@types/react@19.2.5))(@types/react@19.2.5)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@tiptap/starter-kit':
         specifier: ^3.14.0
         version: 3.22.5
+      '@tiptap/y-tiptap':
+        specifier: ^3.0.2
+        version: 3.0.3(prosemirror-model@1.25.4)(prosemirror-state@1.4.4)(prosemirror-view@1.41.8)(y-protocols@1.0.7(yjs@13.6.30))(yjs@13.6.30)
       lucide-react:
         specifier: ^0.554.0
         version: 0.554.0(react@19.2.0)

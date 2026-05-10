@@ -1,11 +1,9 @@
 import { useEffect, useMemo, useRef, type PointerEvent } from "react";
 import Collaboration from "@tiptap/extension-collaboration";
 import CollaborationCaret from "@tiptap/extension-collaboration-caret";
-import { Markdown } from "@tiptap/markdown";
-import Placeholder from "@tiptap/extension-placeholder";
 import { EditorContent, useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
 import type { MdKitCollaborationSession } from "../document/documentTypes";
+import { createMdKitTiptapExtensions } from "./createMdKitTiptapExtensions";
 import type { MdKitEditorDebugEvent } from "./editorDebug";
 import { MarkdownBubbleMenu } from "./MarkdownBubbleMenu";
 import { normalizeMarkdownSerialization } from "./normalizeMarkdownSerialization";
@@ -192,26 +190,9 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
         },
       },
       extensions: [
-        StarterKit.configure({
-          heading: { levels: [1, 2] },
-          link: {
-            HTMLAttributes: {
-              rel: "noopener noreferrer",
-              target: "_blank",
-            },
-            autolink: true,
-            linkOnPaste: true,
-            openOnClick: true,
-          },
-          undoRedo: hasCollaboration ? false : undefined,
-        }),
-        Placeholder.configure({
+        ...createMdKitTiptapExtensions({
           placeholder,
-        }),
-        Markdown.configure({
-          markedOptions: {
-            gfm: true,
-          },
+          undoRedo: !hasCollaboration,
         }),
         ...(collaborationDocument
           ? [
