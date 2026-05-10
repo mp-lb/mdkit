@@ -64,14 +64,14 @@ Build and pack:
 
 ```bash
 pnpm --filter=@mp-lb/mdkit release:check
-pnpm --filter=@mp-lb/mdkit pack --pack-destination /tmp
+pnpm -C packages/mdkit pack --out /tmp/mdkit-local.tgz
 ```
 
 Install the tarball in a separate local project:
 
 ```bash
 cd /path/to/consumer-app
-pnpm add /tmp/mp-lb-mdkit-0.0.1.tgz
+pnpm add /tmp/mdkit-local.tgz
 ```
 
 Use the package:
@@ -86,17 +86,17 @@ After making changes in mdkit, rebuild and repack:
 ```bash
 cd /Users/felixsebastian/Code/mdkit
 pnpm --filter=@mp-lb/mdkit release:check
-pnpm --filter=@mp-lb/mdkit pack --pack-destination /tmp
+pnpm -C packages/mdkit pack --out /tmp/mdkit-local.tgz
 
 cd /path/to/consumer-app
-pnpm add /tmp/mp-lb-mdkit-0.0.1.tgz
+pnpm add /tmp/mdkit-local.tgz
 ```
 
 If the version has not changed, the consumer package manager may reuse cache. Remove the dependency and add it again if needed:
 
 ```bash
 pnpm remove @mp-lb/mdkit
-pnpm add /tmp/mp-lb-mdkit-0.0.1.tgz
+pnpm add /tmp/mdkit-local.tgz
 ```
 
 ## Link-Based Testing

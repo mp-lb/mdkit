@@ -45,8 +45,9 @@ Any behavior or public API change should update docs in the same release.
 Create and inspect the tarball:
 
 ```bash
-pnpm --filter=@mp-lb/mdkit pack --pack-destination /tmp
-tar -tf /tmp/mp-lb-mdkit-0.0.1.tgz | sort
+pnpm -C packages/mdkit pack --pack-destination /tmp
+MDKIT_VERSION=$(node -p "JSON.parse(require('fs').readFileSync('packages/mdkit/package.json', 'utf8')).version")
+tar -tf "/tmp/mp-lb-mdkit-${MDKIT_VERSION}.tgz" | sort
 ```
 
 Confirm it contains:
