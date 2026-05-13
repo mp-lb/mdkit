@@ -11,6 +11,7 @@
     "!dist/**/*.test.d.ts",
     "!dist/**/*.test.js",
     "!dist/test",
+    "!docs/.vitepress/cache",
     "!docs/.vitepress/dist"
   ],
   "exports": {

@@ -9,6 +9,9 @@ import {
   waitFor,
 } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
+import * as Y from "yjs";
+import type { MdKitCollaborationSession } from "../document/documentTypes";
+import { replaceMdKitYjsMarkdown } from "../yjs/MdKitMarkdownYjs";
 import { MdKitEditor } from "./MdKitEditor";
 
 const firstMarkdown = "# Stored document\n\nOriginal paragraph.";
@@ -44,6 +47,29 @@ const editorText = (container: HTMLElement) => {
   }
 
   return editor.textContent ?? "";
+};
+
+const createCollaborationSession = (
+  markdown: string,
+): MdKitCollaborationSession => {
+  const document = new Y.Doc();
+
+  replaceMdKitYjsMarkdown(document, markdown);
+
+  return {
+    collaborator: {
+      color: "hsl(220, 85%, 55%)",
+      id: "user-1",
+      name: "User 1",
+    },
+    document,
+    isCollaborating: false,
+    otherParticipants: [],
+    participants: [],
+    provider: null,
+    roomName: "test-room",
+    status: "connected",
+  };
 };
 
 describe("MdKitEditor", () => {
@@ -168,6 +194,43 @@ describe("MdKitEditor", () => {
       expect(container.querySelector(".ProseMirror")).toBe(editor);
       expect(editorText(container)).toContain("one two");
     });
+  });
+
+  it("does not apply controlled value changes into a collaborative document", async () => {
+    const collaboration = createCollaborationSession(
+      "# Shared document\n\nYjs owns this content.",
+    );
+    const onChange = vi.fn();
+
+    const { container, rerender } = render(
+      <MdKitEditor
+        collaboration={collaboration}
+        value="# Shared document\n\nYjs owns this content."
+        onChange={onChange}
+      />,
+    );
+
+    await waitFor(() => {
+      expect(editorText(container)).toContain("Shared document");
+      expect(editorText(container)).toContain("Yjs owns this content.");
+    });
+
+    rerender(
+      <MdKitEditor
+        collaboration={collaboration}
+        value="# Late storage snapshot\n\nThis must not be inserted."
+        onChange={onChange}
+      />,
+    );
+
+    await waitFor(() => {
+      expect(container.querySelector(".ProseMirror")).toBeTruthy();
+    });
+
+    expect(editorText(container)).toContain("Shared document");
+    expect(editorText(container)).toContain("Yjs owns this content.");
+    expect(editorText(container)).not.toContain("Late storage snapshot");
+    expect(editorText(container)).not.toContain("This must not be inserted.");
   });
 
   it("focuses the editor when the fill-height background is clicked", async () => {

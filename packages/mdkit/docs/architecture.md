@@ -23,11 +23,19 @@ or the host application.
 For collaborative editing, the same component accepts:
 
 - `collaboration: MdKitCollaborationSession`
+- `value?: string`
+- `onChange?: (markdown: string) => void`
 - `onFocusChange?: (focused: boolean) => void`
 
 Collaboration needs a different editor engine internally because it is backed by
 Yjs state and remote cursors, but consumers should not need a separate editor
 component.
+
+In collaborative mode, Yjs is the live content source. The editor must not apply
+late React `value` updates into the collaborative document because a host app may
+load the durable markdown snapshot after Hocuspocus has already hydrated the
+same document. Applying that snapshot as editor content can duplicate blocks in
+the shared CRDT state.
 
 `MdKitView` is the read-only companion surface. It accepts a markdown `value`
 and uses the same package styling and full-height layout contract as

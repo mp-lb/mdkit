@@ -35,6 +35,8 @@ The MdKit editor can:
 - hydrate from a markdown `value`
 - accept external `value` replacement
 - remount from a markdown `value`
+- ignore external `value` replacement in collaborative mode, where Yjs owns the
+  editor content
 - hydrate expanded blank-line runs as visible empty editor paragraphs
 - serialize internal empty editor paragraphs back to plain markdown newline runs
 - preserve leading and trailing blank-line runs

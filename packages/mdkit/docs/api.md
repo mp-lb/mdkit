@@ -23,6 +23,12 @@ Collaborative mode:
 <MdKitEditor collaboration={collaboration} />
 ```
 
+In collaborative mode the Yjs document in `collaboration.document` is the editor
+content source. `value` may be passed for API symmetry with connected examples,
+but external `value` changes are not applied into the collaborative document.
+Use your Hocuspocus/MDKit collaboration persistence bridge to seed or replace
+collaborative content.
+
 ### `MdKitEditorProps`
 
 Props for `MdKitEditor`.
@@ -40,6 +46,8 @@ Local editing props:
 Collaborative editing props:
 
 - `collaboration: MdKitCollaborationSession`
+- `value?: string`
+- `onChange?: (markdown: string) => void`
 - `onFocusChange?: (focused: boolean) => void`
 - `fillHeight?: boolean`
 - `className?: string`

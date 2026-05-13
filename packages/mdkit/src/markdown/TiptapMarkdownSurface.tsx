@@ -309,6 +309,12 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
       return;
     }
 
+    if (hasCollaboration) {
+      currentMarkdownRef.current = markdownValue;
+      pendingControlledEchoesRef.current.clear();
+      return;
+    }
+
     if (markdownValue === currentMarkdownRef.current) {
       pendingControlledEchoesRef.current.clear();
       return;
@@ -334,7 +340,7 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
     window.queueMicrotask(() => {
       isApplyingExternalValueRef.current = false;
     });
-  }, [editor, markdownValue]);
+  }, [editor, hasCollaboration, markdownValue]);
 
   if (!editor) {
     return (
