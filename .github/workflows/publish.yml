@@ -21,6 +21,7 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || github.actor != 'github-actions[bot]' }}
     permissions:
       contents: read
       id-token: write
@@ -32,10 +33,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Detect Changesets
+        id: changesets
+        if: ${{ github.event_name == 'push' }}
+        shell: bash
+        run: |
+          count=$(find .changeset -maxdepth 1 -type f -name "*.md" ! -name "README.md" | wc -l | tr -d " ")
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+
+          if [ "$count" != "0" ]; then
+            echo "Pending changesets found. Stable release workflow will publish this push."
+          fi
+
       - name: Set up pnpm
+        if: ${{ github.event_name == 'workflow_dispatch' || steps.changesets.outputs.count == '0' }}
         uses: pnpm/action-setup@v4
 
       - name: Set up Node.js
+        if: ${{ github.event_name == 'workflow_dispatch' || steps.changesets.outputs.count == '0' }}
         uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -44,10 +59,11 @@ jobs:
           scope: "@mp-lb"
 
       - name: Install dependencies
+        if: ${{ github.event_name == 'workflow_dispatch' || steps.changesets.outputs.count == '0' }}
         run: pnpm install --frozen-lockfile
 
       - name: Set publish version
-        if: ${{ github.event_name != 'workflow_dispatch' || !inputs.stable }}
+        if: ${{ (github.event_name == 'workflow_dispatch' || steps.changesets.outputs.count == '0') && (github.event_name != 'workflow_dispatch' || !inputs.stable) }}
         run: |
           node <<'NODE'
           const fs = require("node:fs");
@@ -60,18 +76,23 @@ jobs:
           NODE
 
       - name: Typecheck
+        if: ${{ github.event_name == 'workflow_dispatch' || steps.changesets.outputs.count == '0' }}
         run: pnpm --filter=@mp-lb/mdkit typecheck
 
       - name: Test
+        if: ${{ github.event_name == 'workflow_dispatch' || steps.changesets.outputs.count == '0' }}
         run: pnpm --filter=@mp-lb/mdkit test
 
       - name: Build
+        if: ${{ github.event_name == 'workflow_dispatch' || steps.changesets.outputs.count == '0' }}
         run: pnpm --filter=@mp-lb/mdkit build
 
       - name: Build docs
+        if: ${{ github.event_name == 'workflow_dispatch' || steps.changesets.outputs.count == '0' }}
         run: pnpm --filter=@mp-lb/mdkit docs:build
 
       - name: Publish
+        if: ${{ github.event_name == 'workflow_dispatch' || steps.changesets.outputs.count == '0' }}
         run: |
           tag=main
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.stable }}" = "true" ]; then

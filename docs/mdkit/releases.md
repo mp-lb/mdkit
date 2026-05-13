@@ -4,7 +4,12 @@ Runbook for publishing `@mp-lb/mdkit` to npm.
 
 ## Current State
 
-The package uses Changesets for versioning and release PRs. The release workflow publishes `@mp-lb/mdkit` after a Changesets version PR lands on `main`.
+The package uses Changesets for versioning. Stable releases are direct from
+`main`: when a pushed commit contains one or more pending changeset files, the
+release workflow versions `@mp-lb/mdkit`, runs release checks, publishes to npm,
+then pushes the generated version commit and git tags back to `main`.
+
+The normal stable release path no longer creates a Changesets release PR.
 
 ## Release Requirements
 
@@ -64,7 +69,7 @@ Confirm it does not contain:
 - VitePress cache or dist output
 - app testbench files
 
-## Changesets Release
+## Stable Release
 
 Create a changeset for every public API or behavior change:
 
@@ -72,7 +77,24 @@ Create a changeset for every public API or behavior change:
 pnpm changeset
 ```
 
-On `main`, the release workflow opens or updates a release PR. Merging that PR publishes the package to npm.
+Enter the release type and summary when prompted, then push the changeset to
+`main`.
+
+For agent-managed releases, do not stop after creating the changeset. The agent
+doing the release is responsible for committing the code/docs changes and the
+generated `.changeset/*.md` file, then pushing that commit to GitHub. That push
+is the release trigger.
+
+After the changeset commit reaches `main`, the release workflow will:
+
+1. run `pnpm changeset version`
+2. run the release checks
+3. commit the generated package version, changelog, and removed changeset with
+   a `chore: release @mp-lb/mdkit@<version> [skip ci]` commit
+4. publish the package to npm with provenance enabled
+5. push the release commit and git tags back to `main`
+
+No release PR should be opened for this path.
 
 Then verify npm after the release workflow succeeds:
 
@@ -93,6 +115,13 @@ Run the consumer app and verify:
 - stylesheet import works
 - editor renders
 - hydration test cases from manual QA still behave as expected
+
+## Main Prereleases
+
+The separate `Publish Package` workflow still publishes `main` prerelease
+versions for package changes that do not include a changeset. If a push includes
+a pending changeset, that workflow skips publishing and leaves the stable
+release workflow to publish `latest`.
 
 ## Release Blockers
 
