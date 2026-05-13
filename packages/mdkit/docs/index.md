@@ -177,8 +177,9 @@ and build your own workflow components.
 
 The backend starts with a store object. Replace `createYourDocumentStore()` with
 Postgres, MongoDB, Redis, files, or any other durable storage. Your store
-implements database primitives: read/write the current document, create/read
-checkpoints, restore a checkpoint, and optionally persist collaboration state.
+implements the [`MdKitBackendStore`](./api.md#mdkitbackendstore) interface:
+read/write the current document, create/read checkpoints, restore a checkpoint,
+and optionally persist collaboration state.
 The mdkit backend helper applies checkpoint policy and turns those primitives
 into tRPC or REST procedures. Application-owned metadata, auth, permissions,
 tenancy, and durable Yjs storage stay in your code; see
