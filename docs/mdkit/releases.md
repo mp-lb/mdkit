@@ -121,7 +121,8 @@ Run the consumer app and verify:
 The separate `Publish Package` workflow still publishes `main` prerelease
 versions for package changes that do not include a changeset. If a push includes
 a pending changeset, that workflow skips publishing and leaves the stable
-release workflow to publish `latest`.
+release workflow to publish `latest`. Workflow-only and docs-only changes
+outside the published package do not publish prereleases.
 
 ## Release Blockers
 
