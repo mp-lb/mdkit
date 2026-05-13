@@ -1,5 +1,11 @@
 # @mp-lb/mdkit
 
+## 0.2.4
+
+### Patch Changes
+
+- 89b10f9: Streamline the MDKit release process so pushing a changeset to main publishes directly without a release PR.
+
 ## 0.2.3
 
 ### Patch Changes
