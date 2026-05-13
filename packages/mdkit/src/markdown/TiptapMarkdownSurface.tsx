@@ -129,6 +129,8 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
   const collaborationDocument = collaboration?.document ?? null;
   const collaborationProvider = collaboration?.provider ?? null;
   const collaborationUserColor = collaboration?.collaborator.color ?? "";
+  const collaborationUserId = collaboration?.collaborator.id ?? "";
+  const collaborationUserImageUrl = collaboration?.collaborator.imageUrl ?? "";
   const collaborationUserName = collaboration?.collaborator.name ?? "";
   const hasCollaboration = !!collaborationDocument;
 
@@ -168,12 +170,20 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
               }),
               user: {
                 color: collaborationUserColor,
+                id: collaborationUserId,
+                imageUrl: collaborationUserImageUrl || undefined,
                 name: collaborationUserName,
               },
             }),
           ]
         : [],
-    [collaborationProvider, collaborationUserColor, collaborationUserName],
+    [
+      collaborationProvider,
+      collaborationUserColor,
+      collaborationUserId,
+      collaborationUserImageUrl,
+      collaborationUserName,
+    ],
   );
 
   const editor = useEditor(

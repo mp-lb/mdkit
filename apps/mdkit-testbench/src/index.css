@@ -312,6 +312,68 @@ svg {
   color: #64748b;
 }
 
+.testbench-field-grid {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.testbench-field {
+  display: grid;
+  gap: 0.3rem;
+  color: #334155;
+  font-size: 0.82rem;
+}
+
+.testbench-input {
+  min-width: 0;
+  width: 100%;
+  height: 2.25rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.6rem;
+  background: rgba(248, 250, 252, 0.82);
+  color: #0f172a;
+  font: inherit;
+  padding: 0 0.65rem;
+}
+
+.testbench-color-input {
+  padding: 0.2rem;
+}
+
+.testbench-collaboration-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.testbench-participant-list {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.testbench-participant-list li {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.45rem;
+  color: #334155;
+  font-size: 0.84rem;
+}
+
+.testbench-participant-list small {
+  color: #64748b;
+}
+
+.testbench-participant-swatch {
+  width: 0.75rem;
+  height: 0.75rem;
+  flex: 0 0 auto;
+  border-radius: 999px;
+}
+
 .testbench-debug-empty {
   margin: 0;
   color: #64748b;
@@ -439,6 +501,16 @@ svg {
   min-height: 0;
 }
 
+.testbench-sidebar {
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 1rem;
+  overflow: hidden;
+}
+
 .testbench-qa-layout {
   width: 100%;
   min-height: 0;
@@ -543,6 +615,24 @@ svg {
   border: 1px solid #e5e7eb;
   border-radius: 0.85rem;
   background: #ffffff;
+}
+
+.testbench-connected-stack-card {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 0.65rem;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.85rem;
+  background: #ffffff;
+  padding: 0.85rem;
+}
+
+.testbench-connected-stack-card h2 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 0.95rem;
 }
 
 .testbench-inspector-header {

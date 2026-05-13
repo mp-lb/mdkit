@@ -23,6 +23,7 @@ import {
   useMdKitCollaboration,
   useMdKitDocument,
   useMdKitDocumentVersions,
+  type MdKitCollaborationParticipant,
   type MdKitDocumentVersionDetail,
   type MdKitEditorTheme,
   type MdKitEditorThemeStyle,
@@ -47,6 +48,10 @@ import {
 } from "./components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
 import { Textarea } from "./components/ui/textarea";
+
+(
+  globalThis as typeof globalThis & { __MDKIT_COLLAB_DEBUG__?: boolean }
+).__MDKIT_COLLAB_DEBUG__ = true;
 
 const storageKey = "mdkit-testbench:basic-markdown";
 const docsUrl = import.meta.env.VITE_DOCS_URL;
@@ -103,6 +108,18 @@ type InspectorTab = {
 type StoredMarkdown = {
   markdown: string;
   storedAt: string;
+};
+
+const createDefaultCollaborator = (): MdKitCollaborationParticipant => {
+  const suffix = Math.random().toString(36).slice(2, 8);
+
+  return {
+    color: `#${Math.floor(Math.random() * 0xffffff)
+      .toString(16)
+      .padStart(6, "0")}`,
+    id: `testbench-${suffix}`,
+    name: `Testbench ${suffix.toUpperCase()}`,
+  };
 };
 
 type MdKitTestbenchTrpcClient = MdKitTrpcClient & {
@@ -351,6 +368,32 @@ const Inspector = ({
   );
 };
 
+const ConnectedSidebar = ({
+  activeInspectorTab,
+  inspectorTabs,
+  onActiveInspectorTabChange,
+  onStackChange,
+  stackId,
+}: {
+  activeInspectorTab?: string;
+  inspectorTabs: InspectorTab[];
+  onActiveInspectorTabChange?: (tab: string) => void;
+  onStackChange: (stackId: TestbenchStackId) => void;
+  stackId: TestbenchStackId;
+}) => (
+  <aside className="testbench-sidebar">
+    <ConnectedStackCard
+      stackId={stackId}
+      onStackChange={onStackChange}
+    />
+    <Inspector
+      activeTab={activeInspectorTab}
+      tabs={inspectorTabs}
+      onActiveTabChange={onActiveInspectorTabChange}
+    />
+  </aside>
+);
+
 const BehaviorPanel = ({
   fillHeight,
   onFillHeightChange,
@@ -374,6 +417,128 @@ const BehaviorPanel = ({
     </label>
   </section>
 );
+
+const ConnectedShellPanel = ({
+  connectedVariant,
+  onVariantChange,
+}: {
+  connectedVariant: ConnectedVariant;
+  onVariantChange: (variant: ConnectedVariant) => void;
+}) => (
+  <section className="testbench-config-section">
+    <h2>Shell</h2>
+    <div className="testbench-control-summary">
+      <span className="testbench-control-label">
+        <TerminalSquare />
+        {connectedVariant === "base" ? "Panels" : "Shadcn"}
+      </span>
+      <span>
+        Choose whether the connected workflow uses mdkit starter panels or the
+        shadcn reference shell.
+      </span>
+    </div>
+    <div className="testbench-actions testbench-inspector-actions">
+      <Button
+        type="button"
+        variant={connectedVariant === "base" ? "default" : "outline"}
+        onClick={() => onVariantChange("base")}
+      >
+        Panels
+      </Button>
+      <Button
+        type="button"
+        variant={connectedVariant === "shadcn" ? "default" : "outline"}
+        onClick={() => onVariantChange("shadcn")}
+      >
+        Shadcn
+      </Button>
+    </div>
+  </section>
+);
+
+const CollaborationInfoPanel = ({
+  collaboration,
+  collaborator,
+  enabled,
+  onCollaboratorChange,
+}: {
+  collaboration: ReturnType<typeof useMdKitCollaboration>;
+  collaborator: MdKitCollaborationParticipant;
+  enabled: boolean;
+  onCollaboratorChange: (
+    collaborator: MdKitCollaborationParticipant,
+  ) => void;
+}) => {
+  const updateCollaborator = (
+    patch: Partial<MdKitCollaborationParticipant>,
+  ) => {
+    onCollaboratorChange({
+      ...collaborator,
+      ...patch,
+    });
+  };
+
+  return (
+    <section className="testbench-config-section">
+      <h2>Collaboration Info</h2>
+      <div className="testbench-field-grid">
+        <label className="testbench-field">
+          <span>Name</span>
+          <input
+            className="testbench-input"
+            value={collaborator.name}
+            onChange={(event) =>
+              updateCollaborator({ name: event.currentTarget.value })
+            }
+          />
+        </label>
+        <label className="testbench-field">
+          <span>ID</span>
+          <input
+            className="testbench-input"
+            value={collaborator.id}
+            onChange={(event) =>
+              updateCollaborator({ id: event.currentTarget.value })
+            }
+          />
+        </label>
+        <label className="testbench-field">
+          <span>Color</span>
+          <input
+            className="testbench-input testbench-color-input"
+            type="color"
+            value={collaborator.color ?? "#2563eb"}
+            onChange={(event) =>
+              updateCollaborator({ color: event.currentTarget.value })
+            }
+          />
+        </label>
+      </div>
+      <div className="testbench-collaboration-summary">
+        <Badge variant="outline">
+          {enabled ? (collaboration?.status ?? "connecting") : "off"}
+        </Badge>
+        <Badge variant="outline">
+          {collaboration?.isCollaborating ? "collaborating" : "solo"}
+        </Badge>
+      </div>
+      {collaboration ? (
+        <ul className="testbench-participant-list">
+          {collaboration.participants.map((participant) => (
+            <li key={participant.clientId}>
+              <span
+                className="testbench-participant-swatch"
+                style={{ backgroundColor: participant.color }}
+              />
+              <span>{participant.name}</span>
+              {participant.isLocal ? <small>this tab</small> : null}
+            </li>
+          ))}
+        </ul>
+      ) : null}
+    </section>
+  );
+};
 
 const StylingPanel = ({
   editorTheme,
@@ -505,45 +670,16 @@ const ConnectedActionsPanel = ({
   </section>
 );
 
-const ConnectedConfigPanel = ({
-  connectedVariant,
+const ConnectedStackCard = ({
   onStackChange,
-  onVariantChange,
   stackId,
 }: {
-  connectedVariant: ConnectedVariant;
   onStackChange: (stackId: TestbenchStackId) => void;
-  onVariantChange: (variant: ConnectedVariant) => void;
   stackId: TestbenchStackId;
 }) => {
-  const activeStack = connectedStackById[stackId];
-
   return (
-    <section className="testbench-config-section">
+    <section className="testbench-connected-stack-card">
       <h2>Connected Stack</h2>
-      <div className="testbench-control-summary">
-        <span className="testbench-control-label">
-          <GitBranch />
-          {activeStack.label}
-        </span>
-        <span>{activeStack.description}</span>
-      </div>
-      <div className="testbench-actions testbench-inspector-actions">
-        <Button
-          type="button"
-          variant={connectedVariant === "base" ? "default" : "outline"}
-          onClick={() => onVariantChange("base")}
-        >
-          Panels
-        </Button>
-        <Button
-          type="button"
-          variant={connectedVariant === "shadcn" ? "default" : "outline"}
-          onClick={() => onVariantChange("shadcn")}
-        >
-          Shadcn
-        </Button>
-      </div>
       <div className="testbench-actions testbench-inspector-actions">
         {connectedStacks.map((stack) => (
           <Button
@@ -555,31 +691,6 @@ const ConnectedConfigPanel = ({
             {stack.label}
           </Button>
         ))}
-      </div>
-      <div className="testbench-status">
-        <Badge variant="outline">tRPC</Badge>
-        <Badge
-          variant="outline"
-          className={
-            activeStack.hasCheckpoints
-              ? statusBadgeClass.success
-              : statusBadgeClass.warning
-          }
-        >
-          {activeStack.hasCheckpoints ? "checkpoints on" : "checkpoints off"}
-        </Badge>
-        <Badge
-          variant="outline"
-          className={
-            activeStack.hasCollaboration
-              ? statusBadgeClass.success
-              : statusBadgeClass.warning
-          }
-        >
-          {activeStack.hasCollaboration
-            ? "collaboration on"
-            : "collaboration off"}
-        </Badge>
       </div>
     </section>
   );
@@ -911,19 +1022,9 @@ const ConnectedTab = ({
     [mdkitClient],
   );
 
-  const versionAdapter = useMemo(
-    () =>
-      activeStack.hasCheckpoints
-        ? adapter
-        : {
-            readDocumentVersion: undefined,
-            listDocumentVersions: undefined,
-          },
-    [activeStack.hasCheckpoints, adapter],
-  );
-
   const [debugStatus, setDebugStatus] = useState("Backend idle");
   const [activeInspectorTab, setActiveInspectorTab] = useState("state");
+  const [collaborator, setCollaborator] = useState(createDefaultCollaborator);
   const [versionHistoryOpen, setVersionHistoryOpen] = useState(false);
   const [conflictOpen, setConflictOpen] = useState(false);
 
@@ -935,14 +1036,16 @@ const ConnectedTab = ({
   });
 
   const versions = useMdKitDocumentVersions({
-    adapter: versionAdapter,
+    adapter,
     documentId: connectedDocumentId,
+    enabled: activeStack.hasCheckpoints,
   });
 
   const collaboration = useMdKitCollaboration({
     collaborator: {
-      id: "testbench-user",
-      name: "Testbench",
+      color: collaborator.color,
+      id: collaborator.id || "testbench-user",
+      name: collaborator.name || "Testbench",
     },
     documentId: connectedDocumentId,
     enabled: activeStack.hasCollaboration,
@@ -1017,11 +1120,11 @@ const ConnectedTab = ({
       id: "actions",
       label: "Actions",
       content: (
-          <ConnectedActionsPanel
-            debugStatus={debugStatus}
-            document={document}
-            simulateRemoteChange={simulateRemoteChange}
-          />
+        <ConnectedActionsPanel
+          debugStatus={debugStatus}
+          document={document}
+          simulateRemoteChange={simulateRemoteChange}
+        />
       ),
     },
     {
@@ -1042,10 +1145,8 @@ const ConnectedTab = ({
       label: "Controls",
       content: (
         <>
-          <ConnectedConfigPanel
+          <ConnectedShellPanel
             connectedVariant={connectedVariant}
-            stackId={stackId}
-            onStackChange={setStackId}
             onVariantChange={setConnectedVariant}
           />
           <BehaviorPanel
@@ -1057,6 +1158,18 @@ const ConnectedTab = ({
             onEditorThemeChange={onEditorThemeChange}
           />
         </>
+      ),
+    },
+    {
+      id: "collaboration",
+      label: "Collaboration",
+      content: (
+        <CollaborationInfoPanel
+          collaboration={collaboration}
+          collaborator={collaborator}
+          enabled={activeStack.hasCollaboration}
+          onCollaboratorChange={setCollaborator}
+        />
       ),
     },
   ];
@@ -1144,10 +1257,12 @@ const ConnectedTab = ({
             </>
           ) : null}
           {showInspector ? (
-            <Inspector
-              activeTab={activeInspectorTab}
-              tabs={inspectorTabs}
-              onActiveTabChange={setActiveInspectorTab}
+            <ConnectedSidebar
+              activeInspectorTab={activeInspectorTab}
+              inspectorTabs={inspectorTabs}
+              stackId={stackId}
+              onActiveInspectorTabChange={setActiveInspectorTab}
+              onStackChange={setStackId}
             />
           ) : null}
         </div>

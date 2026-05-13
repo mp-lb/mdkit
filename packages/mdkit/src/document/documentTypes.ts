@@ -67,9 +67,17 @@ export type MdKitCollaborationParticipant = {
   imageUrl?: string;
 };
 
+export type MdKitCollaborationPresence = MdKitCollaborationParticipant & {
+  clientId: number;
+  isLocal: boolean;
+};
+
 export type MdKitCollaborationSession = {
   collaborator: MdKitCollaborationParticipant;
   document: Y.Doc;
+  isCollaborating: boolean;
+  otherParticipants: MdKitCollaborationPresence[];
+  participants: MdKitCollaborationPresence[];
   provider: HocuspocusProvider | null;
   roomName: string;
   status: MdKitCollaborationStatus;

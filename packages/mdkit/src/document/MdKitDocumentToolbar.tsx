@@ -32,6 +32,7 @@ export const MdKitDocumentToolbar = ({
   versions,
 }: MdKitDocumentToolbarProps) => {
   const [pendingAction, setPendingAction] = useState<string | null>(null);
+  const otherCollaboratorCount = collaboration?.otherParticipants.length ?? 0;
 
   const runAction = async (name: string, action: () => Promise<unknown>) => {
     setPendingAction(name);
@@ -44,6 +45,7 @@ export const MdKitDocumentToolbar = ({
   };
 
   const hasVersionHistory = versions?.hasVersioning ?? false;
+  const hasActiveCollaborators = collaboration?.isCollaborating ?? false;
   const isBusy = pendingAction !== null || document.saveStatus === "saving";
 
   const status = document.conflict
@@ -71,34 +73,30 @@ export const MdKitDocumentToolbar = ({
       <div className="mp-lb-mdkit-document-toolbar-status">
         <strong>{status}</strong>
         <span>{formatUpdatedAt(document.updatedAt)}</span>
-        <span>
-          Collaboration {collaboration ? collaboration.status : "off"}
-        </span>
+        {hasActiveCollaborators ? (
+          <span>{otherCollaboratorCount + 1} collaborators</span>
+        ) : null}
       </div>
       {document.error && !document.conflict ? (
         <div className="mp-lb-mdkit-document-toolbar-error">{document.error}</div>
       ) : null}
       <div className="mp-lb-mdkit-document-toolbar-actions">
-        <button
-          type="button"
-          disabled={
-            isBusy ||
-            document.conflict ||
-            !hasVersionHistory ||
-            versions?.isLoading ||
-            !onOpenVersionHistory
-          }
-          onClick={() =>
-            void runAction("versions", async () => {
-              await versions?.refresh();
-              await onOpenVersionHistory?.();
-            })
-          }
-        >
-          {versions?.isLoading
-            ? "Loading versions..."
-            : `Version ${String(document.version ?? "none")}`}
-        </button>
+        {hasVersionHistory && onOpenVersionHistory ? (
+          <button
+            type="button"
+            disabled={isBusy || document.conflict || versions?.isLoading}
+            onClick={() =>
+              void runAction("versions", async () => {
+                await versions?.refresh();
+                await onOpenVersionHistory();
+              })
+            }
+          >
+            {versions?.isLoading
+              ? "Loading versions..."
+              : `Version ${String(document.version ?? "none")}`}
+          </button>
+        ) : null}
         {document.conflict && onOpenConflict ? (
           <button
             type="button"

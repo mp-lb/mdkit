@@ -11,6 +11,7 @@ export type UseMdKitDocumentVersionsOptions = {
     "listDocumentVersions" | "readDocumentVersion"
   >;
   documentId: string | null;
+  enabled?: boolean;
 };
 
 export type MdKitDocumentVersionsController = {
@@ -27,7 +28,7 @@ export type MdKitDocumentVersionsController = {
 export const useMdKitDocumentVersions = (
   options: UseMdKitDocumentVersionsOptions,
 ): MdKitDocumentVersionsController => {
-  const { adapter, documentId } = options;
+  const { adapter, documentId, enabled = true } = options;
   const [versions, setVersions] = useState<MdKitDocumentVersionSummary[]>([]);
 
   const [selectedVersionId, setSelectedVersionId] = useState<string | null>(
@@ -41,10 +42,10 @@ export const useMdKitDocumentVersions = (
   const [error, setError] = useState<string | null>(null);
 
   const hasVersioning =
-    !!adapter.listDocumentVersions && !!adapter.readDocumentVersion;
+    enabled && !!adapter.listDocumentVersions && !!adapter.readDocumentVersion;
 
   const refresh = useCallback(async () => {
-    if (!documentId || !adapter.listDocumentVersions) {
+    if (!hasVersioning || !documentId || !adapter.listDocumentVersions) {
       setVersions([]);
       setSelectedVersionId(null);
       setSelectedVersion(null);
@@ -76,11 +77,11 @@ export const useMdKitDocumentVersions = (
     } finally {
       setIsLoading(false);
     }
-  }, [adapter, documentId]);
+  }, [adapter, documentId, hasVersioning]);
 
   const openVersion = useCallback(
     async (versionId: string) => {
-      if (!documentId || !adapter.readDocumentVersion) {
+      if (!hasVersioning || !documentId || !adapter.readDocumentVersion) {
         return;
       }
 
@@ -107,7 +108,7 @@ export const useMdKitDocumentVersions = (
         setIsLoading(false);
       }
     },
-    [adapter, documentId],
+    [adapter, documentId, hasVersioning],
   );
 
   useEffect(() => {

@@ -75,4 +75,31 @@ describe("useMdKitDocumentVersions", () => {
 
     expect(adapter.listDocumentVersions).toHaveBeenCalledTimes(1);
   });
+
+  it("can disable versioning even when the adapter exposes version methods", async () => {
+    const adapter: Pick<
+      MdKitDocumentAdapter,
+      "listDocumentVersions" | "readDocumentVersion"
+    > = {
+      listDocumentVersions: vi.fn(async () => []),
+      readDocumentVersion: vi.fn(async () => null),
+    };
+
+    const { result } = renderHook(() =>
+      useMdKitDocumentVersions({
+        adapter,
+        documentId: "docs/example.md",
+        enabled: false,
+      }),
+    );
+
+    await act(async () => {
+      await result.current.refresh();
+      await result.current.openVersion("1");
+    });
+
+    expect(result.current.hasVersioning).toBe(false);
+    expect(adapter.listDocumentVersions).not.toHaveBeenCalled();
+    expect(adapter.readDocumentVersion).not.toHaveBeenCalled();
+  });
 });

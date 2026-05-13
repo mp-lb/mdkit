@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import type { MdKitDocumentController } from "./useMdKitDocument";
 import { MdKitDocumentToolbar } from "./MdKitDocumentToolbar";
@@ -30,11 +30,11 @@ describe("MdKitDocumentToolbar", () => {
     render(<MdKitDocumentToolbar document={createDocumentController()} />);
 
     expect(screen.getByText("Saved")).toBeTruthy();
-    expect(screen.getByText("Collaboration off")).toBeTruthy();
-    expect(screen.getByRole("button", { name: "Version 1" })).toBeDisabled();
+    expect(screen.queryByText("Collaboration off")).toBeNull();
+    expect(screen.queryByRole("button", { name: "Version 1" })).toBeNull();
   });
 
-  it("does not call the version opener when versioning is absent", () => {
+  it("hides the version opener when versioning is absent", () => {
     const openVersionHistory = vi.fn();
 
     render(
@@ -44,8 +44,36 @@ describe("MdKitDocumentToolbar", () => {
       />,
     );
 
+    expect(screen.queryByRole("button", { name: "Version 1" })).toBeNull();
+    expect(openVersionHistory).not.toHaveBeenCalled();
+  });
+
+  it("opens version history when versioning is available", async () => {
+    const openVersionHistory = vi.fn();
+    const refresh = vi.fn(async () => undefined);
+
+    render(
+      <MdKitDocumentToolbar
+        document={createDocumentController()}
+        onOpenVersionHistory={openVersionHistory}
+        versions={{
+          error: null,
+          hasVersioning: true,
+          isLoading: false,
+          openVersion: vi.fn(),
+          refresh,
+          selectedVersion: null,
+          selectedVersionId: null,
+          versions: [],
+        }}
+      />,
+    );
+
     fireEvent.click(screen.getByRole("button", { name: "Version 1" }));
 
-    expect(openVersionHistory).not.toHaveBeenCalled();
+    expect(refresh).toHaveBeenCalledOnce();
+    await waitFor(() => {
+      expect(openVersionHistory).toHaveBeenCalledOnce();
+    });
   });
 });

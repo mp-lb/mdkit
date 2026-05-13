@@ -151,21 +151,25 @@ export const MdKitConnectedWorkflow = ({
               ? `Saved ${new Date(document.updatedAt).toLocaleTimeString()}`
               : "Never saved"}
           </Badge>
-          <Badge variant="outline" className={toolbarBadgeClass}>
-            Collaboration {collaboration ? collaboration.status : "off"}
-          </Badge>
+          {collaboration?.isCollaborating ? (
+            <Badge variant="outline" className={toolbarBadgeClass}>
+              {collaboration.otherParticipants.length + 1} collaborators
+            </Badge>
+          ) : null}
         </div>
         <div className="testbench-shadcn-toolbar-actions">
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            disabled={!versions.hasVersioning || document.conflict}
-            onClick={() => void openVersionHistory()}
-          >
-            <GitBranch />
-            Version {String(document.version ?? "none")}
-          </Button>
+          {versions.hasVersioning ? (
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              disabled={document.conflict}
+              onClick={() => void openVersionHistory()}
+            >
+              <GitBranch />
+              Version {String(document.version ?? "none")}
+            </Button>
+          ) : null}
           {document.conflict ? (
             <Button
               type="button"
