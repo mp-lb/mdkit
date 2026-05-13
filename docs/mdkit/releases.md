@@ -91,7 +91,7 @@ After the changeset commit reaches `main`, the release workflow will:
 2. run the release checks
 3. commit the generated package version, changelog, and removed changeset with
    a `chore: release @mp-lb/mdkit@<version> [skip ci]` commit
-4. publish the package to npm with provenance enabled
+4. publish the package to npm
 5. push the release commit and git tags back to `main`
 
 No release PR should be opened for this path.

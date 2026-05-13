@@ -24,7 +24,6 @@ jobs:
     if: ${{ github.event_name == 'workflow_dispatch' || github.actor != 'github-actions[bot]' }}
     permissions:
       contents: read
-      id-token: write
     concurrency:
       group: publish-mdkit-${{ github.ref }}
       cancel-in-progress: true
@@ -122,6 +121,6 @@ jobs:
             tag=latest
           fi
 
-          pnpm --filter=@mp-lb/mdkit publish --no-git-checks --provenance --tag "$tag"
+          pnpm --filter=@mp-lb/mdkit publish --no-git-checks --tag "$tag"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
