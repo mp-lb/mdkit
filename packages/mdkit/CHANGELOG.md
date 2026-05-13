@@ -1,5 +1,11 @@
 # @mp-lb/mdkit
 
+## 0.2.5
+
+### Patch Changes
+
+- 915af53: Prevent late controlled value updates from being applied into collaborative Yjs editor documents.
+
 ## 0.2.4
 
 ### Patch Changes
