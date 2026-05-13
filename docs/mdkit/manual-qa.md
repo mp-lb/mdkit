@@ -2,7 +2,8 @@
 
 Manual QA is required for editor behavior that jsdom cannot reliably prove. Use
 this document as the regression checklist before changing editor hydration,
-serialization, focus, hitbox, persistence, versioning, or conflict handling.
+serialization, focus, hitbox, persistence, checkpoint history, or conflict
+handling.
 
 ## Start The Testbench
 
@@ -138,8 +139,8 @@ write.
 Expected:
 
 - `MdKitDocumentToolbar` renders above `MdKitEditor`.
-- The toolbar shows the current save state, version, collaboration state, and
-  version count.
+- The toolbar shows the current save state, revision, collaboration state, and
+  checkpoint count.
 - There is no `Resync` button in the toolbar.
 - There is no `Resolve conflict` button before a conflict exists.
 - The editor loads without a duplicate collaboration status strip inside the
@@ -156,8 +157,8 @@ Expected:
 - `Connected (panels)` renders the package exports:
   `MdKitDocumentToolbar`, `MdKitConflictPanel`, `VersionHistoryPanel`, and
   `MdKitEditor`.
-- `Connected (shadcn)` renders one app-local workflow component that owns
-  its toolbar, version dialog, and conflict dialog, matching the intended future
+- `Connected (shadcn)` renders one app-local workflow component that owns its
+  toolbar, checkpoint dialog, and conflict dialog, matching the intended future
   registry plugin shape.
 - Typing and autosave work in both variants.
 
@@ -173,24 +174,24 @@ Expected:
 
 - The toolbar returns to a saved/idle state.
 - The unique sentence is still present after reload.
-- The version number has advanced.
+- The document revision has advanced.
 
-### Version History Restore
+### Checkpoint History Restore
 
 1. Reset the backend.
 2. Open `/qa-connected-base`.
 3. Type `Version one` and click `Save now`.
 4. Replace the content with `Version two` and click `Save now`.
 5. Click `Version history` in the toolbar.
-6. Select the saved version containing `Version one`.
+6. Select the saved checkpoint containing `Version one`.
 7. Click `Restore`.
 
 Expected:
 
 - `VersionHistoryPanel` opens in the app-owned modal shell.
-- Selecting a version previews its markdown.
-- Restoring the first version puts `Version one` back in the editor.
-- The toolbar version advances after restore.
+- Selecting a checkpoint previews its markdown.
+- Restoring the first checkpoint puts `Version one` back in the editor.
+- The toolbar revision advances after restore.
 
 ### Conflict: Keep Remote
 

@@ -26,7 +26,7 @@ zap start mdkit
 ```
 
 `mdkit` starts the Vite testbench and its in-memory backend. The backend exposes
-HTTP document/version APIs and a Hocuspocus websocket route on the
+HTTP document/checkpoint APIs and a Hocuspocus websocket route on the
 Zapper-assigned `TESTBENCH_API_PORT`.
 
 If zap is unavailable:

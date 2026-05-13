@@ -20,10 +20,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 ```
 
-That means the workflow component can own polished app UI: toolbar, version
+That means the workflow component can own polished app UI: toolbar, checkpoint
 history dialog, conflict dialog, tabs, buttons, and layout. The underlying state
-still comes from the mdkit hooks. The recommended transport for this path is the
-tRPC adapter from `@mp-lb/mdkit/trpc/client`.
+still comes from the mdkit hooks. The recommended transport for this path is
+the tRPC adapter from `@mp-lb/mdkit/trpc/client`.
 
 ## Intended Shape
 
@@ -48,16 +48,19 @@ export function EditorScreen() {
   const adapter = createMdKitTrpcAdapter({ client });
   const document = useMdKitDocument({ adapter, documentId });
   const versions = useMdKitDocumentVersions({ adapter, documentId });
+
   const collaboration = useMdKitCollaboration({
     collaborator,
     documentId,
     endpoint: hocuspocusEndpoint,
   });
+
   const restoreVersion = async (version) => {
     await client.restoreDocumentVersion.mutate({
       documentId,
       versionId: version.id,
     });
+
     await document.resync();
     await versions.refresh();
   };

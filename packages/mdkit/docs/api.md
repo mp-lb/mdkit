@@ -103,8 +103,8 @@ without adopting a design system.
 />
 ```
 
-It renders save status, collaboration status, an optional version-history entry
-point labelled with the current version, and a conflict entry point via
+It renders save status, collaboration status, an optional checkpoint-history
+entry point labelled with the current revision token, and a conflict entry via
 `onOpenConflict`.
 
 Related type:
@@ -158,10 +158,15 @@ Required storage methods:
 - `resyncDocument` is optional and can force a fresh read from the canonical
   source.
 
-Optional versioning methods:
+Optional checkpoint-history methods:
 
-- `listDocumentVersions` returns available versions for the document.
-- `readDocumentVersion` returns a saved markdown snapshot for one version.
+- `listDocumentVersions` returns available checkpoints for the document.
+- `readDocumentVersion` returns a saved markdown snapshot for one checkpoint.
+
+The current public names still use `Version` because that is the existing API.
+Conceptually these records are checkpoints. `MdKitDocumentSnapshot.version` is
+an opaque current-document revision token, not necessarily a user-facing
+checkpoint id.
 
 Related storage types:
 
@@ -220,16 +225,16 @@ Related exports:
 `MdKitThemeEditor` also relies on the optional package stylesheet for its own
 layout. Without that stylesheet, it still renders normal form controls.
 
-## Version History
+## Checkpoint History
 
 ### `useMdKitDocumentVersions`
 
-Hook for listing versions, reading a version detail, and tracking version
-history loading state.
+Hook for listing checkpoints, reading a checkpoint detail, and tracking
+checkpoint-history loading state.
 
 ### `VersionHistoryPanel`
 
-UI component for rendering version history from `useMdKitDocumentVersions`.
+UI component for rendering checkpoint history from `useMdKitDocumentVersions`.
 
 Related types:
 
@@ -253,6 +258,119 @@ type MdKitDocumentVersionSummary = {
 
 type MdKitDocumentVersionDetail = MdKitDocumentVersionSummary & {
   content: string;
+};
+```
+
+The `Version` type names are retained for compatibility with the current public
+API. The data model should be understood as checkpoint history.
+
+### `CheckpointPolicy`
+
+Backend helper for deciding when saved content should become checkpoint
+history. Pass the policy to mdkit's backend helper, not to your application
+store. Your store exposes database operations; mdkit evaluates the policy after
+writes and calls your checkpoint storage when the policy triggers.
+
+```ts
+import { CheckpointPolicy } from "@mp-lb/mdkit/core";
+
+const never = CheckpointPolicy.never();
+const always = CheckpointPolicy.always();
+const smart = CheckpointPolicy.smart();
+const tunedSmart = CheckpointPolicy.smart({
+  minEditDistance: 250,
+  minIntervalMs: 5 * 60_000,
+});
+
+const custom = CheckpointPolicy.function(
+  ({
+    currentContent,
+    editDistance,
+    previousCheckpointContent,
+    timeSinceLastCheckpointMs,
+  }) =>
+    editDistance > 500 ||
+    timeSinceLastCheckpointMs > 10 * 60_000 ||
+    currentContent.startsWith("# Published") !==
+      previousCheckpointContent?.startsWith("# Published"),
+);
+```
+
+`smart()` without options uses mdkit's default autosave-friendly policy.
+`function()` receives both mdkit's computed edit distance and the raw document
+content, so products can use the built-in comparison or replace it with their
+own.
+
+### `createMdKitBackend`
+
+Creates the mdkit backend surface from your application store and checkpoint
+policy. This is the layer that owns checkpoint orchestration.
+
+```ts
+import { CheckpointPolicy } from "@mp-lb/mdkit/core";
+import {
+  createMdKitBackend,
+  type MdKitBackendStore,
+} from "@mp-lb/mdkit/server";
+import { createMdKitTrpcRouter } from "@mp-lb/mdkit/trpc/server";
+
+const store: MdKitBackendStore = createYourDocumentStore();
+
+const mdkit = createMdKitBackend({
+  store,
+  checkpointPolicy: CheckpointPolicy.smart(),
+});
+
+const router = createMdKitTrpcRouter(mdkit);
+```
+
+On a document write, the helper should:
+
+- write the canonical current document
+- compare the current content with the latest checkpoint
+- evaluate the configured `CheckpointPolicy`
+- call the store's checkpoint creation method when the policy triggers
+- return the write result to the transport layer
+
+Exported from `@mp-lb/mdkit/server`.
+
+### `MdKitBackendStore`
+
+Application-owned persistence contract consumed by `createMdKitBackend`.
+Implement this with your database. The checkpoint policy is not interpreted by
+this store; mdkit calls `createCheckpoint` when the configured policy triggers.
+
+```ts
+type MdKitBackendStore = {
+  readDocument(documentId: string): Promise<MdKitDocumentSnapshot>;
+  writeDocument(
+    input: MdKitDocumentWriteInput,
+  ): Promise<MdKitDocumentWriteResult>;
+  getLatestCheckpoint?(
+    documentId: string,
+  ): Promise<MdKitDocumentVersionDetail | null>;
+  createCheckpoint?(input: {
+    documentId: string;
+    content: string;
+    sourceRevision: MdKitDocumentVersionToken;
+    metadata?: unknown;
+  }): Promise<MdKitDocumentVersionSummary>;
+  listDocumentVersions?(
+    documentId: string,
+  ): Promise<MdKitDocumentVersionSummary[]>;
+  readDocumentVersion?(input: {
+    documentId: string;
+    versionId: string;
+  }): Promise<MdKitDocumentVersionDetail | null>;
+  restoreDocumentVersion?(input: {
+    documentId: string;
+    versionId: string;
+  }): Promise<MdKitDocumentWriteResult>;
+  readCollaborationState?(documentName: string): Promise<Uint8Array | null>;
+  writeCollaborationState?(
+    documentName: string,
+    state: Uint8Array,
+  ): Promise<void>;
 };
 ```
 
@@ -283,6 +401,9 @@ type MdKitCollaborationSession = {
 ### `createMdKitRestAdapter`
 
 Creates an `MdKitDocumentAdapter` that talks to the mdkit REST endpoint shape.
+Restore is not part of `MdKitDocumentAdapter` yet, so REST restore needs a
+separate `POST /versions/:versionId/restore` call from application code. See
+[REST Backend](./rest.md).
 
 ```ts
 const adapter = createMdKitRestAdapter({
@@ -299,7 +420,7 @@ Registers the matching REST endpoints on a Fastify app.
 ```ts
 await registerMdKitFastify(app, {
   prefix: "/mdkit",
-  store,
+  store: mdkit,
 });
 ```
 
@@ -307,15 +428,19 @@ Exported from `@mp-lb/mdkit/fastify`.
 
 ### `createMdKitTrpcRouter`
 
-Creates a tRPC router for document reads, writes, resync, version list/read, and
-version restore.
+Creates a tRPC router for document reads, writes, resync, checkpoint list/read,
+and restore. The current API names still use `Version`, but these methods model
+checkpoint history.
 
 ```ts
-await app.register(fastifyTRPCPlugin, {
-  prefix: "/trpc",
-  trpcOptions: {
-    router: createMdKitTrpcRouter(store),
-  },
+const appRouter = t.router({
+  mdkit: createMdKitTrpcRouter(mdkit),
+  // otherRouters: ...
+});
+
+const server = createHTTPServer({
+  basePath: "/trpc",
+  router: appRouter,
 });
 ```
 
@@ -330,11 +455,21 @@ const client = createMdKitTrpcClient({ url: `${apiUrl}/trpc` });
 const adapter = createMdKitTrpcAdapter({ client });
 ```
 
+If the mdkit router is nested inside your app router, create your normal app
+client and pass the mdkit sub-client:
+
+```ts
+const adapter = createMdKitTrpcAdapter({ client: trpc.mdkit });
+```
+
 Exported from `@mp-lb/mdkit/trpc/client`.
 
 ### `MdKitTransportStore`
 
-Backend store contract used by the Fastify and tRPC helpers.
+Transport-ready backend surface used by the Fastify and tRPC helpers. You can
+implement this directly for full control, but the opinionated path is to create
+it with `createMdKitBackend({ store, checkpointPolicy })` so mdkit owns
+checkpoint policy orchestration.
 
 ```ts
 type MdKitTransportStore = {

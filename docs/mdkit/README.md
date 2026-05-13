@@ -13,6 +13,8 @@ published package.
 - [Library tradeoffs](library-tradeoffs.md)
 - [Serialization and hydration](serialization-and-hydration.md)
 - [Adapters](adapters.md)
+- [Use cases](../use-cases.md)
+- [Permissions](../permissions.md)
 - [Automated testing](automated-testing.md)
 - [Distribution](distribution.md)
 - [Manual QA](manual-qa.md)

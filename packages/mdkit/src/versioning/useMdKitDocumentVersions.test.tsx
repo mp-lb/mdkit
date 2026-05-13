@@ -4,6 +4,28 @@ import type { MdKitDocumentAdapter } from "../document/documentTypes";
 import { useMdKitDocumentVersions } from "./useMdKitDocumentVersions";
 
 describe("useMdKitDocumentVersions", () => {
+  it("degrades cleanly when the adapter has no versioning methods", async () => {
+    const adapter = {};
+
+    const { result } = renderHook(() =>
+      useMdKitDocumentVersions({
+        adapter,
+        documentId: "docs/example.md",
+      }),
+    );
+
+    await act(async () => {
+      await result.current.refresh();
+      await result.current.openVersion("missing");
+    });
+
+    expect(result.current.hasVersioning).toBe(false);
+    expect(result.current.versions).toEqual([]);
+    expect(result.current.selectedVersion).toBeNull();
+    expect(result.current.selectedVersionId).toBeNull();
+    expect(result.current.error).toBeNull();
+  });
+
   it("keeps the selected version preview open after loading it", async () => {
     const adapter: Pick<
       MdKitDocumentAdapter,

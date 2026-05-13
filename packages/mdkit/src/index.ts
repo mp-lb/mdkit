@@ -1,5 +1,9 @@
 export { useMdKitCollaboration } from "./collaboration/useMdKitCollaboration";
 export {
+  CheckpointPolicy,
+  measureMdKitEditDistance,
+} from "./core/checkpointPolicy";
+export {
   createMdKitDocumentRecord,
   detectMdKitDocumentConflict,
   normalizeMdKitVersionToken,
@@ -22,6 +26,11 @@ export { VersionHistoryPanel } from "./versioning/VersionHistoryPanel";
 export { useMdKitDocumentVersions } from "./versioning/useMdKitDocumentVersions";
 export { yjs } from "./yjs/index";
 
+export type {
+  MdKitCheckpointPolicy,
+  MdKitCheckpointPolicyInput,
+  MdKitSmartCheckpointPolicyOptions,
+} from "./core/checkpointPolicy";
 export type {
   CreateMdKitDocumentRecordInput,
   MdKitDocumentRecord,

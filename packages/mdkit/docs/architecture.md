@@ -1,6 +1,7 @@
 # Architecture
 
-The editor package should keep UI concerns separate from persistence, versioning, and collaboration infrastructure.
+The editor package should keep UI concerns separate from persistence,
+checkpoint history, permissions, and collaboration infrastructure.
 
 ## Layers
 
@@ -15,7 +16,9 @@ For local editing, it accepts:
 - `onFocusChange?: (focused: boolean) => void`
 - `instanceKey?: string | number`
 
-It should behave like a fancy textarea from the consumer's point of view. It must not know about storage, versions, auth, servers, Hocuspocus, MongoDB, or the host application.
+It should behave like a fancy textarea from the consumer's point of view. It
+must not know about storage, checkpoints, auth, servers, Hocuspocus, MongoDB,
+or the host application.
 
 For collaborative editing, the same component accepts:
 
@@ -29,12 +32,12 @@ component.
 `MdKitView` is the read-only companion surface. It accepts a markdown `value`
 and uses the same package styling and full-height layout contract as
 `MdKitEditor`, but it renders markdown without Tiptap or ProseMirror. Use it
-when consumers need previews, version snapshots, or readonly document views that
-visually match the editor without paying the editor runtime cost.
+when consumers need previews, checkpoint snapshots, or readonly document views
+that visually match the editor without paying the editor runtime cost.
 
 ### Headless Hooks
 
-Storage, versioning, and collaboration controls should come from hooks and
+Storage, checkpoint history, and collaboration controls should come from hooks and
 consumer-owned UI. A product can render those controls in a header, toolbar,
 side panel, command menu, or nowhere at all.
 
@@ -42,25 +45,37 @@ Hooks should expose enough state for consumers to decide which UI features are
 visible based on available adapters:
 
 - storage adapter present: load/save UI and autosave can exist
-- version adapter present: version history UI can exist
+- checkpoint adapter present: checkpoint history UI can exist
 - collaboration adapter present: collaborative state and presence can exist
 
 Missing adapters should remove functionality, not break the editor.
 
 ### Reference Integrations
 
-Reference integrations should provide plug-and-play adapters for supported backends. The editor UI should depend on adapter interfaces, not implementation details.
+Reference integrations should provide plug-and-play adapters for supported
+backends. The editor UI should depend on adapter interfaces, not implementation
+details.
 
 Examples:
 
 - JSON document storage
 - MongoDB-backed document storage
-- JSON or MongoDB version history
+- JSON or MongoDB checkpoint history
 - Hocuspocus/Yjs collaboration
+
+### Backend Helpers
+
+The opinionated backend helper should provide structure, not own application
+data. Applications still own storage, metadata, auth, permissions, tenancy, and
+infrastructure. MDKit should own the workflow shape: current-document writes,
+checkpoint policy, restore ordering, collaboration authorization hooks, and
+markdown/Yjs bridging.
 
 ## Ownership Rule
 
-The frontend editor owns rendering and local editing state. Adapters own durable state and transport. The editor should never import database clients, server framework code, or backend-specific SDKs.
+The frontend editor owns rendering and local editing state. Adapters own
+durable state and transport. The editor should never import database clients,
+server framework code, or backend-specific SDKs.
 
 ## Package Boundaries
 

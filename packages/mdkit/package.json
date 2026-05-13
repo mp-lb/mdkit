@@ -29,6 +29,11 @@
       "import": "./dist/fastify.js",
       "types": "./dist/fastify.d.ts"
     },
+    "./server": {
+      "source": "./src/server.ts",
+      "import": "./dist/server.js",
+      "types": "./dist/server.d.ts"
+    },
     "./trpc": {
       "source": "./src/trpc.ts",
       "import": "./dist/trpc.js",

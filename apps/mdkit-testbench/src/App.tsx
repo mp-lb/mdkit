@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 import {
   createMdKitEditorThemeStyle,
-  createMdKitRestAdapter,
   defaultMdKitEditorTheme,
   MdKitConflictPanel,
   MdKitDocumentToolbar,
@@ -28,10 +27,13 @@ import {
   type MdKitEditorTheme,
   type MdKitEditorThemeStyle,
 } from "@mp-lb/mdkit";
-import {
-  createMdKitTrpcAdapter,
-  createMdKitTrpcClient,
-} from "@mp-lb/mdkit/trpc/client";
+import { createMdKitTrpcAdapter } from "@mp-lb/mdkit/trpc/client";
+import type { MdKitTrpcClient } from "@mp-lb/mdkit/trpc/client";
+import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
+import type {
+  AppRouter,
+  TestbenchStackId,
+} from "../../mdkit-testbench-backend/src/app";
 import { Badge } from "./components/ui/badge";
 import { MdKitConnectedWorkflow } from "./components/mdkit-connected-workflow";
 import { Button } from "./components/ui/button";
@@ -83,14 +85,11 @@ This pane renders markdown without mounting Tiptap or ProseMirror.
 > Use the State tab to type arbitrary markdown and inspect rendering.`;
 
 type ConnectedVariant = "base" | "shadcn";
-type ActiveTab =
-  | "connected-base"
-  | "connected-shadcn"
-  | "read-only"
-  | "unconnected";
+type ActiveTab = "connected" | "read-only" | "unconnected";
 
 type TestbenchRoute = {
   connectedVariant: ConnectedVariant;
+  initialStackId: TestbenchStackId;
   initialTab: ActiveTab;
   qaMode: boolean;
 };
@@ -106,11 +105,61 @@ type StoredMarkdown = {
   storedAt: string;
 };
 
+type MdKitTestbenchTrpcClient = MdKitTrpcClient & {
+  restoreDocumentVersion: {
+    mutate(input: {
+      documentId: string;
+      versionId: string;
+    }): Promise<unknown>;
+  };
+};
+
 const statusBadgeClass = {
   danger: "border-red-200 bg-red-50 text-red-700",
   success: "border-emerald-200 bg-emerald-50 text-emerald-700",
   warning: "border-amber-200 bg-amber-50 text-amber-700",
 } as const;
+
+const connectedStacks = [
+  {
+    description: "Current document reads, writes, autosave, and conflicts.",
+    hasCheckpoints: false,
+    hasCollaboration: false,
+    id: "storage",
+    label: "Storage",
+  },
+  {
+    description: "Storage plus smart checkpoint history and restore.",
+    hasCheckpoints: true,
+    hasCollaboration: false,
+    id: "checkpoints",
+    label: "Storage + checkpoints",
+  },
+  {
+    description: "Storage plus a Hocuspocus/Yjs collaboration room.",
+    hasCheckpoints: false,
+    hasCollaboration: true,
+    id: "collaboration",
+    label: "Storage + collaboration",
+  },
+  {
+    description: "Storage, smart checkpoints, restore, and collaboration.",
+    hasCheckpoints: true,
+    hasCollaboration: true,
+    id: "full",
+    label: "Full stack",
+  },
+] as const satisfies readonly {
+  description: string;
+  hasCheckpoints: boolean;
+  hasCollaboration: boolean;
+  id: TestbenchStackId;
+  label: string;
+}[];
+
+const connectedStackById = Object.fromEntries(
+  connectedStacks.map((stack) => [stack.id, stack]),
+) as Record<TestbenchStackId, (typeof connectedStacks)[number]>;
 
 const countWords = (value: string) =>
   value.trim() ? value.trim().split(/\s+/).length : 0;
@@ -121,6 +170,7 @@ const readTestbenchRoute = (): TestbenchRoute => {
   if (route === "/qa-unconnected") {
     return {
       connectedVariant: "base",
+      initialStackId: "full",
       initialTab: "unconnected",
       qaMode: true,
     };
@@ -129,6 +179,7 @@ const readTestbenchRoute = (): TestbenchRoute => {
   if (route === "/qa-read-only") {
     return {
       connectedVariant: "base",
+      initialStackId: "full",
       initialTab: "read-only",
       qaMode: true,
     };
@@ -137,7 +188,8 @@ const readTestbenchRoute = (): TestbenchRoute => {
   if (route === "/qa-connected-base" || route === "/qa-connected") {
     return {
       connectedVariant: "base",
-      initialTab: "connected-base",
+      initialStackId: "full",
+      initialTab: "connected",
       qaMode: true,
     };
   }
@@ -145,14 +197,16 @@ const readTestbenchRoute = (): TestbenchRoute => {
   if (route === "/qa-connected-shadcn") {
     return {
       connectedVariant: "shadcn",
-      initialTab: "connected-shadcn",
+      initialStackId: "full",
+      initialTab: "connected",
       qaMode: true,
     };
   }
 
   return {
     connectedVariant: "base",
-    initialTab: "unconnected",
+    initialStackId: "full",
+    initialTab: "connected",
     qaMode: false,
   };
 };
@@ -186,19 +240,14 @@ const readStoredMarkdown = (): StoredMarkdown | null => {
 const formatStoredAt = (storedAt: string) =>
   new Date(storedAt).toLocaleString();
 
-const restoreVersionPath = (documentId: string, versionId: string) =>
-  `${apiUrl}/versions/${encodeURIComponent(
-    versionId,
-  )}/restore?documentId=${encodeURIComponent(documentId)}`;
-
 const trpcUrl = () => `${apiUrl}/trpc`;
 
-const collaborationEndpoint = () => {
+const collaborationEndpoint = (stackId: TestbenchStackId) => {
   if (!apiUrl) {
     return null;
   }
 
-  return `${apiUrl.replace(/^http/, "ws")}/collaboration`;
+  return `${apiUrl.replace(/^http/, "ws")}/collaboration/${stackId}`;
 };
 
 const MarkdownStatePanel = ({
@@ -455,6 +504,86 @@ const ConnectedActionsPanel = ({
     </div>
   </section>
 );
+
+const ConnectedConfigPanel = ({
+  connectedVariant,
+  onStackChange,
+  onVariantChange,
+  stackId,
+}: {
+  connectedVariant: ConnectedVariant;
+  onStackChange: (stackId: TestbenchStackId) => void;
+  onVariantChange: (variant: ConnectedVariant) => void;
+  stackId: TestbenchStackId;
+}) => {
+  const activeStack = connectedStackById[stackId];
+
+  return (
+    <section className="testbench-config-section">
+      <h2>Connected Stack</h2>
+      <div className="testbench-control-summary">
+        <span className="testbench-control-label">
+          <GitBranch />
+          {activeStack.label}
+        </span>
+        <span>{activeStack.description}</span>
+      </div>
+      <div className="testbench-actions testbench-inspector-actions">
+        <Button
+          type="button"
+          variant={connectedVariant === "base" ? "default" : "outline"}
+          onClick={() => onVariantChange("base")}
+        >
+          Panels
+        </Button>
+        <Button
+          type="button"
+          variant={connectedVariant === "shadcn" ? "default" : "outline"}
+          onClick={() => onVariantChange("shadcn")}
+        >
+          Shadcn
+        </Button>
+      </div>
+      <div className="testbench-actions testbench-inspector-actions">
+        {connectedStacks.map((stack) => (
+          <Button
+            key={stack.id}
+            type="button"
+            variant={stack.id === stackId ? "default" : "outline"}
+            onClick={() => onStackChange(stack.id)}
+          >
+            {stack.label}
+          </Button>
+        ))}
+      </div>
+      <div className="testbench-status">
+        <Badge variant="outline">tRPC</Badge>
+        <Badge
+          variant="outline"
+          className={
+            activeStack.hasCheckpoints
+              ? statusBadgeClass.success
+              : statusBadgeClass.warning
+          }
+        >
+          {activeStack.hasCheckpoints ? "checkpoints on" : "checkpoints off"}
+        </Badge>
+        <Badge
+          variant="outline"
+          className={
+            activeStack.hasCollaboration
+              ? statusBadgeClass.success
+              : statusBadgeClass.warning
+          }
+        >
+          {activeStack.hasCollaboration
+            ? "collaboration on"
+            : "collaboration off"}
+        </Badge>
+      </div>
+    </section>
+  );
+};
 
 const EditorWorkbench = ({
   children,
@@ -729,38 +858,68 @@ const ReadOnlyTab = ({
 };
 
 const ConnectedTab = ({
-  connectedVariant,
   documentDebounceMs = 450,
   editorFillHeight,
   editorStyle,
   editorTheme,
+  initialStackId,
+  initialVariant,
   onEditorThemeChange,
   onFillHeightChange,
   showInspector = true,
 }: {
-  connectedVariant: ConnectedVariant;
   documentDebounceMs?: number;
   editorFillHeight: boolean;
   editorStyle: MdKitEditorThemeStyle;
   editorTheme: MdKitEditorTheme;
+  initialStackId: TestbenchStackId;
+  initialVariant: ConnectedVariant;
   onEditorThemeChange: (theme: MdKitEditorTheme) => void;
   onFillHeightChange: (fillHeight: boolean) => void;
   showInspector?: boolean;
 }) => {
-  const trpcClient = useMemo(
+  const [connectedVariant, setConnectedVariant] =
+    useState<ConnectedVariant>(initialVariant);
+
+  const [stackId, setStackId] = useState<TestbenchStackId>(initialStackId);
+
+  const activeStack = connectedStackById[stackId];
+
+  const trpc = useMemo(
     () =>
-      connectedVariant === "shadcn"
-        ? createMdKitTrpcClient({ url: trpcUrl() })
-        : null,
-    [connectedVariant],
+      createTRPCProxyClient<AppRouter>({
+        links: [httpBatchLink({ url: trpcUrl() })],
+      }),
+    [],
   );
 
+  const mdkitClient = useMemo((): MdKitTestbenchTrpcClient => {
+    switch (stackId) {
+      case "checkpoints":
+        return trpc.checkpoints;
+      case "collaboration":
+        return trpc.collaboration;
+      case "storage":
+        return trpc.storage;
+      case "full":
+        return trpc.full;
+    }
+  }, [stackId, trpc]);
+
   const adapter = useMemo(
+    () => createMdKitTrpcAdapter({ client: mdkitClient }),
+    [mdkitClient],
+  );
+
+  const versionAdapter = useMemo(
     () =>
-      trpcClient
-        ? createMdKitTrpcAdapter({ client: trpcClient })
-        : createMdKitRestAdapter({ baseUrl: apiUrl }),
-    [trpcClient],
+      activeStack.hasCheckpoints
+        ? adapter
+        : {
+            readDocumentVersion: undefined,
+            listDocumentVersions: undefined,
+          },
+    [activeStack.hasCheckpoints, adapter],
   );
 
   const [debugStatus, setDebugStatus] = useState("Backend idle");
@@ -776,7 +935,7 @@ const ConnectedTab = ({
   });
 
   const versions = useMdKitDocumentVersions({
-    adapter,
+    adapter: versionAdapter,
     documentId: connectedDocumentId,
   });
 
@@ -786,7 +945,10 @@ const ConnectedTab = ({
       name: "Testbench",
     },
     documentId: connectedDocumentId,
-    endpoint: collaborationEndpoint(),
+    enabled: activeStack.hasCollaboration,
+    endpoint: activeStack.hasCollaboration
+      ? collaborationEndpoint(stackId)
+      : null,
   });
 
   const useCollaborativeEditor = collaboration;
@@ -817,23 +979,10 @@ const ConnectedTab = ({
     );
 
   const restoreVersion = async (version: MdKitDocumentVersionDetail) => {
-    if (trpcClient) {
-      await trpcClient.restoreDocumentVersion.mutate({
-        documentId: connectedDocumentId,
-        versionId: version.id,
-      });
-    } else {
-      const response = await fetch(
-        restoreVersionPath(connectedDocumentId, version.id),
-        {
-          method: "POST",
-        },
-      );
-
-      if (!response.ok) {
-        throw new Error(`Restore failed: ${response.status}`);
-      }
-    }
+    await mdkitClient.restoreDocumentVersion.mutate({
+      documentId: connectedDocumentId,
+      versionId: version.id,
+    });
 
     await document.resync();
     await versions.refresh();
@@ -868,11 +1017,11 @@ const ConnectedTab = ({
       id: "actions",
       label: "Actions",
       content: (
-        <ConnectedActionsPanel
-          debugStatus={debugStatus}
-          document={document}
-          simulateRemoteChange={simulateRemoteChange}
-        />
+          <ConnectedActionsPanel
+            debugStatus={debugStatus}
+            document={document}
+            simulateRemoteChange={simulateRemoteChange}
+          />
       ),
     },
     {
@@ -893,6 +1042,12 @@ const ConnectedTab = ({
       label: "Controls",
       content: (
         <>
+          <ConnectedConfigPanel
+            connectedVariant={connectedVariant}
+            stackId={stackId}
+            onStackChange={setStackId}
+            onVariantChange={setConnectedVariant}
+          />
           <BehaviorPanel
             fillHeight={editorFillHeight}
             onFillHeightChange={onFillHeightChange}
@@ -928,7 +1083,7 @@ const ConnectedTab = ({
                   document={document}
                   onOpenConflict={() => setConflictOpen(true)}
                   showConflictActions={false}
-                  versions={versions}
+                  versions={activeStack.hasCheckpoints ? versions : null}
                   onOpenVersionHistory={() => {
                     setVersionHistoryOpen((current) => !current);
                   }}
@@ -960,8 +1115,8 @@ const ConnectedTab = ({
                   <DialogHeader>
                     <DialogTitle>Version history</DialogTitle>
                     <DialogDescription>
-                      This modal shell belongs to the app. The content below is
-                      the mdkit base panel.
+                      The bundled panel is starter UI backed by mdkit hooks;
+                      replace it when your product needs a custom workflow.
                     </DialogDescription>
                   </DialogHeader>
                   <VersionHistoryPanel
@@ -979,8 +1134,8 @@ const ConnectedTab = ({
                   <DialogHeader>
                     <DialogTitle>Resolve conflict</DialogTitle>
                     <DialogDescription>
-                      This modal shell belongs to the app. The content below is
-                      the mdkit base panel.
+                      The bundled panel is starter UI backed by mdkit hooks;
+                      replace it when your product needs a custom conflict flow.
                     </DialogDescription>
                   </DialogHeader>
                   <MdKitConflictPanel document={document} />
@@ -1050,27 +1205,14 @@ export const App = () => {
                 type="button"
                 variant="ghost"
                 className={
-                  activeTab === "connected-base"
+                  activeTab === "connected"
                     ? "testbench-tab testbench-tab-active"
                     : "testbench-tab"
                 }
-                onClick={() => setActiveTab("connected-base")}
+                onClick={() => setActiveTab("connected")}
               >
                 <GitBranch />
-                Connected (panels)
-              </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                className={
-                  activeTab === "connected-shadcn"
-                    ? "testbench-tab testbench-tab-active"
-                    : "testbench-tab"
-                }
-                onClick={() => setActiveTab("connected-shadcn")}
-              >
-                <GitBranch />
-                Connected (shadcn)
+                Connected
               </Button>
               <Button
                 type="button"
@@ -1117,16 +1259,15 @@ export const App = () => {
         />
       ) : (
         <ConnectedTab
-          connectedVariant={
-            activeTab === "connected-shadcn" ? "shadcn" : "base"
-          }
           documentDebounceMs={route.qaMode ? 3000 : 450}
           editorFillHeight={editorFillHeight}
           editorStyle={editorStyle}
           editorTheme={editorTheme}
+          initialStackId={route.initialStackId}
+          initialVariant={route.connectedVariant}
           onEditorThemeChange={setEditorTheme}
           onFillHeightChange={setEditorFillHeight}
-          showInspector={!route.qaMode}
+          showInspector
         />
       )}
     </main>

@@ -39,7 +39,7 @@ A registry item could install:
 - shadcn-styled editor shell components
 - toolbar components
 - status bars
-- version history panels
+- checkpoint history panels
 - adapter wiring examples
 - app-specific wrapper components
 - recommended CSS variables and theme tokens
@@ -53,7 +53,7 @@ A registry item is not ideal for the whole editor runtime:
 - ProseMirror/Tiptap/Yjs dependencies are non-trivial
 - serialization and hydration behavior needs package-level tests
 - collaboration adapters may depend on Hocuspocus and server infrastructure
-- version and storage adapters should remain typed package APIs
+- checkpoint and storage adapters should remain typed package APIs
 
 Copying all internals into an app would make upgrades and bug fixes harder.
 
@@ -76,5 +76,5 @@ The registry item can depend on the npm package and install opinionated wrappers
 ## Open Questions
 
 - Should registry items be maintained in this repo or generated from package examples?
-- Should we publish a registry item for `MdKitEditor` first, or wait for stronger storage/versioning examples?
+- Should we publish a registry item for `MdKitEditor` first, or wait for stronger storage/checkpoint examples?
 - How much of the shadcn UI layer should be copied into consumer apps versus imported from npm?

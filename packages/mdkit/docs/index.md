@@ -2,8 +2,12 @@
 
 Markdown Editor Kit is a React package for teams that need more than a bare
 markdown editor widget. It starts with a controlled markdown editor that behaves
-like a textarea, then adds autosave, version history, conflict handling, and
+like a textarea, then adds autosave, checkpoint history, conflict handling, and
 collaboration through adapters.
+
+Use the pieces you need. `MdKitEditor` works without any backend, storage,
+checkpoint history, or collaboration. Persistence, checkpoint history, and
+collaboration are optional layers that can be added independently.
 
 ```bash
 pnpm add @mp-lb/mdkit
@@ -22,7 +26,8 @@ custom panel styles.
 ## Basic Editor
 
 `MdKitEditor` is the textarea-like entry point. It has no persistence, no
-version history, and no collaboration. You own the `value` and `onChange` state.
+checkpoint history, and no collaboration. You own the `value` and `onChange`
+state.
 
 ```tsx
 import { useState } from "react";
@@ -31,7 +36,6 @@ import "@mp-lb/mdkit/styles.css";
 
 export function MarkdownEditorExample() {
   const [markdown, setMarkdown] = useState("# Hello markdown");
-
   return <MdKitEditor value={markdown} onChange={setMarkdown} />;
 }
 ```
@@ -53,15 +57,15 @@ export function MarkdownPreview({ markdown }: { markdown: string }) {
 }
 ```
 
-Use this for document previews, restored-version views, or any readonly markdown
-surface that should visually match the editor.
+Use this for document previews, restored-checkpoint views, or any readonly
+markdown surface that should visually match the editor.
 
 ## Connected Editor
 
 The connected workflow combines:
 
 - `useMdKitDocument` for loading, autosave, dirty state, and conflict detection
-- `useMdKitDocumentVersions` for version browsing and restore
+- `useMdKitDocumentVersions` for checkpoint browsing and restore
 - `useMdKitCollaboration` for Hocuspocus/Yjs collaboration
 - `MdKitDocumentToolbar`, `VersionHistoryPanel`, and `MdKitConflictPanel` for
   a complete base-panel UI
@@ -83,10 +87,9 @@ import {
   useMdKitDocumentVersions,
   type MdKitDocumentVersionDetail,
 } from "@mp-lb/mdkit";
-import {
-  createMdKitTrpcAdapter,
-  createMdKitTrpcClient,
-} from "@mp-lb/mdkit/trpc/client";
+import { createMdKitTrpcAdapter } from "@mp-lb/mdkit/trpc/client";
+import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
+import type { AppRouter } from "./server";
 
 const documentId = "docs/example.md";
 
@@ -99,13 +102,20 @@ export function ConnectedMarkdownEditor({
   const [conflictOpen, setConflictOpen] = useState(false);
 
   const trpc = useMemo(
-    () => createMdKitTrpcClient({ url: `${apiUrl}/trpc` }),
+    () =>
+      createTRPCProxyClient<AppRouter>({
+        links: [httpBatchLink({ url: `${apiUrl}/trpc` })],
+      }),
     [apiUrl],
   );
-  const adapter = useMemo(() => createMdKitTrpcAdapter({ client: trpc }), [trpc]);
 
+  const adapter = useMemo(
+    () => createMdKitTrpcAdapter({ client: trpc.mdkit }),
+    [trpc],
+  );
   const document = useMdKitDocument({ adapter, documentId });
   const versions = useMdKitDocumentVersions({ adapter, documentId });
+
   const collaboration = useMdKitCollaboration({
     collaborator: { id: "user-1", name: "Ada" },
     documentId,
@@ -113,10 +123,11 @@ export function ConnectedMarkdownEditor({
   });
 
   const restoreVersion = async (version: MdKitDocumentVersionDetail) => {
-    await trpc.restoreDocumentVersion.mutate({
+    await trpc.mdkit.restoreDocumentVersion.mutate({
       documentId,
       versionId: version.id,
     });
+
     await document.resync();
     await versions.refresh();
   };
@@ -159,100 +170,163 @@ export function ConnectedMarkdownEditor({
 }
 ```
 
-The modal shells above are intentionally plain. Put `VersionHistoryPanel` and
-`MdKitConflictPanel` inside your own dialog, drawer, side panel, or editor
-replacement view. If your app uses shadcn/ui, see [Shadcn Plugin](./shadcn.md)
-for the source-installed workflow component.
+The base panels are starter UI; if they do not fit your product, keep the hooks
+and build your own workflow components.
 
-### Backend With Fastify And tRPC
+### Backend Store Contract
 
-The backend only needs a store object. Replace `createYourDocumentStore()` with
-Postgres, MongoDB, Redis, files, or any other durable storage.
+The backend starts with a store object. Replace `createYourDocumentStore()` with
+Postgres, MongoDB, Redis, files, or any other durable storage. Your store
+implements database primitives: read/write the current document, create/read
+checkpoints, restore a checkpoint, and optionally persist collaboration state.
+The mdkit backend helper applies checkpoint policy and turns those primitives
+into tRPC or REST procedures. Application-owned metadata, auth, permissions,
+tenancy, and durable Yjs storage stay in your code; see
+[Permissions](./permissions.md).
+
+### Backend With tRPC
 
 ```ts
-import cors from "@fastify/cors";
-import websocket from "@fastify/websocket";
+import { createHTTPServer } from "@trpc/server/adapters/standalone";
 import { Database } from "@hocuspocus/extension-database";
 import { Server } from "@hocuspocus/server";
-import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify";
-import Fastify from "fastify";
+import { WebSocketServer } from "ws";
+import { CheckpointPolicy } from "@mp-lb/mdkit/core";
+import { t } from "./trpc";
+import {
+  createMdKitBackend,
+  type MdKitBackendStore,
+} from "@mp-lb/mdkit/server";
 import { createMdKitTrpcRouter } from "@mp-lb/mdkit/trpc/server";
 
-const app = Fastify();
-const store = createYourDocumentStore();
+const store: MdKitBackendStore = createYourDocumentStore();
+
+const mdkit = createMdKitBackend({
+  store,
+  checkpointPolicy: CheckpointPolicy.smart(),
+});
 
 const collaboration = Server.configure({
   extensions: [
     new Database({
-      fetch: ({ documentName }) => store.readCollaborationState(documentName),
+      fetch: ({ documentName }) => mdkit.readCollaborationState(documentName),
       store: ({ documentName, state }) =>
-        store.writeCollaborationState(documentName, state),
+        mdkit.writeCollaborationState(documentName, state),
     }),
   ],
 });
 
-await app.register(cors, { origin: true });
-await app.register(websocket);
-
-await app.register(fastifyTRPCPlugin, {
-  prefix: "/trpc",
-  trpcOptions: {
-    router: createMdKitTrpcRouter(store),
-  },
+const appRouter = t.router({
+  mdkit: createMdKitTrpcRouter(mdkit),
+  // otherRouters: ...
 });
 
-app.get("/collaboration", { websocket: true }, (socket, request) => {
-  collaboration.handleConnection(socket, request.raw, {});
+export type AppRouter = typeof appRouter;
+
+const server = createHTTPServer({
+  basePath: "/trpc",
+  router: appRouter,
 });
 
-await app.listen({ port: Number(process.env.PORT ?? 4312) });
+const collaborationSockets = new WebSocketServer({ noServer: true });
+
+collaborationSockets.on("connection", (socket, request) => {
+  collaboration.handleConnection(socket, request, {});
+});
+
+server.on("upgrade", (request, socket, head) => {
+  if (!request.url?.startsWith("/collaboration")) {
+    socket.destroy();
+    return;
+  }
+
+  collaborationSockets.handleUpgrade(request, socket, head, (websocket) => {
+    collaborationSockets.emit("connection", websocket, request);
+  });
+});
+
+server.listen(Number(process.env.PORT ?? 4312));
 ```
 
-The store object implements `MdKitTransportStore`: current document reads and
-writes, version list/read/restore, and optional collaboration state storage. See
-[API Reference](./api.md#transport-helpers).
+**Important:** if you enable collaboration, decide where Hocuspocus Yjs state is
+stored; in-memory state is simple but does not scale across backend instances.
+See [Collaboration Persistence](./collaboration-persistence.md).
 
-### REST Compatibility
+If the frontend runs on a different origin, put this server behind your app's
+dev proxy or add CORS handling around the tRPC handler. See
+[API Reference](./api.md#transport-helpers) for the full backend helper API.
 
-If you want REST instead of tRPC, use the REST frontend adapter:
+### REST
 
-```tsx
-import { createMdKitRestAdapter } from "@mp-lb/mdkit";
+The quick start uses tRPC because it gives the connected editor a complete typed
+backend surface. REST is supported, but it is more verbose: the frontend adapter
+expects matching REST endpoints, and restore currently needs one explicit
+request from your UI.
 
-const adapter = createMdKitRestAdapter({
-  baseUrl: "https://api.example.com/mdkit",
-});
-```
+See [REST Backend](./rest.md) for the backend route shape and the small
+frontend transport changes.
 
-On Fastify, register the matching REST endpoints:
+### Checkpoints
 
-```ts
-import { registerMdKitFastify } from "@mp-lb/mdkit/fastify";
-
-await registerMdKitFastify(app, {
-  prefix: "/mdkit",
-  store,
-});
-```
-
-The mdkit testbench uses this split deliberately: `Connected (panels)` uses the
-REST adapter, while `Connected (shadcn)` uses the tRPC adapter.
+Checkpoint policies decide when saved content becomes history. The backend
+example uses `CheckpointPolicy.smart()`, which applies mdkit's default
+autosave-friendly policy. See [Checkpoint Policy](./api.md#checkpoint-policy)
+for `never`, `always`, `smart`, and custom policy functions.
 
 ## Questions
 
 ### Do the backends need to know about each other?
 
-Storage, version history, and collaboration can stay separate. Storage stores
-the current markdown snapshot. Version history stores markdown snapshots.
-Hocuspocus stores live Yjs collaboration state. They only need glue if your
-product wants collaborative edits to automatically become saved markdown
-versions.
+Storage, checkpoint history, and collaboration can stay separate. Storage stores
+the current markdown snapshot. Checkpoint history stores immutable markdown
+snapshots. Hocuspocus hosts live Yjs collaboration state, and your application
+chooses whether and where to persist that state. These pieces need glue when
+your product wants collaborative edits to become canonical markdown or
+checkpoints.
 
 ### Does mdkit require tRPC or these exact REST endpoints?
 
 No. The frontend hooks only need an `MdKitDocumentAdapter`. You can use REST,
 tRPC, GraphQL, server actions, IndexedDB, Rails, Go, or anything else as long as
 your adapter returns the documented shapes.
+
+### How do store callbacks access user or request context?
+
+In the tRPC quick-start path, `createMdKitTrpcRouter(mdkit)` is the simple
+version: create one mdkit backend around a store object, then mount the router.
+Use that when the store can enforce permissions and write metadata without
+per-request React editor context.
+
+If your store methods need the authenticated user, organization, request id,
+logger, or other trusted request state, create the store at your application
+request boundary and close over that context:
+
+```ts
+const createStoreForRequest = (ctx: AppContext): MdKitBackendStore => ({
+  readDocument: (documentId) =>
+    files.readCurrentMarkdown({ documentId, user: ctx.user }),
+
+  writeDocument: (input) =>
+    files.writeCurrentMarkdown({
+      ...input,
+      actorId: ctx.user.id,
+    }),
+
+  createCheckpoint: (input) =>
+    files.createMarkdownCheckpoint({
+      ...input,
+      actorId: ctx.user.id,
+    }),
+});
+```
+
+With tRPC, that means writing the mdkit procedures in your app router when you
+need request-scoped behavior, and calling `createMdKitBackend({
+store: createStoreForRequest(ctx), checkpointPolicy })` inside those
+procedures. With REST, use the same pattern inside your route handlers after
+you have authenticated the request. Mdkit does not need to understand your auth
+model; it only needs store callbacks that can read, write, and checkpoint the
+document.
 
 ### Do I have to use the base panels?
 

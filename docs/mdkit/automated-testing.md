@@ -57,11 +57,11 @@ Current exact unit coverage exists for:
 - autosave debounce behavior
 - no data loss when remote content changes while local edits are dirty
 
-### Version Adapter
+### Checkpoint Adapter
 
-- list versions
-- read version detail
-- restore version through storage
+- list checkpoints
+- read checkpoint detail
+- restore checkpoint through storage
 - raw markdown fidelity for restored snapshots
 
 ### Collaboration Adapter

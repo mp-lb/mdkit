@@ -5,6 +5,10 @@ export {
   restoreMdKitDocumentVersion,
   writeMdKitDocumentRecord,
 } from "./documentEngine.js";
+export {
+  CheckpointPolicy,
+  measureMdKitEditDistance,
+} from "./checkpointPolicy.js";
 
 export type {
   CreateMdKitDocumentRecordInput,
@@ -14,6 +18,11 @@ export type {
   WriteMdKitDocumentRecordInput,
   WriteMdKitDocumentRecordResult,
 } from "./documentEngine.js";
+export type {
+  MdKitCheckpointPolicy,
+  MdKitCheckpointPolicyInput,
+  MdKitSmartCheckpointPolicyOptions,
+} from "./checkpointPolicy.js";
 export type {
   MdKitDocumentSnapshot,
   MdKitDocumentVersionDetail,

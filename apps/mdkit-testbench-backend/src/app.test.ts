@@ -1,12 +1,13 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { createMdKitTrpcClient } from "@mp-lb/mdkit/trpc/client";
-import { createTestbenchApp } from "./app.js";
+import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
+import { createTestbenchApp, type AppRouter } from "./app.js";
 
 type TestServer = Awaited<ReturnType<typeof createTestbenchApp>>;
 
 const documentId = "docs/example.md";
 const documentQuery = `documentId=${encodeURIComponent(documentId)}`;
 const documentPath = `/documents?${documentQuery}`;
+const largeCheckpointContent = `# Stored\n\n${"Markdown ".repeat(40)}`;
 
 describe("mdkit testbench backend", () => {
   let server: TestServer;
@@ -45,7 +46,7 @@ describe("mdkit testbench backend", () => {
       method: "PUT",
       payload: {
         baseVersion: "0",
-        content: "# Stored\n\nMarkdown",
+        content: largeCheckpointContent,
       },
       url: documentPath,
     });
@@ -61,7 +62,7 @@ describe("mdkit testbench backend", () => {
     });
 
     expect(current.json()).toMatchObject({
-      content: "# Stored\n\nMarkdown",
+      content: largeCheckpointContent,
       version: "1",
     });
 
@@ -80,7 +81,7 @@ describe("mdkit testbench backend", () => {
 
     expect(version.statusCode).toBe(200);
     expect(version.json()).toMatchObject({
-      content: "# Stored\n\nMarkdown",
+      content: largeCheckpointContent,
       id: "1",
       version: "1",
     });
@@ -154,20 +155,20 @@ describe("mdkit testbench backend", () => {
       port: 0,
     });
 
-    const client = createMdKitTrpcClient({
-      url: `${address}/trpc`,
+    const client = createTRPCProxyClient<AppRouter>({
+      links: [httpBatchLink({ url: `${address}/trpc` })],
     });
 
-    const initial = await client.readDocument.query({ documentId });
+    const initial = await client.mdkit.readDocument.query({ documentId });
 
     expect(initial).toMatchObject({
       content: "",
       version: "0",
     });
 
-    const write = await client.writeDocument.mutate({
+    const write = await client.mdkit.writeDocument.mutate({
       baseVersion: "0",
-      content: "# Stored through tRPC",
+      content: largeCheckpointContent,
       documentId,
     });
 
@@ -175,11 +176,13 @@ describe("mdkit testbench backend", () => {
       version: "1",
     });
 
-    const versions = await client.listDocumentVersions.query({ documentId });
+    const versions = await client.mdkit.listDocumentVersions.query({
+      documentId,
+    });
 
     expect(versions.versions).toHaveLength(2);
 
-    const restored = await client.restoreDocumentVersion.mutate({
+    const restored = await client.mdkit.restoreDocumentVersion.mutate({
       documentId,
       versionId: "0",
     });
@@ -189,10 +192,97 @@ describe("mdkit testbench backend", () => {
     });
 
     await expect(
-      client.readDocument.query({ documentId }),
+      client.mdkit.readDocument.query({ documentId }),
     ).resolves.toMatchObject({
       content: "",
       version: "2",
+    });
+  });
+
+  it("exposes isolated tRPC stacks for supported connected configurations", async () => {
+    const address = await server.app.listen({
+      host: "127.0.0.1",
+      port: 0,
+    });
+
+    const client = createTRPCProxyClient<AppRouter>({
+      links: [httpBatchLink({ url: `${address}/trpc` })],
+    });
+
+    await client.storage.writeDocument.mutate({
+      baseVersion: "0",
+      content: "storage only",
+      documentId,
+    });
+
+    await client.checkpoints.writeDocument.mutate({
+      baseVersion: "0",
+      content: largeCheckpointContent,
+      documentId,
+    });
+
+    await client.collaboration.writeDocument.mutate({
+      baseVersion: "0",
+      content: "collaboration only",
+      documentId,
+    });
+
+    await client.full.writeDocument.mutate({
+      baseVersion: "0",
+      content: largeCheckpointContent,
+      documentId,
+    });
+
+    await expect(
+      client.storage.readDocument.query({ documentId }),
+    ).resolves.toMatchObject({
+      content: "storage only",
+      version: "1",
+    });
+
+    await expect(
+      client.checkpoints.readDocument.query({ documentId }),
+    ).resolves.toMatchObject({
+      content: largeCheckpointContent,
+      version: "1",
+    });
+
+    await expect(
+      client.collaboration.readDocument.query({ documentId }),
+    ).resolves.toMatchObject({
+      content: "collaboration only",
+      version: "1",
+    });
+
+    await expect(
+      client.full.readDocument.query({ documentId }),
+    ).resolves.toMatchObject({
+      content: largeCheckpointContent,
+      version: "1",
+    });
+
+    await expect(
+      client.storage.listDocumentVersions.query({ documentId }),
+    ).resolves.toEqual({
+      versions: [],
+    });
+
+    await expect(
+      client.collaboration.listDocumentVersions.query({ documentId }),
+    ).resolves.toEqual({
+      versions: [],
+    });
+
+    await expect(
+      client.checkpoints.listDocumentVersions.query({ documentId }),
+    ).resolves.toMatchObject({
+      versions: [{ id: "0" }, { id: "1" }],
+    });
+
+    await expect(
+      client.full.listDocumentVersions.query({ documentId }),
+    ).resolves.toMatchObject({
+      versions: [{ id: "0" }, { id: "1" }],
     });
   });
 
@@ -226,7 +316,7 @@ describe("mdkit testbench backend", () => {
       method: "PUT",
       payload: {
         baseVersion: "0",
-        content: "first",
+        content: largeCheckpointContent,
       },
       url: documentPath,
     });
@@ -256,7 +346,7 @@ describe("mdkit testbench backend", () => {
     });
 
     expect(current.json()).toMatchObject({
-      content: "first",
+      content: largeCheckpointContent,
       version: "3",
     });
   });

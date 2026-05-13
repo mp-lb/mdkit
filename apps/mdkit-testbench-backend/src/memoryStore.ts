@@ -1,8 +1,11 @@
 import {
   createMdKitDocumentRecord,
-  restoreMdKitDocumentVersion,
-  writeMdKitDocumentRecord,
+  detectMdKitDocumentConflict,
   type MdKitDocumentRecord,
+  type MdKitDocumentSnapshot,
+  type MdKitDocumentVersionDetail,
+  type MdKitDocumentVersionSummary,
+  type MdKitDocumentVersionToken,
   type MdKitDocumentWriteInput,
 } from "@mp-lb/mdkit/core";
 
@@ -29,24 +32,68 @@ export const createMemoryStore = () => {
 
   const readDocument = (documentId: string) => readRecord(documentId).current;
 
-  const writeDocument = (input: TestbenchWriteDocumentInput) => {
-    const written = writeMdKitDocumentRecord(readRecord(input.documentId), {
-      baseVersion: input.baseVersion,
-      content: input.content,
-      force: input.force,
-    });
-
-    records.set(input.documentId, written.record);
-    return written.result;
+  const nextVersionToken = (currentVersion: MdKitDocumentVersionToken) => {
+    const current = Number(currentVersion);
+    return Number.isFinite(current) ? String(current + 1) : String(Date.now());
   };
 
-  const restoreDocumentVersion = (documentId: string, versionId: string) => {
-    const restored = restoreMdKitDocumentVersion(readRecord(documentId), {
-      versionId,
+  const writeDocument = (input: TestbenchWriteDocumentInput) => {
+    const record = readRecord(input.documentId);
+
+    if (
+      !input.force &&
+      detectMdKitDocumentConflict({
+        baseVersion: input.baseVersion,
+        currentVersion: record.current.version,
+      })
+    ) {
+      return {
+        conflict: true as const,
+        updatedAt: record.current.updatedAt,
+        version: record.current.version,
+      };
+    }
+
+    const now = new Date().toISOString();
+    const current: MdKitDocumentSnapshot = {
+      content: input.content,
+      updatedAt: now,
+      version: nextVersionToken(record.current.version),
+    };
+
+    records.set(input.documentId, {
+      ...record,
+      current,
     });
 
-    records.set(documentId, restored.record);
-    return restored.result;
+    return {
+      updatedAt: current.updatedAt,
+      version: current.version,
+    };
+  };
+
+  const createCheckpoint = (input: {
+    content: string;
+    documentId: string;
+    sourceRevision: MdKitDocumentVersionToken;
+  }): MdKitDocumentVersionSummary => {
+    const record = readRecord(input.documentId);
+    const now = new Date().toISOString();
+    const checkpoint: MdKitDocumentVersionDetail = {
+      content: input.content,
+      createdAt: now,
+      id: String(input.sourceRevision),
+      label: `Version ${input.sourceRevision}`,
+      updatedAt: now,
+      version: input.sourceRevision,
+    };
+
+    records.set(input.documentId, {
+      ...record,
+      versions: [...record.versions, checkpoint],
+    });
+
+    return checkpoint;
   };
 
   const listDocumentVersions = (documentId: string) =>
@@ -70,12 +117,14 @@ export const createMemoryStore = () => {
       records.clear();
       collaborationStates.clear();
     },
+    createCheckpoint,
+    getLatestCheckpoint: (documentId: string) =>
+      readRecord(documentId).versions.at(-1) ?? null,
     listDocumentVersions,
     readCollaborationState: (documentId: string) =>
       collaborationStates.get(documentId) ?? null,
     readDocument,
     readDocumentVersion,
-    restoreDocumentVersion,
     writeCollaborationState: (documentId: string, state: Uint8Array) => {
       collaborationStates.set(documentId, state);
     },

@@ -44,10 +44,10 @@ The core React product is the hooks and workflow logic:
 - autosave state
 - dirty state
 - conflict state
-- restore/version state
+- restore/checkpoint state
 - collaboration connection state
 - actions needed to resolve conflicts
-- actions needed to open version history and restore a version
+- actions needed to open checkpoint history and restore a checkpoint
 
 These hooks should remain the main reusable abstraction. They should contain the
 workflow logic without dictating layout or visual style, and they must never
@@ -75,7 +75,7 @@ It should handle:
 
 - autosave status in a header
 - no manual save button by default
-- version history trigger and inline version history content
+- checkpoint history trigger and inline checkpoint history content
 - conflict warning
 - frozen editor while unresolved conflict exists
 - conflict resolution actions
@@ -98,10 +98,10 @@ The recommended boundary is:
 - the consuming application owns placement and shell components
 - optional design-system packages can own richer shells later
 
-For example, the default toolbar can expose or render version history inline.
-The app can place that version history content in a shadcn dialog, a side panel,
-or directly below the toolbar. The same applies to conflict details and future
-diff views.
+For example, the default toolbar can expose or render checkpoint history inline.
+The app can place that checkpoint history content in a shadcn dialog, a side
+panel, or directly below the toolbar. The same applies to conflict details and
+future diff views.
 
 ### Component Layers
 
@@ -109,9 +109,9 @@ The public React layers should be:
 
 1. Hooks and core functions. These are the non-negotiable foundation and must
    never depend on mdkit UI.
-2. Headless workflow controller. This composes document, versions,
+2. Headless workflow controller. This composes document, checkpoints,
    collaboration, autosave, and conflict state into one ergonomic contract.
-3. Base panels. These render raw semantic HTML for toolbar, version history,
+3. Base panels. These render raw semantic HTML for toolbar, checkpoint history,
    and conflict details, with stable mp-lb-mdkit-prefixed classes and optional mdkit
    CSS.
 4. Shadcn plugin/registry components. These are copied into the consuming app
@@ -186,9 +186,9 @@ The mdkit testbench should act as the reference consumer for both paths:
   into the testbench, shaped like the future registry-installed source
 
 The shadcn reference component should be all-in-one for workflow UI. A consumer
-should call the document, version, and collaboration hooks, render
+should call the document, checkpoint, and collaboration hooks, render
 `MdKitEditor`, and render one installed shadcn workflow component above it. That
-component should own the toolbar, version history dialog, conflict dialog,
+component should own the toolbar, checkpoint history dialog, conflict dialog,
 buttons, tabs, and any shadcn shell components. It should not reuse the base
 panels internally because the point of this layer is a polished app-local
 implementation, not a wrapper around generic fallback HTML.
@@ -215,8 +215,8 @@ The default behavior should be:
 2. Freeze editing until the conflict is handled.
 3. Show enough state for the user to understand what happened.
 4. Offer resolution actions:
-   - keep local version
-   - use remote version
+   - keep local content
+   - use remote content
    - inspect local, remote, and base markdown
    - manually edit/merge and then force-save
 5. Resume autosave after resolution.
@@ -229,26 +229,29 @@ resolution buttons. The unstyled conflict component can start with local/remote
 metadata and actions; a diff view is the obvious next layer once the underlying
 diff helper is available.
 
-## Version History UX
+## Checkpoint History UX
 
-Version history is mostly workflow and backend/data modeling, but a headless UI
-component is still valuable.
+Checkpoint history is mostly workflow and backend/data modeling, but a headless
+UI component is still valuable.
 
-The default version UI should work without custom application code beyond
-passing a versions controller and restore callback. It should not require the
-consumer to wire the toolbar trigger manually before it does anything useful.
+The current API names still use `VersionHistoryPanel` and
+`useMdKitDocumentVersions`, but those surfaces should model checkpoints:
+immutable snapshots of the canonical markdown document. The default checkpoint
+UI should work without custom application code beyond passing the current
+history controller and restore callback. It should not require the consumer to
+wire the toolbar trigger manually before it does anything useful.
 
-The default version history surface should be an unstyled content component that
-can be rendered inline. The toolbar can either render it inline itself or expose
-open/close state through a controller. If a consumer wants a modal, they should
-wrap that content in their own modal shell.
+The default checkpoint history surface should be an unstyled content component
+that can be rendered inline. The toolbar can either render it inline itself or
+expose open/close state through a controller. If a consumer wants a modal, they
+should wrap that content in their own modal shell.
 
 Useful surfaces:
 
-- headless controller for listing/selecting/restoring versions
-- base version history panel
+- headless controller for listing/selecting/restoring checkpoints
+- base checkpoint history panel
 - base conflict details panel
-- shadcn plugin version history dialog/drawer component
+- shadcn plugin checkpoint history dialog/drawer component
 - read-only markdown viewer that visually matches `MdKitEditor`
 
 ## Styling Strategy

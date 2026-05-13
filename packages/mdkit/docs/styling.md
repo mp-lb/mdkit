@@ -196,7 +196,7 @@ Example:
 - `.mp-lb-mdkit-conflict-panel`: root element
 - `.mp-lb-mdkit-conflict-panel-content`: title, explanatory text, and metadata
 - `.mp-lb-mdkit-conflict-panel-error`: error text
-- `.mp-lb-mdkit-conflict-panel-meta`: remote version metadata
+- `.mp-lb-mdkit-conflict-panel-meta`: remote revision metadata
 - `.mp-lb-mdkit-conflict-panel-preview`: preview area
 - `.mp-lb-mdkit-conflict-panel-tabs`: preview tab list
 - `.mp-lb-mdkit-conflict-panel-tab`: preview tab button
@@ -206,22 +206,23 @@ Example:
 
 The preview tabs also use `aria-selected` for state-aware styling.
 
-### Version History Panel
+### Checkpoint History Panel
 
-`VersionHistoryPanel` renders a version list, selected version preview, restore
-action, and empty/error states.
+`VersionHistoryPanel` renders checkpoint history: a checkpoint list, selected
+checkpoint preview, restore action, and empty/error states. The component and
+CSS class names keep `version-history` for current API compatibility.
 
 - `.mp-lb-mdkit-version-history-panel`: root element
 - `.mp-lb-mdkit-version-history-header`: panel header
 - `.mp-lb-mdkit-version-history-title`: panel title
 - `.mp-lb-mdkit-version-history-subtitle`: panel subtitle
 - `.mp-lb-mdkit-version-history-layout`: list and preview layout
-- `.mp-lb-mdkit-version-history-list`: version list
-- `.mp-lb-mdkit-version-history-item`: version list item button
-- `.mp-lb-mdkit-version-history-item-active`: selected version list item
+- `.mp-lb-mdkit-version-history-list`: checkpoint list
+- `.mp-lb-mdkit-version-history-item`: checkpoint list item button
+- `.mp-lb-mdkit-version-history-item-active`: selected checkpoint list item
 - `.mp-lb-mdkit-version-history-item-title`: list item title
-- `.mp-lb-mdkit-version-history-item-meta`: list item or selected version metadata
-- `.mp-lb-mdkit-version-history-preview`: selected version preview area
+- `.mp-lb-mdkit-version-history-item-meta`: list item or selected checkpoint metadata
+- `.mp-lb-mdkit-version-history-preview`: selected checkpoint preview area
 - `.mp-lb-mdkit-version-history-preview-header`: preview header
 - `.mp-lb-mdkit-version-history-preview-title`: preview title
 - `.mp-lb-mdkit-version-history-code`: markdown preview code block
@@ -232,7 +233,7 @@ action, and empty/error states.
 
 ### Shared Panel Actions
 
-Conflict and version panels share generic action classes:
+Conflict and checkpoint panels share generic action classes:
 
 - `.mp-lb-mdkit-panel-primary-action`: primary action button
 - `.mp-lb-mdkit-panel-secondary-action`: secondary action button
