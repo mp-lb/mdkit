@@ -46,7 +46,11 @@ import { MdKitConnectedWorkflow } from "@/components/mdkit/mdkit-connected-workf
 export function EditorScreen() {
   const client = createMdKitTrpcClient({ url: "/trpc" });
   const adapter = createMdKitTrpcAdapter({ client });
-  const document = useMdKitDocument({ adapter, documentId });
+  const document = useMdKitDocument({
+    adapter,
+    debounceMs: 1000,
+    documentId,
+  });
   const versions = useMdKitDocumentVersions({ adapter, documentId });
 
   const collaboration = useMdKitCollaboration({

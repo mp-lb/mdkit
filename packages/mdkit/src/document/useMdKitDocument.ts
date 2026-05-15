@@ -50,7 +50,7 @@ const emptyDocumentState = {
 export const useMdKitDocument = (
   options: UseMdKitDocumentOptions,
 ): MdKitDocumentController => {
-  const { adapter, debounceMs = 350, documentId, pollMs = 2000 } = options;
+  const { adapter, debounceMs = 1000, documentId, pollMs = 2000 } = options;
 
   const [local, setLocal] = useState("");
   const [base, setBase] = useState("");

@@ -56,7 +56,11 @@ function PlainTextDocument({
   adapter: MdKitDocumentAdapter;
   documentId: string;
 }) {
-  const document = useMdKitDocument({ adapter, documentId });
+  const document = useMdKitDocument({
+    adapter,
+    debounceMs: 1000,
+    documentId,
+  });
   const versions = useMdKitDocumentVersions({ adapter, documentId });
 
   return (

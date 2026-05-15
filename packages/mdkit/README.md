@@ -63,6 +63,7 @@ import {
 
 const document = useMdKitDocument({
   adapter,
+  debounceMs: 1000,
   documentId: "docs/brief.md",
 });
 

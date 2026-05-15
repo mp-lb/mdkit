@@ -113,7 +113,11 @@ export function ConnectedMarkdownEditor({
     () => createMdKitTrpcAdapter({ client: trpc.mdkit }),
     [trpc],
   );
-  const document = useMdKitDocument({ adapter, documentId });
+  const document = useMdKitDocument({
+    adapter,
+    debounceMs: 1000,
+    documentId,
+  });
   const versions = useMdKitDocumentVersions({ adapter, documentId });
 
   const collaboration = useMdKitCollaboration({
