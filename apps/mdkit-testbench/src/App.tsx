@@ -57,6 +57,7 @@ const storageKey = "mdkit-testbench:basic-markdown";
 const docsUrl = import.meta.env.VITE_DOCS_URL;
 const apiUrl = import.meta.env.VITE_TESTBENCH_API_URL;
 const connectedDocumentId = "docs/example.md";
+const plainTextConnectedDocumentId = "docs/plain-text.txt";
 
 const sampleMarkdown = `# mdkit testbench
 
@@ -91,10 +92,12 @@ This pane renders markdown without mounting Tiptap or ProseMirror.
 
 type ConnectedVariant = "base" | "shadcn";
 type ActiveTab = "connected" | "read-only" | "unconnected";
+type ConnectedEditorKind = "markdown" | "plain-text";
+type ConnectedStackOptionId = TestbenchStackId | "plain-text-checkpoints";
 
 type TestbenchRoute = {
   connectedVariant: ConnectedVariant;
-  initialStackId: TestbenchStackId;
+  initialStackId: ConnectedStackOptionId;
   initialTab: ActiveTab;
   qaMode: boolean;
 };
@@ -139,44 +142,63 @@ const statusBadgeClass = {
 
 const connectedStacks = [
   {
+    backendStackId: "storage",
     description: "Current document reads, writes, autosave, and conflicts.",
+    editorKind: "markdown",
     hasCheckpoints: false,
     hasCollaboration: false,
     id: "storage",
     label: "Storage",
   },
   {
+    backendStackId: "checkpoints",
     description: "Storage plus smart checkpoint history and restore.",
+    editorKind: "markdown",
     hasCheckpoints: true,
     hasCollaboration: false,
     id: "checkpoints",
     label: "Storage + checkpoints",
   },
   {
+    backendStackId: "checkpoints",
+    description: "Plain text editor using the same storage and checkpoints.",
+    editorKind: "plain-text",
+    hasCheckpoints: true,
+    hasCollaboration: false,
+    id: "plain-text-checkpoints",
+    label: "Storage + checkpoints (plain text)",
+  },
+  {
+    backendStackId: "collaboration",
     description: "Storage plus a Hocuspocus/Yjs collaboration room.",
+    editorKind: "markdown",
     hasCheckpoints: false,
     hasCollaboration: true,
     id: "collaboration",
     label: "Storage + collaboration",
   },
   {
+    backendStackId: "full",
     description: "Storage, smart checkpoints, restore, and collaboration.",
+    editorKind: "markdown",
     hasCheckpoints: true,
     hasCollaboration: true,
     id: "full",
     label: "Full stack",
   },
 ] as const satisfies readonly {
+  backendStackId: TestbenchStackId;
   description: string;
+  editorKind: ConnectedEditorKind;
   hasCheckpoints: boolean;
   hasCollaboration: boolean;
-  id: TestbenchStackId;
+  id: ConnectedStackOptionId;
   label: string;
 }[];
 
 const connectedStackById = Object.fromEntries(
   connectedStacks.map((stack) => [stack.id, stack]),
-) as Record<TestbenchStackId, (typeof connectedStacks)[number]>;
+) as Record<ConnectedStackOptionId, (typeof connectedStacks)[number]>;
 
 const countWords = (value: string) =>
   value.trim() ? value.trim().split(/\s+/).length : 0;
@@ -269,6 +291,7 @@ const collaborationEndpoint = (stackId: TestbenchStackId) => {
 
 const MarkdownStatePanel = ({
   focusedPane,
+  label = "Markdown State",
   markdown,
   onBlur,
   onChange,
@@ -276,6 +299,7 @@ const MarkdownStatePanel = ({
   storageMatchesMemory,
 }: {
   focusedPane?: string | null;
+  label?: string;
   markdown: string;
   onBlur?: () => void;
   onChange: (markdown: string) => void;
@@ -293,7 +317,7 @@ const MarkdownStatePanel = ({
 
   return (
     <section className="testbench-config-section testbench-state-panel">
-      <h2>Markdown State</h2>
+      <h2>{label}</h2>
       <div className="testbench-status" aria-label="Markdown stats">
         <Badge>{stats.characters} chars</Badge>
         <Badge>{stats.words} words</Badge>
@@ -378,8 +402,8 @@ const ConnectedSidebar = ({
   activeInspectorTab?: string;
   inspectorTabs: InspectorTab[];
   onActiveInspectorTabChange?: (tab: string) => void;
-  onStackChange: (stackId: TestbenchStackId) => void;
-  stackId: TestbenchStackId;
+  onStackChange: (stackId: ConnectedStackOptionId) => void;
+  stackId: ConnectedStackOptionId;
 }) => (
   <aside className="testbench-sidebar">
     <ConnectedStackCard
@@ -631,10 +655,12 @@ const UnconnectedStoragePanel = ({
 
 const ConnectedActionsPanel = ({
   debugStatus,
+  documentId,
   document,
   simulateRemoteChange,
 }: {
   debugStatus: string;
+  documentId: string;
   document: ReturnType<typeof useMdKitDocument>;
   simulateRemoteChange: () => Promise<void>;
 }) => (
@@ -644,7 +670,7 @@ const ConnectedActionsPanel = ({
         <GitBranch />
         Connected document
       </span>
-      <span>{connectedDocumentId}</span>
+      <span>{documentId}</span>
       <span>{apiUrl}</span>
       <span>{debugStatus}</span>
     </div>
@@ -674,8 +700,8 @@ const ConnectedStackCard = ({
   onStackChange,
   stackId,
 }: {
-  onStackChange: (stackId: TestbenchStackId) => void;
-  stackId: TestbenchStackId;
+  onStackChange: (stackId: ConnectedStackOptionId) => void;
+  stackId: ConnectedStackOptionId;
 }) => {
   return (
     <section className="testbench-connected-stack-card">
@@ -695,6 +721,34 @@ const ConnectedStackCard = ({
     </section>
   );
 };
+
+const PlainTextEditor = ({
+  fillHeight,
+  onChange,
+  onFocusChange,
+  readOnly,
+  value,
+}: {
+  fillHeight: boolean;
+  onChange: (value: string) => void;
+  onFocusChange: (focused: boolean) => void;
+  readOnly?: boolean;
+  value: string;
+}) => (
+  <Textarea
+    className={
+      fillHeight
+        ? "testbench-plain-text-editor testbench-plain-text-editor-fill"
+        : "testbench-plain-text-editor"
+    }
+    readOnly={readOnly}
+    spellCheck={false}
+    value={value}
+    onBlur={() => onFocusChange(false)}
+    onChange={(event) => onChange(event.currentTarget.value)}
+    onFocus={() => onFocusChange(true)}
+  />
+);
 
 const EditorWorkbench = ({
   children,
@@ -983,7 +1037,7 @@ const ConnectedTab = ({
   editorFillHeight: boolean;
   editorStyle: MdKitEditorThemeStyle;
   editorTheme: MdKitEditorTheme;
-  initialStackId: TestbenchStackId;
+  initialStackId: ConnectedStackOptionId;
   initialVariant: ConnectedVariant;
   onEditorThemeChange: (theme: MdKitEditorTheme) => void;
   onFillHeightChange: (fillHeight: boolean) => void;
@@ -992,9 +1046,14 @@ const ConnectedTab = ({
   const [connectedVariant, setConnectedVariant] =
     useState<ConnectedVariant>(initialVariant);
 
-  const [stackId, setStackId] = useState<TestbenchStackId>(initialStackId);
+  const [stackId, setStackId] =
+    useState<ConnectedStackOptionId>(initialStackId);
 
   const activeStack = connectedStackById[stackId];
+  const activeDocumentId =
+    activeStack.editorKind === "plain-text"
+      ? plainTextConnectedDocumentId
+      : connectedDocumentId;
 
   const trpc = useMemo(
     () =>
@@ -1005,7 +1064,7 @@ const ConnectedTab = ({
   );
 
   const mdkitClient = useMemo((): MdKitTestbenchTrpcClient => {
-    switch (stackId) {
+    switch (activeStack.backendStackId) {
       case "checkpoints":
         return trpc.checkpoints;
       case "collaboration":
@@ -1015,7 +1074,7 @@ const ConnectedTab = ({
       case "full":
         return trpc.full;
     }
-  }, [stackId, trpc]);
+  }, [activeStack.backendStackId, trpc]);
 
   const adapter = useMemo(
     () => createMdKitTrpcAdapter({ client: mdkitClient }),
@@ -1031,13 +1090,13 @@ const ConnectedTab = ({
   const document = useMdKitDocument({
     adapter,
     debounceMs: documentDebounceMs,
-    documentId: connectedDocumentId,
+    documentId: activeDocumentId,
     pollMs: 1200,
   });
 
   const versions = useMdKitDocumentVersions({
     adapter,
-    documentId: connectedDocumentId,
+    documentId: activeDocumentId,
     enabled: activeStack.hasCheckpoints,
   });
 
@@ -1047,17 +1106,30 @@ const ConnectedTab = ({
       id: collaborator.id || "testbench-user",
       name: collaborator.name || "Testbench",
     },
-    documentId: connectedDocumentId,
+    documentId: activeDocumentId,
     enabled: activeStack.hasCollaboration,
     endpoint: activeStack.hasCollaboration
-      ? collaborationEndpoint(stackId)
+      ? collaborationEndpoint(activeStack.backendStackId)
       : null,
   });
 
-  const useCollaborativeEditor = collaboration;
+  const useCollaborativeEditor =
+    activeStack.editorKind === "markdown" ? collaboration : null;
 
-  const renderEditor = () =>
-    useCollaborativeEditor ? (
+  const renderEditor = () => {
+    if (activeStack.editorKind === "plain-text") {
+      return (
+        <PlainTextEditor
+          fillHeight={editorFillHeight}
+          readOnly={document.conflict}
+          value={document.value}
+          onChange={document.setContent}
+          onFocusChange={document.setFocused}
+        />
+      );
+    }
+
+    return useCollaborativeEditor ? (
       <MdKitEditor
         className={editorClassName(editorFillHeight)}
         collaboration={useCollaborativeEditor}
@@ -1080,10 +1152,11 @@ const ConnectedTab = ({
         onFocusChange={document.setFocused}
       />
     );
+  };
 
   const restoreVersion = async (version: MdKitDocumentVersionDetail) => {
     await mdkitClient.restoreDocumentVersion.mutate({
-      documentId: connectedDocumentId,
+      documentId: activeDocumentId,
       versionId: version.id,
     });
 
@@ -1095,12 +1168,12 @@ const ConnectedTab = ({
     setDebugStatus("Writing remote change...");
 
     try {
-      const remote = await adapter.readDocument(connectedDocumentId);
+      const remote = await adapter.readDocument(activeDocumentId);
 
       const result = await adapter.writeDocument({
         baseVersion: remote.version,
         content: `${remote.content}\n\nRemote change ${new Date().toLocaleTimeString()}`,
-        documentId: connectedDocumentId,
+        documentId: activeDocumentId,
       });
 
       if ("conflict" in result) {
@@ -1122,6 +1195,7 @@ const ConnectedTab = ({
       content: (
         <ConnectedActionsPanel
           debugStatus={debugStatus}
+          documentId={activeDocumentId}
           document={document}
           simulateRemoteChange={simulateRemoteChange}
         />
@@ -1133,6 +1207,11 @@ const ConnectedTab = ({
       content: (
         <MarkdownStatePanel
           focusedPane={document.isFocused ? "editor" : null}
+          label={
+            activeStack.editorKind === "plain-text"
+              ? "Plain Text State"
+              : "Markdown State"
+          }
           markdown={document.value}
           onBlur={() => document.setFocused(false)}
           onChange={document.setContent}
@@ -1172,7 +1251,9 @@ const ConnectedTab = ({
         />
       ),
     },
-  ];
+  ].filter(
+    (tab) => activeStack.editorKind === "markdown" || tab.id !== "collaboration",
+  );
 
   return (
     <>
@@ -1184,7 +1265,9 @@ const ConnectedTab = ({
         >
           <EditorWorkbench
             components={
-              connectedVariant === "base"
+              activeStack.editorKind === "plain-text"
+                ? "Plain text editor, MdKitDocumentToolbar, MdKitConflictPanel, VersionHistoryPanel"
+                : connectedVariant === "base"
                 ? "MdKitEditor, MdKitDocumentToolbar, MdKitConflictPanel, VersionHistoryPanel"
                 : "MdKitEditor, shadcn plugin reference"
             }

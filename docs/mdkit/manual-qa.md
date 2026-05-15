@@ -193,6 +193,24 @@ Expected:
 - Restoring the first checkpoint puts `Version one` back in the editor.
 - The toolbar revision advances after restore.
 
+### Plain Text Connected Workflow
+
+1. Reset the backend.
+2. Open the normal debugger URL.
+3. In the Connected Stack card, select `Storage + checkpoints (plain text)`.
+4. Type or paste plain text that should not be parsed as markdown, such as JSON
+   or source code.
+5. Wait for autosave.
+6. Click `Version history`.
+
+Expected:
+
+- The workbench renders a plain textarea, not `MdKitEditor`.
+- The toolbar reaches a saved state and the revision advances.
+- The connected document shown in the Actions tab is `docs/plain-text.txt`.
+- Version history opens and can show plain text checkpoints.
+- The inspector does not show a Collaboration tab for this stack.
+
 ### Conflict: Keep Remote
 
 1. Reset the backend.

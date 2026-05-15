@@ -7,6 +7,7 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: "Quick Start", link: "/" },
+      { text: "Plain Text", link: "/plain-text" },
       { text: "Styling", link: "/styling" },
       { text: "Shadcn", link: "/shadcn" },
       { text: "REST", link: "/rest" },
@@ -21,6 +22,7 @@ export default defineConfig({
         text: "Guide",
         items: [
           { text: "Quick Start", link: "/" },
+          { text: "Plain Text Editors", link: "/plain-text" },
           { text: "Styling", link: "/styling" },
           { text: "Shadcn Plugin", link: "/shadcn" },
           { text: "REST Backend", link: "/rest" },
