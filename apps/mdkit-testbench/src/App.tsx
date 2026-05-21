@@ -36,7 +36,10 @@ import type {
   TestbenchStackId,
 } from "../../mdkit-testbench-backend/src/app";
 import { Badge } from "./components/ui/badge";
-import { MdKitConnectedWorkflow } from "./components/mdkit-connected-workflow";
+import {
+  MdKitConnectedEditor,
+  MdKitEditorChrome,
+} from "./components/mdkit-editor";
 import { Button } from "./components/ui/button";
 import { Checkbox } from "./components/ui/checkbox";
 import {
@@ -1288,17 +1291,27 @@ const ConnectedTab = ({
                   {renderEditor()}
                 </EditorSurface>
               </>
-            ) : (
-              <MdKitConnectedWorkflow
+            ) : activeStack.editorKind === "markdown" ? (
+              <MdKitConnectedEditor
                 collaboration={collaboration}
                 document={document}
-                versions={versions}
+                editorClassName={editorClassName(editorFillHeight)}
+                editorFillHeight={editorFillHeight}
+                editorStyle={editorStyle}
+                versions={activeStack.hasCheckpoints ? versions : null}
+                onRestoreVersion={restoreVersion}
+              />
+            ) : (
+              <MdKitEditorChrome
+                collaboration={collaboration}
+                document={document}
+                versions={activeStack.hasCheckpoints ? versions : null}
                 onRestoreVersion={restoreVersion}
               >
                 <EditorSurface fillHeight={editorFillHeight}>
                   {renderEditor()}
                 </EditorSurface>
-              </MdKitConnectedWorkflow>
+              </MdKitEditorChrome>
             )}
           </EditorWorkbench>
           {connectedVariant === "base" ? (
