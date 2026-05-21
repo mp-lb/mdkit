@@ -457,11 +457,11 @@ const ConnectedShellPanel = ({
     <div className="testbench-control-summary">
       <span className="testbench-control-label">
         <TerminalSquare />
-        {connectedVariant === "base" ? "Panels" : "Shadcn"}
+        {connectedVariant === "base" ? "Panels" : "Registry editor"}
       </span>
       <span>
         Choose whether the connected workflow uses mdkit starter panels or the
-        shadcn reference shell.
+        shadcn registry editor shell.
       </span>
     </div>
     <div className="testbench-actions testbench-inspector-actions">
@@ -477,7 +477,7 @@ const ConnectedShellPanel = ({
         variant={connectedVariant === "shadcn" ? "default" : "outline"}
         onClick={() => onVariantChange("shadcn")}
       >
-        Shadcn
+        Registry editor
       </Button>
     </div>
   </section>
@@ -1272,7 +1272,7 @@ const ConnectedTab = ({
                 ? "Plain text editor, MdKitDocumentToolbar, MdKitConflictPanel, VersionHistoryPanel"
                 : connectedVariant === "base"
                 ? "MdKitEditor, MdKitDocumentToolbar, MdKitConflictPanel, VersionHistoryPanel"
-                : "MdKitEditor, shadcn plugin reference"
+                : "MdKitConnectedEditor from the shadcn registry source"
             }
           >
             {connectedVariant === "base" ? (
