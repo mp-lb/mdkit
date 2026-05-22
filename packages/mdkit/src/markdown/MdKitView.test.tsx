@@ -58,6 +58,25 @@ describe("MdKitView", () => {
     expect(screen.getByText("No content yet.")).toBeTruthy();
   });
 
+  it("renders YAML front matter by default", () => {
+    render(<MdKitView value={'---\nkey: ["value"]\n---\n\n# Title'} />);
+
+    expect(screen.getByText('key: ["value"]')).toBeTruthy();
+    expect(screen.getByRole("heading", { level: 1, name: "Title" })).toBeTruthy();
+  });
+
+  it("can ignore YAML front matter", () => {
+    render(
+      <MdKitView
+        ignoreYamlFrontMatter
+        value={'---\nkey: ["value"]\n---\n\n# Title'}
+      />,
+    );
+
+    expect(screen.queryByText('key: ["value"]')).toBeNull();
+    expect(screen.getByRole("heading", { level: 1, name: "Title" })).toBeTruthy();
+  });
+
   it("lets fill-height read-only content grow instead of clipping code blocks", () => {
     const css = readFileSync(resolve(__dirname, "../styles.css"), "utf8");
 

@@ -2,10 +2,12 @@ import type { CSSProperties } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { joinClassNames } from "../ui/joinClassNames";
+import { removeYamlFrontMatter } from "./yamlFrontMatter";
 
 export type MdKitViewProps = {
   className?: string;
   fillHeight?: boolean;
+  ignoreYamlFrontMatter?: boolean;
   placeholder?: string;
   style?: CSSProperties;
   value: string;
@@ -14,11 +16,16 @@ export type MdKitViewProps = {
 export const MdKitView = ({
   className,
   fillHeight = false,
+  ignoreYamlFrontMatter = false,
   placeholder,
   style,
   value,
 }: MdKitViewProps) => {
-  const renderedValue = value.trim().length > 0 ? value : (placeholder ?? "");
+  const markdownValue = ignoreYamlFrontMatter
+    ? removeYamlFrontMatter(value)
+    : value;
+  const renderedValue =
+    markdownValue.trim().length > 0 ? markdownValue : (placeholder ?? "");
 
   return (
     <div

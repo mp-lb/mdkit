@@ -7,10 +7,12 @@ import { TiptapMarkdownSurface } from "./TiptapMarkdownSurface";
 type MdKitEditorBaseProps = {
   className?: string;
   fillHeight?: boolean;
+  ignoreYamlFrontMatter?: boolean;
   instanceKey?: string | number;
   onDebugEvent?: (event: MdKitEditorDebugEvent) => void;
   onFocusChange?: (focused: boolean) => void;
   readOnly?: boolean;
+  search?: boolean;
   style?: CSSProperties;
 };
 

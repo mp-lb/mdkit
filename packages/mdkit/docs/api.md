@@ -39,6 +39,7 @@ Local editing props:
 - `onChange?: (markdown: string) => void`
 - `onFocusChange?: (focused: boolean) => void`
 - `fillHeight?: boolean`
+- `search?: boolean`
 - `instanceKey?: string | number`
 - `className?: string`
 - `style?: CSSProperties`
@@ -50,12 +51,17 @@ Collaborative editing props:
 - `onChange?: (markdown: string) => void`
 - `onFocusChange?: (focused: boolean) => void`
 - `fillHeight?: boolean`
+- `search?: boolean`
 - `className?: string`
 - `style?: CSSProperties`
 
 `fillHeight` makes the editor fill its parent height, own its scroll area, and
 keep blank space below the last line clickable so it focuses the cursor at the
 end. Leave it off when the host application owns sizing and scrolling.
+
+`search` opts the editor into the built-in document search panel. The panel is
+not rendered by default; when enabled, users open it with `Cmd+F` on macOS or
+`Ctrl+F` on Windows/Linux.
 
 The package stylesheet includes reset-resistant markdown rules for headings,
 lists, code blocks, blockquotes, and links. Styling is controlled with CSS

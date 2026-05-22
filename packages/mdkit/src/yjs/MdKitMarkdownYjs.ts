@@ -6,17 +6,27 @@ import {
 } from "@tiptap/y-tiptap";
 import * as Y from "yjs";
 import { createMdKitTiptapExtensions } from "../markdown/createMdKitTiptapExtensions";
+import {
+  extractYamlFrontMatter,
+  prependYamlFrontMatter,
+} from "../markdown/yamlFrontMatter";
 import { normalizeMarkdownSerialization } from "../markdown/normalizeMarkdownSerialization";
 import { prepareMarkdownForEditorHydration } from "../markdown/prepareMarkdownForEditorHydration";
 
 export type MdKitMarkdownYjsOptions = {
   fragmentName?: string;
+  ignoreYamlFrontMatter?: boolean;
 };
 
 const defaultMdKitYjsFragmentName = "default";
+const mdKitYjsMetadataMapName = "__mdkit";
+const frontMatterPrefixMetadataKey = "frontMatterPrefix";
 
 const getMdKitYjsFragmentName = (options?: MdKitMarkdownYjsOptions) =>
   options?.fragmentName ?? defaultMdKitYjsFragmentName;
+
+const getFrontMatterPrefixMetadataKey = (fragmentName: string) =>
+  `${fragmentName}:${frontMatterPrefixMetadataKey}`;
 
 const createMdKitMarkdownManager = () =>
   new MarkdownManager({
@@ -42,11 +52,23 @@ export const replaceMdKitYjsMarkdown = (
   markdown: string,
   options?: MdKitMarkdownYjsOptions,
 ): Uint8Array => {
-  const fragment = ydoc.getXmlFragment(getMdKitYjsFragmentName(options));
+  const fragmentName = getMdKitYjsFragmentName(options);
+  const fragment = ydoc.getXmlFragment(fragmentName);
+  const metadata = ydoc.getMap<string>(mdKitYjsMetadataMapName);
   const schema = createMdKitProseMirrorSchema();
-  const json = markdownToProseMirrorJson(markdown);
+  const frontMatter = options?.ignoreYamlFrontMatter
+    ? extractYamlFrontMatter(markdown)
+    : null;
+  const json = markdownToProseMirrorJson(frontMatter?.body ?? markdown);
+  const metadataKey = getFrontMatterPrefixMetadataKey(fragmentName);
 
   prosemirrorJSONToYXmlFragment(schema, json, fragment);
+
+  if (frontMatter?.frontMatter) {
+    metadata.set(metadataKey, frontMatter.frontMatter.raw);
+  } else {
+    metadata.delete(metadataKey);
+  }
 
   return Y.encodeStateAsUpdate(ydoc);
 };
@@ -68,11 +90,18 @@ export const mdKitYjsToMarkdown = (
 
   Y.applyUpdate(ydoc, yjsState);
 
+  const fragmentName = getMdKitYjsFragmentName(options);
   const json = yXmlFragmentToProsemirrorJSON(
-    ydoc.getXmlFragment(getMdKitYjsFragmentName(options)),
+    ydoc.getXmlFragment(fragmentName),
   );
+  const metadata = ydoc.getMap<string>(mdKitYjsMetadataMapName);
+  const frontMatterRaw =
+    metadata.get(getFrontMatterPrefixMetadataKey(fragmentName)) ?? "";
 
-  return proseMirrorJsonToMarkdown(json);
+  return prependYamlFrontMatter(
+    frontMatterRaw,
+    proseMirrorJsonToMarkdown(json),
+  );
 };
 
 export const yjs = {

@@ -24,6 +24,18 @@ describe("MdKit Markdown/Yjs conversion", () => {
     expect(mdKitYjsToMarkdown(state)).toBe(markdown);
   });
 
+  it("round-trips YAML front matter when it is ignored by the editor body", () => {
+    const markdown = ['---', 'key: ["value"]', "---", "", "# Title"].join(
+      "\n",
+    );
+
+    const state = markdownToMdKitYjs(markdown, {
+      ignoreYamlFrontMatter: true,
+    });
+
+    expect(mdKitYjsToMarkdown(state)).toBe(markdown);
+  });
+
   it("uses the same Markdown serialization normalization as editor onChange", () => {
     const state = markdownToMdKitYjs("Before\n\n\n\nAfter");
 

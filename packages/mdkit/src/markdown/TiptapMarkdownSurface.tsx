@@ -1,11 +1,24 @@
-import { useEffect, useMemo, useRef, type PointerEvent } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type PointerEvent,
+} from "react";
 import Collaboration from "@tiptap/extension-collaboration";
 import CollaborationCaret from "@tiptap/extension-collaboration-caret";
 import { EditorContent, useEditor } from "@tiptap/react";
 import type { MdKitCollaborationSession } from "../document/documentTypes";
 import { createMdKitTiptapExtensions } from "./createMdKitTiptapExtensions";
 import type { MdKitEditorDebugEvent } from "./editorDebug";
+import {
+  extractYamlFrontMatter,
+  prependYamlFrontMatter,
+  type MdKitYamlFrontMatter,
+} from "./yamlFrontMatter";
 import { MarkdownBubbleMenu } from "./MarkdownBubbleMenu";
+import { MarkdownSearchPanel } from "./MarkdownSearchPanel";
 import { normalizeMarkdownSerialization } from "./normalizeMarkdownSerialization";
 import { prepareMarkdownForEditorHydration } from "./prepareMarkdownForEditorHydration";
 
@@ -14,8 +27,10 @@ type LocalTiptapMarkdownSurfaceProps = {
   onChange?: (markdown: string) => void;
   onDebugEvent?: (event: MdKitEditorDebugEvent) => void;
   onFocusChange?: (focused: boolean) => void;
+  ignoreYamlFrontMatter?: boolean;
   placeholder?: string;
   readOnly?: boolean;
+  search?: boolean;
   value: string;
 };
 
@@ -24,8 +39,10 @@ type CollaborativeTiptapMarkdownSurfaceProps = {
   onChange?: (markdown: string) => void;
   onDebugEvent?: (event: MdKitEditorDebugEvent) => void;
   onFocusChange?: (focused: boolean) => void;
+  ignoreYamlFrontMatter?: boolean;
   placeholder?: string;
   readOnly?: boolean;
+  search?: boolean;
   value?: string;
 };
 
@@ -34,6 +51,11 @@ type TiptapMarkdownSurfaceProps =
   | LocalTiptapMarkdownSurfaceProps;
 
 type TiptapEditor = NonNullable<ReturnType<typeof useEditor>>;
+
+type SearchMatch = {
+  from: number;
+  to: number;
+};
 
 const describeElement = (element: Element) => {
   const classes =
@@ -102,20 +124,28 @@ const createEditorDebugSnapshot = (editor: TiptapEditor, phase: string) => {
 export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
   const {
     collaboration = null,
+    ignoreYamlFrontMatter = false,
     onDebugEvent,
     onFocusChange,
     placeholder = "Start writing...",
     readOnly = false,
+    search = false,
   } = props;
 
   const markdownValue =
     "value" in props && typeof props.value === "string" ? props.value : "";
 
   const editorSurfaceRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const onDebugEventRef = useRef(onDebugEvent);
   const onFocusChangeRef = useRef(onFocusChange);
   const onChangeRef = useRef(props.onChange);
   const currentMarkdownRef = useRef(markdownValue);
+  const yamlFrontMatterRef = useRef<MdKitYamlFrontMatter | null>(
+    ignoreYamlFrontMatter
+      ? extractYamlFrontMatter(markdownValue).frontMatter
+      : null,
+  );
   const isApplyingExternalValueRef = useRef(false);
   const pendingControlledEchoesRef = useRef<Set<string>>(new Set());
 
@@ -126,6 +156,9 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
   } | null>(null);
 
   const shouldFocusAfterPointerRef = useRef(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeSearchMatchIndex, setActiveSearchMatchIndex] = useState(0);
   const collaborationDocument = collaboration?.document ?? null;
   const collaborationProvider = collaboration?.provider ?? null;
   const collaborationUserColor = collaboration?.collaborator.color ?? "";
@@ -190,7 +223,11 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
     {
       content: hasCollaboration
         ? undefined
-        : prepareMarkdownForEditorHydration(markdownValue),
+        : prepareMarkdownForEditorHydration(
+            ignoreYamlFrontMatter
+              ? extractYamlFrontMatter(markdownValue).body
+              : markdownValue,
+          ),
       contentType: "markdown",
       editable: !readOnly,
       editorProps: {
@@ -241,7 +278,10 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
         );
 
         const previousMarkdown = currentMarkdownRef.current;
-        const nextMarkdown = nextSerializedMarkdown;
+        const nextMarkdown = prependYamlFrontMatter(
+          yamlFrontMatterRef.current,
+          nextSerializedMarkdown,
+        );
 
         currentMarkdownRef.current = nextMarkdown;
 
@@ -255,9 +295,142 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
       collaborationCaretExtensions,
       collaborationDocument,
       hasCollaboration,
+      ignoreYamlFrontMatter,
       placeholder,
     ],
   );
+
+  const searchMatches = useMemo<SearchMatch[]>(() => {
+    const query = searchQuery.trim().toLocaleLowerCase();
+
+    if (!editor || query.length === 0) {
+      return [];
+    }
+
+    const matches: SearchMatch[] = [];
+
+    editor.state.doc.descendants((node, position) => {
+      if (!node.isText || typeof node.text !== "string") {
+        return;
+      }
+
+      const text = node.text.toLocaleLowerCase();
+      let fromIndex = text.indexOf(query);
+
+      while (fromIndex >= 0) {
+        matches.push({
+          from: position + fromIndex,
+          to: position + fromIndex + query.length,
+        });
+
+        fromIndex = text.indexOf(query, fromIndex + query.length);
+      }
+    });
+
+    return matches;
+  }, [editor, searchQuery, markdownValue]);
+
+  const activeSearchMatchNumber =
+    searchMatches.length === 0 ? 0 : activeSearchMatchIndex + 1;
+
+  const selectSearchMatch = useCallback(
+    (matchIndex: number) => {
+      if (!editor || searchMatches.length === 0) {
+        return;
+      }
+
+      const nextIndex =
+        ((matchIndex % searchMatches.length) + searchMatches.length) %
+        searchMatches.length;
+
+      const match = searchMatches[nextIndex];
+      setActiveSearchMatchIndex(nextIndex);
+      editor
+        .chain()
+        .focus()
+        .setTextSelection({ from: match.from, to: match.to })
+        .scrollIntoView()
+        .run();
+    },
+    [editor, searchMatches],
+  );
+
+  const openSearch = useCallback(() => {
+    if (!search) {
+      return;
+    }
+
+    setSearchOpen(true);
+    window.requestAnimationFrame(() => {
+      searchInputRef.current?.focus();
+      searchInputRef.current?.select();
+    });
+  }, [search]);
+
+  const closeSearch = useCallback(() => {
+    setSearchOpen(false);
+    editor?.commands.focus();
+  }, [editor]);
+
+  const selectNextSearchMatch = useCallback(() => {
+    selectSearchMatch(activeSearchMatchIndex + 1);
+  }, [activeSearchMatchIndex, selectSearchMatch]);
+
+  const selectPreviousSearchMatch = useCallback(() => {
+    selectSearchMatch(activeSearchMatchIndex - 1);
+  }, [activeSearchMatchIndex, selectSearchMatch]);
+
+  useEffect(() => {
+    if (!search) {
+      setSearchOpen(false);
+      setSearchQuery("");
+    }
+  }, [search]);
+
+  useEffect(() => {
+    if (!search || !editor) {
+      return;
+    }
+
+    const handleSearchShortcut = (event: globalThis.KeyboardEvent) => {
+      const isFindShortcut =
+        (event.metaKey || event.ctrlKey) &&
+        !event.altKey &&
+        event.key.toLocaleLowerCase() === "f";
+
+      if (!isFindShortcut) {
+        return;
+      }
+
+      if (
+        document.activeElement instanceof Element &&
+        !editorSurfaceRef.current?.contains(document.activeElement)
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+      openSearch();
+    };
+
+    document.addEventListener("keydown", handleSearchShortcut);
+
+    return () => {
+      document.removeEventListener("keydown", handleSearchShortcut);
+    };
+  }, [editor, openSearch, search]);
+
+  useEffect(() => {
+    setActiveSearchMatchIndex(0);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    if (!searchOpen || searchQuery.trim().length === 0) {
+      return;
+    }
+
+    selectSearchMatch(activeSearchMatchIndex);
+  }, [activeSearchMatchIndex, searchOpen, searchQuery, selectSearchMatch]);
 
   useEffect(() => {
     editor?.setEditable(!readOnly);
@@ -311,6 +484,9 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
 
     if (hasCollaboration) {
       currentMarkdownRef.current = markdownValue;
+      yamlFrontMatterRef.current = ignoreYamlFrontMatter
+        ? extractYamlFrontMatter(markdownValue).frontMatter
+        : null;
       pendingControlledEchoesRef.current.clear();
       return;
     }
@@ -327,8 +503,12 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
 
     pendingControlledEchoesRef.current.clear();
     isApplyingExternalValueRef.current = true;
+    const frontMatter = ignoreYamlFrontMatter
+      ? extractYamlFrontMatter(markdownValue)
+      : null;
+
     editor.commands.setContent(
-      prepareMarkdownForEditorHydration(markdownValue),
+      prepareMarkdownForEditorHydration(frontMatter?.body ?? markdownValue),
       {
         contentType: "markdown",
         emitUpdate: false,
@@ -336,11 +516,12 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
     );
 
     currentMarkdownRef.current = markdownValue;
+    yamlFrontMatterRef.current = frontMatter?.frontMatter ?? null;
 
     window.queueMicrotask(() => {
       isApplyingExternalValueRef.current = false;
     });
-  }, [editor, hasCollaboration, markdownValue]);
+  }, [editor, hasCollaboration, ignoreYamlFrontMatter, markdownValue]);
 
   if (!editor) {
     return (
@@ -678,6 +859,18 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
         onPointerDownCapture={focusEditorBackgroundOnPointerDown}
         onPointerUpCapture={focusEditorBackgroundOnPointerUp}
       >
+        {search && searchOpen ? (
+          <MarkdownSearchPanel
+            activeMatchNumber={activeSearchMatchNumber}
+            inputRef={searchInputRef}
+            matchCount={searchMatches.length}
+            onClose={closeSearch}
+            onNext={selectNextSearchMatch}
+            onPrevious={selectPreviousSearchMatch}
+            onQueryChange={setSearchQuery}
+            query={searchQuery}
+          />
+        ) : null}
         <MarkdownBubbleMenu editor={editor} />
         <EditorContent editor={editor} />
       </div>

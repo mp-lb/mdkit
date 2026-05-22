@@ -173,6 +173,31 @@ describe("MdKitEditor", () => {
     expect(afterParagraphIndex - whitespaceParagraphIndex).toBeGreaterThan(1);
   });
 
+  it("renders YAML front matter into the editor body by default", async () => {
+    const { container } = render(
+      <MdKitEditor value={'---\nkey: ["value"]\n---\n\n# Title'} />,
+    );
+
+    await waitFor(() => {
+      expect(editorText(container)).toContain('key: ["value"]');
+      expect(editorText(container)).toContain("Title");
+    });
+  });
+
+  it("can ignore YAML front matter in the editor body", async () => {
+    const { container } = render(
+      <MdKitEditor
+        ignoreYamlFrontMatter
+        value={'---\nkey: ["value"]\n---\n\n# Title'}
+      />,
+    );
+
+    await waitFor(() => {
+      expect(editorText(container)).not.toContain('key: ["value"]');
+      expect(editorText(container)).toContain("Title");
+    });
+  });
+
   it("keeps the same editor instance when controlled value changes", async () => {
     const { container, rerender } = render(
       <MdKitEditor value="one" onChange={() => {}} />,
@@ -307,6 +332,74 @@ describe("MdKitEditor", () => {
 
     await waitFor(() => {
       expect(onFocusChange).toHaveBeenCalledWith(false);
+    });
+  });
+
+  it("does not install document search by default", async () => {
+    const { container } = render(
+      <MdKitEditor value="Findable text" onChange={() => {}} />,
+    );
+
+    await waitFor(() => {
+      expect(container.querySelector(".ProseMirror")).toBeTruthy();
+    });
+
+    await act(async () => {
+      const editor = container.querySelector(".ProseMirror");
+
+      if (!(editor instanceof HTMLElement)) {
+        throw new Error("Expected TipTap to render a ProseMirror editor.");
+      }
+
+      editor.focus();
+    });
+
+    fireEvent.keyDown(document, { ctrlKey: true, key: "f" });
+
+    expect(screen.queryByRole("searchbox", { name: "Search document" })).toBe(
+      null,
+    );
+  });
+
+  it("opens optional document search from the find shortcut", async () => {
+    const { container } = render(
+      <MdKitEditor
+        search
+        value="First paragraph. Second paragraph."
+        onChange={() => {}}
+      />,
+    );
+
+    await waitFor(() => {
+      expect(container.querySelector(".ProseMirror")).toBeTruthy();
+    });
+
+    await act(async () => {
+      const editor = container.querySelector(".ProseMirror");
+
+      if (!(editor instanceof HTMLElement)) {
+        throw new Error("Expected TipTap to render a ProseMirror editor.");
+      }
+
+      editor.focus();
+    });
+
+    fireEvent.keyDown(document, { metaKey: true, key: "f" });
+
+    const searchInput = await screen.findByRole("searchbox", {
+      name: "Search document",
+    });
+
+    fireEvent.change(searchInput, { target: { value: "paragraph" } });
+
+    await waitFor(() => {
+      expect(screen.getByText("1 of 2")).toBeTruthy();
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: "Next match" }));
+
+    await waitFor(() => {
+      expect(screen.getByText("2 of 2")).toBeTruthy();
     });
   });
 });

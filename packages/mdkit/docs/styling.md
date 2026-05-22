@@ -120,7 +120,8 @@ you need structural changes, component-specific spacing, or state styling.
 
 `MdKitEditor` renders the markdown editing surface and the selection bubble
 toolbar. The toolbar appears for non-empty text selections while the editor or
-toolbar has focus.
+toolbar has focus. The search panel appears only when `search` is enabled and
+the user opens it with the find keyboard shortcut.
 
 - `.mp-lb-mdkit-markdown-editor`: root element rendered by `MdKitEditor`
 - `.mp-lb-mdkit-markdown-editor-fill-height`: added to the root when
@@ -129,6 +130,10 @@ toolbar has focus.
 - `.mp-lb-mdkit-editor-surface`: scroll and background surface around the
   ProseMirror editor
 - `.mp-lb-mdkit-editor-empty`: loading or connecting placeholder
+- `.mp-lb-mdkit-search-panel`: optional document search panel
+- `.mp-lb-mdkit-search-input`: search text input
+- `.mp-lb-mdkit-search-status`: search result count
+- `.mp-lb-mdkit-search-button`: search navigation or close button
 - `.mp-lb-mdkit-tiptap`: ProseMirror editable element
 - `.mp-lb-mdkit-toolbar`: selection bubble toolbar
 - `.mp-lb-mdkit-toolbar-button`: toolbar button
