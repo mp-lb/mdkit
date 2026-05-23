@@ -394,6 +394,11 @@ describe("MdKitEditor", () => {
 
     await waitFor(() => {
       expect(screen.getByText("1 of 2")).toBeTruthy();
+      expect(document.activeElement).toBe(searchInput);
+      expect(
+        container.querySelector(".mp-lb-mdkit-search-match-active")
+          ?.textContent,
+      ).toBe("paragraph");
     });
 
     fireEvent.click(screen.getByRole("button", { name: "Next match" }));

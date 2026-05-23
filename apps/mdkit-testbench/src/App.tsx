@@ -1,4 +1,10 @@
-import { useMemo, useState, type ReactNode } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 import {
   BookOpen,
   Database,
@@ -30,6 +36,7 @@ import {
 } from "@mp-lb/mdkit";
 import { createMdKitTrpcAdapter } from "@mp-lb/mdkit/trpc/client";
 import type { MdKitTrpcClient } from "@mp-lb/mdkit/trpc/client";
+import { replaceMdKitYjsMarkdown } from "@mp-lb/mdkit/yjs";
 import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
 import type {
   AppRouter,
@@ -62,7 +69,12 @@ const apiUrl = import.meta.env.VITE_TESTBENCH_API_URL;
 const connectedDocumentId = "docs/example.md";
 const plainTextConnectedDocumentId = "docs/plain-text.txt";
 
-const sampleMarkdown = `# mdkit testbench
+const sampleMarkdown = `---
+title: mdkit testbench
+tags: ["front matter", "manual qa"]
+---
+
+# mdkit testbench
 
 This editor is wired like a textarea:
 
@@ -78,7 +90,12 @@ There should be two blank lines above this paragraph in the raw textarea.
 
 Edit either pane and the other one should stay in sync.`;
 
-const readOnlySampleMarkdown = `# Read-only view
+const readOnlySampleMarkdown = `---
+title: Read-only view
+mode: preview
+---
+
+# Read-only view
 
 This pane renders markdown without mounting Tiptap or ProseMirror.
 
@@ -309,13 +326,23 @@ const MarkdownStatePanel = ({
   onFocus?: () => void;
   storageMatchesMemory?: boolean | null;
 }) => {
+  const [draft, setDraft] = useState(markdown);
+  const isEditing = focusedPane === "textarea";
+  const textareaValue = isEditing ? draft : markdown;
+
+  useEffect(() => {
+    if (!isEditing) {
+      setDraft(markdown);
+    }
+  }, [isEditing, markdown]);
+
   const stats = useMemo(
     () => ({
-      characters: markdown.length,
-      lines: markdown.split("\n").length,
-      words: countWords(markdown),
+      characters: textareaValue.length,
+      lines: textareaValue.split("\n").length,
+      words: countWords(textareaValue),
     }),
-    [markdown],
+    [textareaValue],
   );
 
   return (
@@ -341,10 +368,17 @@ const MarkdownStatePanel = ({
       </div>
       <Textarea
         spellCheck={false}
-        value={markdown}
+        value={textareaValue}
         onBlur={onBlur}
-        onChange={(event) => onChange(event.target.value)}
-        onFocus={onFocus}
+        onChange={(event) => {
+          const next = event.target.value;
+          setDraft(next);
+          onChange(next);
+        }}
+        onFocus={() => {
+          setDraft(markdown);
+          onFocus?.();
+        }}
       />
     </section>
   );
@@ -935,7 +969,9 @@ const UnconnectedTab = ({
               <MdKitEditor
                 className={editorClassName(editorFillHeight)}
                 fillHeight={editorFillHeight}
+                ignoreYamlFrontMatter
                 instanceKey={editorRevision}
+                search
                 style={editorStyle}
                 value={markdown}
                 onChange={setMarkdown}
@@ -1014,6 +1050,7 @@ const ReadOnlyTab = ({
             <MdKitView
               className={editorClassName(editorFillHeight)}
               fillHeight={editorFillHeight}
+              ignoreYamlFrontMatter
               style={editorStyle}
               value={markdown}
             />
@@ -1087,6 +1124,9 @@ const ConnectedTab = ({
   const [debugStatus, setDebugStatus] = useState("Backend idle");
   const [activeInspectorTab, setActiveInspectorTab] = useState("state");
   const [collaborator, setCollaborator] = useState(createDefaultCollaborator);
+  const [focusedPane, setFocusedPane] = useState<
+    "editor" | "textarea" | null
+  >(null);
   const [versionHistoryOpen, setVersionHistoryOpen] = useState(false);
   const [conflictOpen, setConflictOpen] = useState(false);
 
@@ -1119,6 +1159,25 @@ const ConnectedTab = ({
   const useCollaborativeEditor =
     activeStack.editorKind === "markdown" ? collaboration : null;
 
+  const setDocumentContent = useCallback(
+    (next: string) => {
+      document.setContent(next);
+
+      if (useCollaborativeEditor) {
+        replaceMdKitYjsMarkdown(useCollaborativeEditor.document, next);
+      }
+    },
+    [document, useCollaborativeEditor],
+  );
+
+  const setDocumentFocused = useCallback(
+    (focused: boolean, pane: "editor" | "textarea") => {
+      document.setFocused(focused);
+      setFocusedPane(focused ? pane : null);
+    },
+    [document],
+  );
+
   const renderEditor = () => {
     if (activeStack.editorKind === "plain-text") {
       return (
@@ -1127,7 +1186,7 @@ const ConnectedTab = ({
           readOnly={document.conflict}
           value={document.value}
           onChange={document.setContent}
-          onFocusChange={document.setFocused}
+          onFocusChange={(focused) => setDocumentFocused(focused, "editor")}
         />
       );
     }
@@ -1137,22 +1196,26 @@ const ConnectedTab = ({
         className={editorClassName(editorFillHeight)}
         collaboration={useCollaborativeEditor}
         fillHeight={editorFillHeight}
+        ignoreYamlFrontMatter
         readOnly={document.conflict}
+        search
         style={editorStyle}
         value={document.value}
         onChange={document.setContent}
-        onFocusChange={document.setFocused}
+        onFocusChange={(focused) => setDocumentFocused(focused, "editor")}
       />
     ) : (
       <MdKitEditor
         className={editorClassName(editorFillHeight)}
         fillHeight={editorFillHeight}
+        ignoreYamlFrontMatter
         instanceKey={document.revision}
         readOnly={document.conflict}
+        search
         style={editorStyle}
         value={document.value}
         onChange={document.setContent}
-        onFocusChange={document.setFocused}
+        onFocusChange={(focused) => setDocumentFocused(focused, "editor")}
       />
     );
   };
@@ -1209,16 +1272,16 @@ const ConnectedTab = ({
       label: "State",
       content: (
         <MarkdownStatePanel
-          focusedPane={document.isFocused ? "editor" : null}
+          focusedPane={focusedPane}
           label={
             activeStack.editorKind === "plain-text"
               ? "Plain Text State"
               : "Markdown State"
           }
           markdown={document.value}
-          onBlur={() => document.setFocused(false)}
-          onChange={document.setContent}
-          onFocus={() => document.setFocused(true)}
+          onBlur={() => setDocumentFocused(false, "textarea")}
+          onChange={setDocumentContent}
+          onFocus={() => setDocumentFocused(true, "textarea")}
         />
       ),
     },

@@ -389,8 +389,10 @@ export function MdKitConnectedEditor({
         className={editorClassName}
         collaboration={collaboration ?? undefined}
         fillHeight={editorFillHeight}
+        ignoreYamlFrontMatter
         instanceKey={document.revision}
         readOnly={document.conflict}
+        search
         style={editorStyle}
         value={document.value}
         onChange={document.setContent}
@@ -416,6 +418,8 @@ export function MdKitLocalEditor({
         className={editorClassName}
         collaboration={null}
         fillHeight={fillHeight}
+        ignoreYamlFrontMatter
+        search
         {...props}
       />
     </section>

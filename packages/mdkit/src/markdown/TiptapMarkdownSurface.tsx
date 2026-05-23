@@ -19,6 +19,10 @@ import {
 } from "./yamlFrontMatter";
 import { MarkdownBubbleMenu } from "./MarkdownBubbleMenu";
 import { MarkdownSearchPanel } from "./MarkdownSearchPanel";
+import {
+  markdownSearchPluginKey,
+  type MarkdownSearchMatch,
+} from "./MarkdownSearchExtension";
 import { normalizeMarkdownSerialization } from "./normalizeMarkdownSerialization";
 import { prepareMarkdownForEditorHydration } from "./prepareMarkdownForEditorHydration";
 
@@ -51,11 +55,6 @@ type TiptapMarkdownSurfaceProps =
   | LocalTiptapMarkdownSurfaceProps;
 
 type TiptapEditor = NonNullable<ReturnType<typeof useEditor>>;
-
-type SearchMatch = {
-  from: number;
-  to: number;
-};
 
 const describeElement = (element: Element) => {
   const classes =
@@ -300,14 +299,14 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
     ],
   );
 
-  const searchMatches = useMemo<SearchMatch[]>(() => {
+  const searchMatches = useMemo<MarkdownSearchMatch[]>(() => {
     const query = searchQuery.trim().toLocaleLowerCase();
 
     if (!editor || query.length === 0) {
       return [];
     }
 
-    const matches: SearchMatch[] = [];
+    const matches: MarkdownSearchMatch[] = [];
 
     editor.state.doc.descendants((node, position) => {
       if (!node.isText || typeof node.text !== "string") {
@@ -333,6 +332,23 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
   const activeSearchMatchNumber =
     searchMatches.length === 0 ? 0 : activeSearchMatchIndex + 1;
 
+  const scrollActiveSearchMatchIntoView = useCallback(() => {
+    window.requestAnimationFrame(() => {
+      const activeMatch = editorSurfaceRef.current?.querySelector(
+        ".mp-lb-mdkit-search-match-active",
+      );
+
+      if (!activeMatch || !("scrollIntoView" in activeMatch)) {
+        return;
+      }
+
+      activeMatch.scrollIntoView({
+        block: "center",
+        inline: "nearest",
+      });
+    });
+  }, []);
+
   const selectSearchMatch = useCallback(
     (matchIndex: number) => {
       if (!editor || searchMatches.length === 0) {
@@ -343,16 +359,18 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
         ((matchIndex % searchMatches.length) + searchMatches.length) %
         searchMatches.length;
 
-      const match = searchMatches[nextIndex];
       setActiveSearchMatchIndex(nextIndex);
-      editor
-        .chain()
-        .focus()
-        .setTextSelection({ from: match.from, to: match.to })
-        .scrollIntoView()
-        .run();
+      editor.view.dispatch(
+        editor.state.tr
+          .setMeta(markdownSearchPluginKey, {
+            activeIndex: nextIndex,
+            matches: searchMatches,
+          })
+          .setMeta("addToHistory", false),
+      );
+      scrollActiveSearchMatchIntoView();
     },
-    [editor, searchMatches],
+    [editor, scrollActiveSearchMatchIntoView, searchMatches],
   );
 
   const openSearch = useCallback(() => {
@@ -369,8 +387,25 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
 
   const closeSearch = useCallback(() => {
     setSearchOpen(false);
-    editor?.commands.focus();
-  }, [editor]);
+
+    if (!editor) {
+      return;
+    }
+
+    const activeMatch = searchMatches[activeSearchMatchIndex];
+
+    if (!activeMatch) {
+      editor.commands.focus();
+      return;
+    }
+
+    editor
+      .chain()
+      .focus()
+      .setTextSelection({ from: activeMatch.from, to: activeMatch.to })
+      .scrollIntoView()
+      .run();
+  }, [activeSearchMatchIndex, editor, searchMatches]);
 
   const selectNextSearchMatch = useCallback(() => {
     selectSearchMatch(activeSearchMatchIndex + 1);
@@ -426,11 +461,39 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
 
   useEffect(() => {
     if (!searchOpen || searchQuery.trim().length === 0) {
+      editor?.view.dispatch(
+        editor.state.tr
+          .setMeta(markdownSearchPluginKey, {
+            activeIndex: 0,
+            matches: [],
+          })
+          .setMeta("addToHistory", false),
+      );
       return;
     }
 
-    selectSearchMatch(activeSearchMatchIndex);
-  }, [activeSearchMatchIndex, searchOpen, searchQuery, selectSearchMatch]);
+    const nextActiveSearchMatchIndex = Math.min(
+      activeSearchMatchIndex,
+      Math.max(0, searchMatches.length - 1),
+    );
+
+    editor?.view.dispatch(
+      editor.state.tr
+        .setMeta(markdownSearchPluginKey, {
+          activeIndex: nextActiveSearchMatchIndex,
+          matches: searchMatches,
+        })
+        .setMeta("addToHistory", false),
+    );
+    scrollActiveSearchMatchIntoView();
+  }, [
+    activeSearchMatchIndex,
+    editor,
+    scrollActiveSearchMatchIntoView,
+    searchMatches,
+    searchOpen,
+    searchQuery,
+  ]);
 
   useEffect(() => {
     editor?.setEditable(!readOnly);

@@ -70,6 +70,7 @@ export const MarkdownSearchPanel = ({
         className="mp-lb-mdkit-search-button"
         disabled={matchCount === 0}
         onClick={onPrevious}
+        title="Previous match"
         type="button"
       >
         <ChevronUp aria-hidden="true" />
@@ -78,6 +79,7 @@ export const MarkdownSearchPanel = ({
         aria-label="Next match"
         className="mp-lb-mdkit-search-button"
         disabled={matchCount === 0}
+        title="Next match"
         type="submit"
       >
         <ChevronDown aria-hidden="true" />
@@ -86,6 +88,7 @@ export const MarkdownSearchPanel = ({
         aria-label="Close search"
         className="mp-lb-mdkit-search-button"
         onClick={onClose}
+        title="Close search"
         type="button"
       >
         <X aria-hidden="true" />

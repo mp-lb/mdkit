@@ -48,6 +48,13 @@ export default defineConfig(({ mode }) => {
           ),
         },
         {
+          find: "@mp-lb/mdkit/yjs",
+          replacement: path.resolve(
+            __dirname,
+            "../../packages/mdkit/src/yjs/index.ts",
+          ),
+        },
+        {
           find: "@mp-lb/mdkit",
           replacement: path.resolve(
             __dirname,

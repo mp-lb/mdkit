@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+    paths:
+      - ".changeset/**"
+      - ".github/workflows/release.yml"
   workflow_dispatch:
 
 permissions:
@@ -23,15 +26,22 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Detect pending changesets
+      - name: Detect pending mdkit changesets
         id: changesets
         shell: bash
         run: |
-          count=$(find .changeset -maxdepth 1 -type f -name "*.md" ! -name "README.md" | wc -l | tr -d " ")
+          count=0
+
+          while IFS= read -r file; do
+            if grep -Eq "^[[:space:]]*['\"]?@mp-lb/mdkit['\"]?:[[:space:]]*(major|minor|patch)[[:space:]]*$" "$file"; then
+              count=$((count + 1))
+            fi
+          done < <(find .changeset -maxdepth 1 -type f -name "*.md" ! -name "README.md" | sort)
+
           echo "count=$count" >> "$GITHUB_OUTPUT"
 
           if [ "$count" = "0" ]; then
-            echo "No pending changesets. Nothing to release."
+            echo "No pending @mp-lb/mdkit changesets. Nothing to release."
           fi
 
       - name: Set up pnpm
@@ -78,6 +88,10 @@ jobs:
           git add .changeset packages/mdkit/package.json packages/mdkit/CHANGELOG.md pnpm-lock.yaml
           git commit -m "chore: release @mp-lb/mdkit@${version} [skip ci]"
 
+      - name: Push release commit
+        if: ${{ steps.changesets.outputs.count != '0' }}
+        run: git push origin "HEAD:${GITHUB_REF_NAME}"
+
       - name: Publish
         if: ${{ steps.changesets.outputs.count != '0' }}
         run: pnpm release
@@ -85,6 +99,6 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Push release commit and tags
+      - name: Push release tags
         if: ${{ steps.changesets.outputs.count != '0' }}
         run: git push origin "HEAD:${GITHUB_REF_NAME}" --follow-tags
