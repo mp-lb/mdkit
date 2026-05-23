@@ -206,6 +206,56 @@ describe("MdKitEditor", () => {
     });
   });
 
+  it("hydrates markdown headings using their source levels", async () => {
+    const { container } = render(
+      <MdKitEditor
+        value={[
+          "# Heading 1",
+          "## Heading 2",
+          "### Heading 3",
+          "#### Heading 4",
+          "##### Heading 5",
+          "###### Heading 6",
+        ].join("\n\n")}
+        onChange={() => {}}
+      />,
+    );
+
+    await waitFor(() => {
+      expect(container.querySelector(".ProseMirror h1")).toHaveTextContent(
+        "Heading 1",
+      );
+      expect(container.querySelector(".ProseMirror h2")).toHaveTextContent(
+        "Heading 2",
+      );
+      expect(container.querySelector(".ProseMirror h3")).toHaveTextContent(
+        "Heading 3",
+      );
+      expect(container.querySelector(".ProseMirror h4")).toHaveTextContent(
+        "Heading 4",
+      );
+      expect(container.querySelector(".ProseMirror h5")).toHaveTextContent(
+        "Heading 5",
+      );
+      expect(container.querySelector(".ProseMirror h6")).toHaveTextContent(
+        "Heading 6",
+      );
+    });
+  });
+
+  it("keeps h3 styled smaller than h2 in the bundled editor CSS", () => {
+    const css = readFileSync(resolve(__dirname, "../styles.css"), "utf8");
+
+    expect(css).toMatch(/--mp-lb-mdkit-heading-2-size:\s*1\.25rem;/);
+    expect(css).toMatch(/--mp-lb-mdkit-heading-3-size:\s*1\.125rem;/);
+    expect(css).toMatch(
+      /\.mp-lb-mdkit-tiptap h2\s*{[^}]*font-size:\s*var\(--mp-lb-mdkit-heading-2-size\);/,
+    );
+    expect(css).toMatch(
+      /\.mp-lb-mdkit-tiptap h3,\s*\.mp-lb-mdkit-tiptap h4,\s*\.mp-lb-mdkit-tiptap h5,\s*\.mp-lb-mdkit-tiptap h6\s*{[^}]*font-size:\s*var\(--mp-lb-mdkit-heading-3-size\);/,
+    );
+  });
+
   it("can ignore YAML front matter in the editor body", async () => {
     const { container } = render(
       <MdKitEditor

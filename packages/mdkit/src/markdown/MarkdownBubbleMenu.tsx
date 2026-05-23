@@ -6,6 +6,7 @@ import {
   Code2,
   Heading1,
   Heading2,
+  Heading3,
   Italic,
   Link2,
   List,
@@ -30,6 +31,7 @@ type ToolbarActiveState = {
   codeBlock: boolean;
   heading1: boolean;
   heading2: boolean;
+  heading3: boolean;
   italic: boolean;
   link: boolean;
   orderedList: boolean;
@@ -51,6 +53,7 @@ const toolbarActiveStateIsEqual = (
     left.codeBlock === right.codeBlock &&
     left.heading1 === right.heading1 &&
     left.heading2 === right.heading2 &&
+    left.heading3 === right.heading3 &&
     left.italic === right.italic &&
     left.link === right.link &&
     left.orderedList === right.orderedList &&
@@ -68,6 +71,7 @@ const useToolbarActiveState = (editor: Editor) =>
       codeBlock: currentEditor.isActive("codeBlock"),
       heading1: currentEditor.isActive("heading", { level: 1 }),
       heading2: currentEditor.isActive("heading", { level: 2 }),
+      heading3: currentEditor.isActive("heading", { level: 3 }),
       italic: currentEditor.isActive("italic"),
       link: currentEditor.isActive("link"),
       orderedList: currentEditor.isActive("orderedList"),
@@ -222,6 +226,15 @@ export const MarkdownBubbleMenu = ({ editor }: MarkdownBubbleMenuProps) => {
         }
       >
         <Heading2 />
+      </ToolbarButton>
+      <ToolbarButton
+        ariaLabel="Heading 3"
+        isActive={activeState.heading3}
+        onAction={() =>
+          editor.chain().focus().toggleHeading({ level: 3 }).run()
+        }
+      >
+        <Heading3 />
       </ToolbarButton>
       <div className="mp-lb-mdkit-toolbar-divider" />
       <ToolbarButton
