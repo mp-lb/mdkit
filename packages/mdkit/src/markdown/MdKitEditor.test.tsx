@@ -49,6 +49,28 @@ const editorText = (container: HTMLElement) => {
   return editor.textContent ?? "";
 };
 
+const getEditorElement = async (container: HTMLElement) =>
+  waitFor(() => {
+    const editor = container.querySelector(".ProseMirror");
+
+    if (!(editor instanceof HTMLElement)) {
+      throw new Error("Expected TipTap to render a ProseMirror editor.");
+    }
+
+    return editor;
+  });
+
+const pasteIntoEditor = (
+  editor: HTMLElement,
+  clipboardValues: Record<string, string>,
+) => {
+  fireEvent.paste(editor, {
+    clipboardData: {
+      getData: (mimeType: string) => clipboardValues[mimeType] ?? "",
+    },
+  });
+};
+
 const createCollaborationSession = (
   markdown: string,
 ): MdKitCollaborationSession => {
@@ -256,6 +278,31 @@ describe("MdKitEditor", () => {
     expect(editorText(container)).toContain("Yjs owns this content.");
     expect(editorText(container)).not.toContain("Late storage snapshot");
     expect(editorText(container)).not.toContain("This must not be inserted.");
+  });
+
+  it("pastes markdown clipboard text as rich editor content", async () => {
+    const { container } = render(<MdKitEditor value="" onChange={() => {}} />);
+    const editor = await getEditorElement(container);
+
+    await act(async () => {
+      editor.focus();
+      pasteIntoEditor(editor, {
+        "text/html":
+          "<pre><code># Pasted heading\n\n- first\n- second</code></pre>",
+        "text/plain": "# Pasted heading\n\n- first\n- second",
+      });
+    });
+
+    await waitFor(() => {
+      expect(container.querySelector(".ProseMirror h1")).toHaveTextContent(
+        "Pasted heading",
+      );
+      expect(container.querySelector(".ProseMirror li")).toHaveTextContent(
+        "first",
+      );
+    });
+
+    expect(container.querySelector(".ProseMirror pre")).toBeNull();
   });
 
   it("focuses the editor when the fill-height background is clicked", async () => {

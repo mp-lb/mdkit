@@ -21,14 +21,14 @@ export type MdKitEditorThemeStyle = CSSProperties &
 
 export const defaultMdKitEditorTheme: MdKitEditorTheme = {
   background: "#ffffff",
-  blockGap: "0.75rem",
+  blockGap: "0.72em",
   border: "#d8dee8",
   codeBackground: "#eef1f4",
   codeRadius: "0.35rem",
   fontFamily: "inherit",
   fontSize: "16px",
   foreground: "#18212f",
-  lineHeight: "1.7",
+  lineHeight: "1.55",
   link: "#4f46e5",
   muted: "#eef1f4",
   mutedForeground: "#5b6472",
@@ -37,14 +37,14 @@ export const defaultMdKitEditorTheme: MdKitEditorTheme = {
 
 export const darkMdKitEditorTheme: MdKitEditorTheme = {
   background: "#0b1220",
-  blockGap: "0.75rem",
+  blockGap: "0.72em",
   border: "#314158",
   codeBackground: "#111827",
   codeRadius: "0.35rem",
   fontFamily: "inherit",
   fontSize: "16px",
   foreground: "#e5edf7",
-  lineHeight: "1.7",
+  lineHeight: "1.55",
   link: "#38bdf8",
   muted: "#172033",
   mutedForeground: "#94a3b8",
@@ -70,4 +70,3 @@ export const createMdKitEditorThemeStyle = (
   "--mp-lb-mdkit-quote-border-color": theme.border,
   "--mp-lb-mdkit-surface-padding": theme.surfacePadding,
 });
-

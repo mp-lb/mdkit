@@ -2,6 +2,7 @@ import type { Extensions } from "@tiptap/core";
 import { Markdown } from "@tiptap/markdown";
 import Placeholder from "@tiptap/extension-placeholder";
 import StarterKit from "@tiptap/starter-kit";
+import { MarkdownPasteExtension } from "./MarkdownPasteExtension";
 import { MarkdownSearchExtension } from "./MarkdownSearchExtension";
 
 type CreateMdKitTiptapExtensionsOptions = {
@@ -36,5 +37,6 @@ export const createMdKitTiptapExtensions = ({
       gfm: true,
     },
   }),
+  MarkdownPasteExtension,
   MarkdownSearchExtension,
 ];
