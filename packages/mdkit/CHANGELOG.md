@@ -1,5 +1,11 @@
 # @mp-lb/mdkit
 
+## 0.3.0
+
+### Minor Changes
+
+- 541f3de: Add built-in markdown search and YAML front matter helpers
+
 ## 0.2.5
 
 ### Patch Changes
