@@ -1,5 +1,11 @@
 # @mp-lb/mdkit
 
+## 0.3.1
+
+### Patch Changes
+
+- 588790f: Fix markdown heading level hydration
+
 ## 0.3.0
 
 ### Minor Changes
