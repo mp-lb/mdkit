@@ -69,3 +69,5 @@ IMPORTANT: `.env.local` is for non-secrets, its ok for you to view and edit it! 
 ## Validation
 
 For small changes, run `zap t check` to run linting and typechecking. For bigger system level changes run that and also `zap t build` to check that all the builds still succeed.
+
+@AGENTS.local.md
