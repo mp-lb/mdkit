@@ -432,6 +432,44 @@ describe("MdKitEditor", () => {
     });
   });
 
+  it("does not force a ProseMirror blur during native input pointerdown", async () => {
+    const onFocusChange = vi.fn();
+
+    const { container } = render(
+      <div>
+        <input aria-label="External input" />
+        <MdKitEditor
+          value="Text that can be selected"
+          onChange={() => {}}
+          onFocusChange={onFocusChange}
+        />
+      </div>,
+    );
+
+    const editor = await waitFor(() => {
+      const element = container.querySelector(".ProseMirror");
+
+      if (!(element instanceof HTMLElement)) {
+        throw new Error("Expected TipTap to render a ProseMirror editor.");
+      }
+
+      return element;
+    });
+
+    await act(async () => {
+      editor.focus();
+    });
+
+    await waitFor(() => {
+      expect(onFocusChange).toHaveBeenCalledWith(true);
+    });
+
+    onFocusChange.mockClear();
+    fireEvent.pointerDown(screen.getByLabelText("External input"));
+
+    expect(onFocusChange).not.toHaveBeenCalledWith(false);
+  });
+
   it("does not install document search by default", async () => {
     const { container } = render(
       <MdKitEditor value="Findable text" onChange={() => {}} />,

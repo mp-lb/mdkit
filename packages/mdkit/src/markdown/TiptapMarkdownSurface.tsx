@@ -71,6 +71,11 @@ const describeEventTarget = (target: EventTarget | null) =>
 const isInteractiveElement = (target: Element) =>
   !!target.closest("a,button,input,select,textarea,[contenteditable='false']");
 
+const isNativeFocusTarget = (target: Element) =>
+  !!target.closest(
+    "a[href],button,input,select,textarea,[contenteditable='true'],[tabindex]:not([tabindex='-1'])",
+  );
+
 const createEditorDebugSnapshot = (editor: TiptapEditor, phase: string) => {
   const activeElement =
     typeof document === "undefined" || !document.activeElement
@@ -504,8 +509,14 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
       return;
     }
 
-    const blurEditorOnExternalPointerDown = (event: globalThis.PointerEvent) => {
+    const blurEditorOnExternalPointerDown = (
+      event: globalThis.PointerEvent,
+    ) => {
       if (editor.isDestroyed) {
+        return;
+      }
+
+      if (!editor.isFocused && !editor.view.hasFocus()) {
         return;
       }
 
@@ -519,6 +530,10 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
         editorSurfaceRef.current?.contains(target) ||
         target.closest(".mp-lb-mdkit-toolbar")
       ) {
+        return;
+      }
+
+      if (isNativeFocusTarget(target)) {
         return;
       }
 
