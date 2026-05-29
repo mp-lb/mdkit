@@ -1,5 +1,11 @@
 # @mp-lb/mdkit
 
+## 0.3.2
+
+### Patch Changes
+
+- 04dad84: Avoid forcing a ProseMirror blur during pointerdown on external native focus targets.
+
 ## 0.3.1
 
 ### Patch Changes
