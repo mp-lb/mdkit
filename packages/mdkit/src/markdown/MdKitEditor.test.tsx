@@ -357,12 +357,14 @@ describe("MdKitEditor", () => {
 
   it("focuses the editor when the fill-height background is clicked", async () => {
     const onFocusChange = vi.fn();
+    const onDebugEvent = vi.fn();
 
     const { container } = render(
       <MdKitEditor
         fillHeight
-        value=""
+        value="Stored document"
         onChange={() => {}}
+        onDebugEvent={onDebugEvent}
         onFocusChange={onFocusChange}
       />,
     );
@@ -383,13 +385,24 @@ describe("MdKitEditor", () => {
       throw new Error("Expected TipTap to render a ProseMirror editor.");
     }
 
-    fireEvent.pointerDown(surface);
-    fireEvent.pointerUp(surface);
+    const clientY = editor.getBoundingClientRect().bottom + 48;
+
+    fireEvent.pointerDown(surface, { clientY });
+    fireEvent.pointerUp(surface, { clientY });
     fireEvent.click(surface);
 
     await waitFor(() => {
       expect(document.activeElement).toBe(editor);
       expect(onFocusChange).toHaveBeenCalledWith(true);
+      expect(onDebugEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          detail: expect.objectContaining({
+            requestedPosition: expect.any(Number),
+            selectionAnchor: "Stored document".length + 1,
+          }),
+          type: "focus-at-position-after",
+        }),
+      );
     });
   });
 
@@ -425,7 +438,7 @@ describe("MdKitEditor", () => {
       expect(onFocusChange).toHaveBeenCalledWith(true);
     });
 
-    fireEvent.pointerDown(screen.getByTestId("page-chrome"));
+    fireEvent.click(screen.getByTestId("page-chrome"));
 
     await waitFor(() => {
       expect(onFocusChange).toHaveBeenCalledWith(false);

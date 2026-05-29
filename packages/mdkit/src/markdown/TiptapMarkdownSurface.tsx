@@ -159,7 +159,6 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
     y: number;
   } | null>(null);
 
-  const shouldFocusAfterPointerRef = useRef(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeSearchMatchIndex, setActiveSearchMatchIndex] = useState(0);
@@ -509,9 +508,7 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
       return;
     }
 
-    const blurEditorOnExternalPointerDown = (
-      event: globalThis.PointerEvent,
-    ) => {
+    const blurEditorOnExternalClick = (event: globalThis.MouseEvent) => {
       if (editor.isDestroyed) {
         return;
       }
@@ -540,18 +537,10 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
       editor.commands.blur();
     };
 
-    document.addEventListener("pointerdown", blurEditorOnExternalPointerDown, {
-      capture: true,
-    });
+    document.addEventListener("click", blurEditorOnExternalClick);
 
     return () => {
-      document.removeEventListener(
-        "pointerdown",
-        blurEditorOnExternalPointerDown,
-        {
-          capture: true,
-        },
-      );
+      document.removeEventListener("click", blurEditorOnExternalClick);
     };
   }, [editor]);
 
@@ -739,7 +728,6 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
 
   const queueEditorFocusAtPosition = (position: number) => {
     emitDebugEvent("focus-queued", {
-      pendingFromPointer: shouldFocusAfterPointerRef.current,
       requestedPosition: position,
     });
 
@@ -863,7 +851,6 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
     );
 
     event.preventDefault();
-    shouldFocusAfterPointerRef.current = false;
     emitDebugEvent("hitbox-pointer-down", {
       defaultPrevented: event.defaultPrevented,
       pointerType: event.pointerType,
@@ -881,7 +868,6 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
 
     if (readOnly) {
       pendingContentFocusRef.current = null;
-      shouldFocusAfterPointerRef.current = false;
       return;
     }
 
@@ -907,26 +893,6 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
 
       return;
     }
-
-    if (!shouldFocusAfterPointerRef.current) {
-      return;
-    }
-
-    event.preventDefault();
-    shouldFocusAfterPointerRef.current = false;
-    emitDebugEvent("hitbox-pointer-up", {
-      defaultPrevented: event.defaultPrevented,
-      pointerType: event.pointerType,
-      target: describeEventTarget(event.target),
-    });
-
-    queueEditorFocusAtPosition(
-      getEditorPositionAtClientPoint(
-        event.clientX,
-        event.clientY,
-        event.target,
-      ),
-    );
   };
 
   return (
