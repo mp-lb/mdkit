@@ -6,13 +6,10 @@
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
-    "docs",
     "src/styles.css",
     "!dist/**/*.test.d.ts",
     "!dist/**/*.test.js",
-    "!dist/test",
-    "!docs/.vitepress/cache",
-    "!docs/.vitepress/dist"
+    "!dist/test"
   ],
   "exports": {
     ".": {
@@ -64,10 +61,7 @@
   "scripts": {
     "dev": "tsc --watch --project tsconfig.json",
     "build": "tsc --project tsconfig.json && node scripts/add-js-extensions.mjs",
-    "docs:build": "vitepress build docs",
-    "docs:dev": "node scripts/load-docs-env.mjs dev",
-    "docs:preview": "node scripts/load-docs-env.mjs preview",
-    "release:check": "pnpm typecheck && pnpm test && pnpm build && pnpm docs:build",
+    "release:check": "pnpm typecheck && pnpm test && pnpm build",
     "test": "vitest run",
     "typecheck": "tsc --noEmit --project tsconfig.json"
   },
@@ -120,7 +114,6 @@
     "fastify": "^5.1.0",
     "jsdom": "29.1.1",
     "vite": "7.2.4",
-    "vitepress": "^1.6.4",
     "vitest": "4.1.5"
   }
 }

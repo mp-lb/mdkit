@@ -1,0 +1,15 @@
+{
+  "title": "Markdown Editor Kit",
+  "pages": [
+    "index",
+    "plain-text",
+    "styling",
+    "shadcn",
+    "rest",
+    "use-cases",
+    "permissions",
+    "collaboration-persistence",
+    "api",
+    "architecture"
+  ]
+}

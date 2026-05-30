@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
     paths:
+      - "apps/docs/**"
       - "packages/mdkit/**"
       - "infra/**"
       - ".github/workflows/deploy-docs.yml"
@@ -66,7 +67,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build docs
-        run: pnpm --filter=@mp-lb/mdkit docs:build
+        run: pnpm --filter=@mp-lb/mdkit-docs build
 
       - name: Get Vercel IDs
         id: vercel
@@ -85,7 +86,7 @@ jobs:
           fi
 
       - name: Deploy docs to Vercel
-        run: npx vercel deploy packages/mdkit/docs/.vitepress/dist --prod --yes --token=${{ secrets.VERCEL_API_TOKEN }}
+        run: npx vercel deploy apps/docs/build/client --prod --yes --token=${{ secrets.VERCEL_API_TOKEN }}
         env:
           VERCEL_PROJECT_ID: ${{ steps.vercel.outputs.project_id }}
           VERCEL_ORG_ID: ${{ steps.vercel.outputs.org_id }}
