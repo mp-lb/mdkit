@@ -14,7 +14,7 @@ The project is currently in development and does not yet have production users. 
 - **`server`** - Node.js-only infrastructure: tRPC instance (`t`), logger, context types. Only import from backend.
 - **`trpc`** - The tRPC router and procedures. Exports `createTrpcRouter` and `AppRouter` type.
 
-See [modular-monolith.md](docs/modular-monolith.md) for the architecture philosophy.
+See [modular-monolith.md](docs/standards/modular-monolith.md) for the architecture philosophy.
 
 ## Running the Project
 
@@ -33,16 +33,16 @@ Check [zapper-usage.md](docs/zapper.md) for more details on running servers, res
 
 Read these before making changes:
 
-- **[env-vars.md](docs/env-vars.md)** - Must read when adding or modifying environment variables
+- **[env-vars.md](docs/standards/env-vars.md)** - Must read when adding or modifying environment variables
 - **[deployment-runbook.md](docs/deployment-runbook.md)** - Production URLs and secrets checklist
 - **[terraform.md](docs/terraform.md)** - Technical reference for Terraform configuration
-- **[style-guide.md](docs/style-guide.md)** - For significant code changes
-- **[crud.md](docs/crud.md)** - For implementing simple CRUD patterns
-- **[errors.md](docs/errors.md)** - For throwing and handling errors
-- **[services.md](docs/services.md)** - For adding/removing services, frontends, databases, or updating infrastructure configuration
+- **[style-guide.md](docs/standards/style-guide.md)** - For significant code changes
+- **[crud.md](docs/standards/crud.md)** - For implementing simple CRUD patterns
+- **[errors.md](docs/standards/errors.md)** - For throwing and handling errors
+- **[services.md](docs/standards/services.md)** - For adding/removing services, frontends, databases, or updating infrastructure configuration
 - **[trpc.md](docs/trpc.md)** - For doing frontend queries/mutations
-- **[logging.md](docs/logging.md)** - For logging on backend (via tRPC context) and frontend
-- **[event-schema.md](docs/event-schema.md)** - For sending/storing any kind of events: errors, logs, analytics, real time events follow this
+- **[logging.md](docs/standards/logging.md)** - For logging on backend (via tRPC context) and frontend
+- **[event-schema.md](docs/standards/event-schema.md)** - For sending/storing any kind of events: errors, logs, analytics, real time events follow this
 
 ## Tech stack
 
