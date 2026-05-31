@@ -6,3 +6,4 @@ dist/
 .env
 .DS_Store
 AGENTS.local.md
+AGENTS_WORKTREE.md
