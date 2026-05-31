@@ -32,6 +32,14 @@ export type MdKitEditorProps =
   | CollaborativeMdKitEditorProps
   | LocalMdKitEditorProps;
 
+/**
+ * Markdown-first rich text editor. Behaves like a controlled textarea in local
+ * mode and switches to a Yjs-backed engine when given a collaboration session.
+ *
+ * @remarks
+ * In collaborative mode the Yjs document is the content source; external
+ * `value` changes are not applied into the shared document.
+ */
 export const MdKitEditor = (props: MdKitEditorProps) => {
   const {
     className,

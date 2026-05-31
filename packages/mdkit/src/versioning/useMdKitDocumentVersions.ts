@@ -25,6 +25,10 @@ export type MdKitDocumentVersionsController = {
   versions: MdKitDocumentVersionSummary[];
 };
 
+/**
+ * Lists a document's checkpoints and lazily reads checkpoint detail, tracking
+ * loading state for checkpoint-history UI.
+ */
 export const useMdKitDocumentVersions = (
   options: UseMdKitDocumentVersionsOptions,
 ): MdKitDocumentVersionsController => {

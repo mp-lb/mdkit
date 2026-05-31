@@ -26,6 +26,10 @@ const getVersionLabel = (
   return version.id.slice(0, 8);
 };
 
+/**
+ * Renders checkpoint history from {@link useMdKitDocumentVersions} and invokes
+ * the host's restore handler for a chosen checkpoint.
+ */
 export const VersionHistoryPanel = ({
   className,
   controller,

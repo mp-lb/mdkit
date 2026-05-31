@@ -47,6 +47,10 @@ const emptyDocumentState = {
   version: null,
 } as const;
 
+/**
+ * Connects an editor to a storage adapter: loads the document, debounces
+ * autosave, tracks dirty/save status, and surfaces conflicts for resolution.
+ */
 export const useMdKitDocument = (
   options: UseMdKitDocumentOptions,
 ): MdKitDocumentController => {

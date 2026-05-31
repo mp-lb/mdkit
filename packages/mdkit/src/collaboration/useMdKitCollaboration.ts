@@ -188,6 +188,10 @@ const setProviderUser = (
   });
 };
 
+/**
+ * Creates a Hocuspocus/Yjs collaboration session for {@link MdKitEditor},
+ * managing the provider connection, local participant, and presence.
+ */
 export const useMdKitCollaboration = (
   options: UseMdKitCollaborationOptions,
 ): MdKitCollaborationSession | null => {

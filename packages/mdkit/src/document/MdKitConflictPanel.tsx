@@ -8,6 +8,10 @@ export type MdKitConflictPanelProps = {
   title?: string;
 };
 
+/**
+ * Base panel for resolving a save conflict. Previews remote and local content
+ * and keeps one side. Renders `null` when the document has no conflict.
+ */
 export const MdKitConflictPanel = ({
   className,
   document,

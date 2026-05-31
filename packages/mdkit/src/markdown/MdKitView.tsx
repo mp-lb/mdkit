@@ -13,6 +13,11 @@ export type MdKitViewProps = {
   value: string;
 };
 
+/**
+ * Read-only markdown surface that mirrors {@link MdKitEditor}'s styling and
+ * sizing contract without mounting the editor runtime. Use it for previews and
+ * restored checkpoints.
+ */
 export const MdKitView = ({
   className,
   fillHeight = false,

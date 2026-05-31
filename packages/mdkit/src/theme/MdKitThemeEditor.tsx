@@ -7,6 +7,10 @@ export type MdKitThemeEditorProps = {
   theme: MdKitEditorTheme;
 };
 
+/**
+ * Optional controls for editing an {@link MdKitEditorTheme}. Intended for theme
+ * builders, docs, and debug tools rather than production editing surfaces.
+ */
 export const MdKitThemeEditor = ({
   className,
   onChange,

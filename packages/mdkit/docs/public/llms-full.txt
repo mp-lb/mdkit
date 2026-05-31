@@ -1,0 +1,3459 @@
+<!-- source: reference/core/README.md -->
+
+# core
+
+## References
+
+### createMdKitDocumentRecord
+
+Re-exports [createMdKitDocumentRecord](../index/functions/createMdKitDocumentRecord.md)
+
+***
+
+### detectMdKitDocumentConflict
+
+Re-exports [detectMdKitDocumentConflict](../index/functions/detectMdKitDocumentConflict.md)
+
+***
+
+### normalizeMdKitVersionToken
+
+Re-exports [normalizeMdKitVersionToken](../index/functions/normalizeMdKitVersionToken.md)
+
+***
+
+### restoreMdKitDocumentVersion
+
+Re-exports [restoreMdKitDocumentVersion](../index/functions/restoreMdKitDocumentVersion.md)
+
+***
+
+### writeMdKitDocumentRecord
+
+Re-exports [writeMdKitDocumentRecord](../index/functions/writeMdKitDocumentRecord.md)
+
+***
+
+### CheckpointPolicy
+
+Re-exports [CheckpointPolicy](../index/variables/CheckpointPolicy.md)
+
+***
+
+### measureMdKitEditDistance
+
+Re-exports [measureMdKitEditDistance](../index/functions/measureMdKitEditDistance.md)
+
+***
+
+### CreateMdKitDocumentRecordInput
+
+Re-exports [CreateMdKitDocumentRecordInput](../index/type-aliases/CreateMdKitDocumentRecordInput.md)
+
+***
+
+### MdKitDocumentRecord
+
+Re-exports [MdKitDocumentRecord](../index/type-aliases/MdKitDocumentRecord.md)
+
+***
+
+### RestoreMdKitDocumentVersionInput
+
+Re-exports [RestoreMdKitDocumentVersionInput](../index/type-aliases/RestoreMdKitDocumentVersionInput.md)
+
+***
+
+### RestoreMdKitDocumentVersionResult
+
+Re-exports [RestoreMdKitDocumentVersionResult](../index/type-aliases/RestoreMdKitDocumentVersionResult.md)
+
+***
+
+### WriteMdKitDocumentRecordInput
+
+Re-exports [WriteMdKitDocumentRecordInput](../index/type-aliases/WriteMdKitDocumentRecordInput.md)
+
+***
+
+### WriteMdKitDocumentRecordResult
+
+Re-exports [WriteMdKitDocumentRecordResult](../index/type-aliases/WriteMdKitDocumentRecordResult.md)
+
+***
+
+### MdKitCheckpointPolicy
+
+Re-exports [MdKitCheckpointPolicy](../index/type-aliases/MdKitCheckpointPolicy.md)
+
+***
+
+### MdKitCheckpointPolicyInput
+
+Re-exports [MdKitCheckpointPolicyInput](../index/type-aliases/MdKitCheckpointPolicyInput.md)
+
+***
+
+### MdKitSmartCheckpointPolicyOptions
+
+Re-exports [MdKitSmartCheckpointPolicyOptions](../index/type-aliases/MdKitSmartCheckpointPolicyOptions.md)
+
+***
+
+### MdKitDocumentSnapshot
+
+Re-exports [MdKitDocumentSnapshot](../index/type-aliases/MdKitDocumentSnapshot.md)
+
+***
+
+### MdKitDocumentVersionDetail
+
+Re-exports [MdKitDocumentVersionDetail](../index/type-aliases/MdKitDocumentVersionDetail.md)
+
+***
+
+### MdKitDocumentVersionSummary
+
+Re-exports [MdKitDocumentVersionSummary](../index/type-aliases/MdKitDocumentVersionSummary.md)
+
+***
+
+### MdKitDocumentVersionToken
+
+Re-exports [MdKitDocumentVersionToken](../index/type-aliases/MdKitDocumentVersionToken.md)
+
+***
+
+### MdKitDocumentWriteInput
+
+Re-exports [MdKitDocumentWriteInput](../index/type-aliases/MdKitDocumentWriteInput.md)
+
+***
+
+### MdKitDocumentWriteResult
+
+Re-exports [MdKitDocumentWriteResult](../index/type-aliases/MdKitDocumentWriteResult.md)
+
+
+---
+
+<!-- source: reference/fastify/functions/registerMdKitFastify.md -->
+
+# Function: registerMdKitFastify()
+
+```ts
+function registerMdKitFastify(app: FastifyInstance, __namedParameters: RegisterMdKitFastifyOptions): Promise<void>;
+```
+
+Defined in: [packages/mdkit/src/transport/fastify.ts:28](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/fastify.ts#L28)
+
+Registers the mdkit REST endpoints on a Fastify app under `prefix`, backed by
+a transport store (typically from `createMdKitBackend`).
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `app` | `FastifyInstance` |
+| `__namedParameters` | [`RegisterMdKitFastifyOptions`](../type-aliases/RegisterMdKitFastifyOptions.md) |
+
+## Returns
+
+`Promise`\<`void`\>
+
+
+---
+
+<!-- source: reference/fastify/README.md -->
+
+# fastify
+
+## Type Aliases
+
+| Type Alias | Description |
+| ------ | ------ |
+| [RegisterMdKitFastifyOptions](type-aliases/RegisterMdKitFastifyOptions.md) | - |
+| [MdKitTransportStore](type-aliases/MdKitTransportStore.md) | - |
+| [MdKitRestoreDocumentVersionInput](type-aliases/MdKitRestoreDocumentVersionInput.md) | - |
+
+## Functions
+
+| Function | Description |
+| ------ | ------ |
+| [registerMdKitFastify](functions/registerMdKitFastify.md) | Registers the mdkit REST endpoints on a Fastify app under `prefix`, backed by a transport store (typically from `createMdKitBackend`). |
+
+
+---
+
+<!-- source: reference/fastify/type-aliases/MdKitRestoreDocumentVersionInput.md -->
+
+# Type Alias: MdKitRestoreDocumentVersionInput
+
+```ts
+type MdKitRestoreDocumentVersionInput = {
+  documentId: string;
+  versionId: string;
+};
+```
+
+Defined in: [packages/mdkit/src/transport/store.ts:42](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/store.ts#L42)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="documentid"></a> `documentId` | `string` | [packages/mdkit/src/transport/store.ts:43](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/store.ts#L43) |
+| <a id="versionid"></a> `versionId` | `string` | [packages/mdkit/src/transport/store.ts:44](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/store.ts#L44) |
+
+
+---
+
+<!-- source: reference/fastify/type-aliases/MdKitTransportStore.md -->
+
+# Type Alias: MdKitTransportStore
+
+```ts
+type MdKitTransportStore = {
+  readDocument:   | MdKitDocumentSnapshot
+     | Promise<MdKitDocumentSnapshot>;
+  writeDocument:   | MdKitDocumentWriteResult
+     | Promise<MdKitDocumentWriteResult>;
+  resyncDocument?:   | MdKitDocumentSnapshot
+     | Promise<MdKitDocumentSnapshot>;
+  listDocumentVersions?:   | MdKitDocumentVersionSummary[]
+     | Promise<MdKitDocumentVersionSummary[]>;
+  readDocumentVersion?:   | MdKitDocumentVersionDetail
+     | Promise<
+     | MdKitDocumentVersionDetail
+     | null>
+     | null;
+  restoreDocumentVersion?:   | MdKitDocumentWriteResult
+     | Promise<MdKitDocumentWriteResult>;
+  readCollaborationState?:   | Uint8Array<ArrayBufferLike>
+     | Promise<Uint8Array<ArrayBufferLike> | null>
+     | null;
+  writeCollaborationState?: void | Promise<void>;
+};
+```
+
+Defined in: [packages/mdkit/src/transport/store.ts:9](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/store.ts#L9)
+
+## Methods
+
+### readDocument()
+
+```ts
+readDocument(documentId: string): 
+  | MdKitDocumentSnapshot
+| Promise<MdKitDocumentSnapshot>;
+```
+
+Defined in: [packages/mdkit/src/transport/store.ts:10](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/store.ts#L10)
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `documentId` | `string` |
+
+#### Returns
+
+  \| [`MdKitDocumentSnapshot`](../../index/type-aliases/MdKitDocumentSnapshot.md)
+  \| `Promise`\<[`MdKitDocumentSnapshot`](../../index/type-aliases/MdKitDocumentSnapshot.md)\>
+
+***
+
+### writeDocument()
+
+```ts
+writeDocument(input: MdKitDocumentWriteInput): 
+  | MdKitDocumentWriteResult
+| Promise<MdKitDocumentWriteResult>;
+```
+
+Defined in: [packages/mdkit/src/transport/store.ts:13](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/store.ts#L13)
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `input` | [`MdKitDocumentWriteInput`](../../index/type-aliases/MdKitDocumentWriteInput.md) |
+
+#### Returns
+
+  \| [`MdKitDocumentWriteResult`](../../index/type-aliases/MdKitDocumentWriteResult.md)
+  \| `Promise`\<[`MdKitDocumentWriteResult`](../../index/type-aliases/MdKitDocumentWriteResult.md)\>
+
+***
+
+### resyncDocument()?
+
+```ts
+optional resyncDocument(documentId: string): 
+  | MdKitDocumentSnapshot
+| Promise<MdKitDocumentSnapshot>;
+```
+
+Defined in: [packages/mdkit/src/transport/store.ts:16](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/store.ts#L16)
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `documentId` | `string` |
+
+#### Returns
+
+  \| [`MdKitDocumentSnapshot`](../../index/type-aliases/MdKitDocumentSnapshot.md)
+  \| `Promise`\<[`MdKitDocumentSnapshot`](../../index/type-aliases/MdKitDocumentSnapshot.md)\>
+
+***
+
+### listDocumentVersions()?
+
+```ts
+optional listDocumentVersions(documentId: string): 
+  | MdKitDocumentVersionSummary[]
+| Promise<MdKitDocumentVersionSummary[]>;
+```
+
+Defined in: [packages/mdkit/src/transport/store.ts:19](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/store.ts#L19)
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `documentId` | `string` |
+
+#### Returns
+
+  \| [`MdKitDocumentVersionSummary`](../../index/type-aliases/MdKitDocumentVersionSummary.md)[]
+  \| `Promise`\<[`MdKitDocumentVersionSummary`](../../index/type-aliases/MdKitDocumentVersionSummary.md)[]\>
+
+***
+
+### readDocumentVersion()?
+
+```ts
+optional readDocumentVersion(input: {
+  documentId: string;
+  versionId: string;
+}): 
+  | MdKitDocumentVersionDetail
+  | Promise<
+  | MdKitDocumentVersionDetail
+  | null>
+  | null;
+```
+
+Defined in: [packages/mdkit/src/transport/store.ts:22](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/store.ts#L22)
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `input` | \{ `documentId`: `string`; `versionId`: `string`; \} |
+| `input.documentId` | `string` |
+| `input.versionId` | `string` |
+
+#### Returns
+
+  \| [`MdKitDocumentVersionDetail`](../../index/type-aliases/MdKitDocumentVersionDetail.md)
+  \| `Promise`\<
+  \| [`MdKitDocumentVersionDetail`](../../index/type-aliases/MdKitDocumentVersionDetail.md)
+  \| `null`\>
+  \| `null`
+
+***
+
+### restoreDocumentVersion()?
+
+```ts
+optional restoreDocumentVersion(input: {
+  documentId: string;
+  versionId: string;
+}): 
+  | MdKitDocumentWriteResult
+| Promise<MdKitDocumentWriteResult>;
+```
+
+Defined in: [packages/mdkit/src/transport/store.ts:29](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/store.ts#L29)
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `input` | \{ `documentId`: `string`; `versionId`: `string`; \} |
+| `input.documentId` | `string` |
+| `input.versionId` | `string` |
+
+#### Returns
+
+  \| [`MdKitDocumentWriteResult`](../../index/type-aliases/MdKitDocumentWriteResult.md)
+  \| `Promise`\<[`MdKitDocumentWriteResult`](../../index/type-aliases/MdKitDocumentWriteResult.md)\>
+
+***
+
+### readCollaborationState()?
+
+```ts
+optional readCollaborationState(documentName: string): 
+  | Uint8Array<ArrayBufferLike>
+  | Promise<Uint8Array<ArrayBufferLike> | null>
+  | null;
+```
+
+Defined in: [packages/mdkit/src/transport/store.ts:33](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/store.ts#L33)
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `documentName` | `string` |
+
+#### Returns
+
+  \| `Uint8Array`\<`ArrayBufferLike`\>
+  \| `Promise`\<`Uint8Array`\<`ArrayBufferLike`\> \| `null`\>
+  \| `null`
+
+***
+
+### writeCollaborationState()?
+
+```ts
+optional writeCollaborationState(documentName: string, state: Uint8Array): void | Promise<void>;
+```
+
+Defined in: [packages/mdkit/src/transport/store.ts:36](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/store.ts#L36)
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `documentName` | `string` |
+| `state` | `Uint8Array` |
+
+#### Returns
+
+`void` \| `Promise`\<`void`\>
+
+
+---
+
+<!-- source: reference/fastify/type-aliases/RegisterMdKitFastifyOptions.md -->
+
+# Type Alias: RegisterMdKitFastifyOptions
+
+```ts
+type RegisterMdKitFastifyOptions = {
+  prefix?: string;
+  store: MdKitTransportStore;
+};
+```
+
+Defined in: [packages/mdkit/src/transport/fastify.ts:5](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/fastify.ts#L5)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="prefix"></a> `prefix?` | `string` | [packages/mdkit/src/transport/fastify.ts:6](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/fastify.ts#L6) |
+| <a id="store"></a> `store` | [`MdKitTransportStore`](MdKitTransportStore.md) | [packages/mdkit/src/transport/fastify.ts:7](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/fastify.ts#L7) |
+
+
+---
+
+<!-- source: reference/index/functions/createMdKitDocumentRecord.md -->
+
+# Function: createMdKitDocumentRecord()
+
+```ts
+function createMdKitDocumentRecord(input?: CreateMdKitDocumentRecordInput): MdKitDocumentRecord;
+```
+
+Defined in: [packages/mdkit/src/core/documentEngine.ts:78](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L78)
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `input` | [`CreateMdKitDocumentRecordInput`](../type-aliases/CreateMdKitDocumentRecordInput.md) |
+
+## Returns
+
+[`MdKitDocumentRecord`](../type-aliases/MdKitDocumentRecord.md)
+
+
+---
+
+<!-- source: reference/index/functions/createMdKitEditorThemeStyle.md -->
+
+# Function: createMdKitEditorThemeStyle()
+
+```ts
+function createMdKitEditorThemeStyle(theme: MdKitEditorTheme): MdKitEditorThemeStyle;
+```
+
+Defined in: [packages/mdkit/src/theme/editorTheme.ts:54](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/theme/editorTheme.ts#L54)
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `theme` | [`MdKitEditorTheme`](../type-aliases/MdKitEditorTheme.md) |
+
+## Returns
+
+[`MdKitEditorThemeStyle`](../type-aliases/MdKitEditorThemeStyle.md)
+
+
+---
+
+<!-- source: reference/index/functions/createMdKitRestAdapter.md -->
+
+# Function: createMdKitRestAdapter()
+
+```ts
+function createMdKitRestAdapter(__namedParameters: CreateMdKitRestAdapterOptions): MdKitDocumentAdapter;
+```
+
+Defined in: [packages/mdkit/src/transport/rest.ts:31](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/rest.ts#L31)
+
+Builds an [MdKitDocumentAdapter](../interfaces/MdKitDocumentAdapter.md) that talks to the mdkit REST endpoint
+shape. Restore is not part of the adapter contract, so REST restore needs a
+separate call from application code.
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `__namedParameters` | [`CreateMdKitRestAdapterOptions`](../type-aliases/CreateMdKitRestAdapterOptions.md) |
+
+## Returns
+
+[`MdKitDocumentAdapter`](../interfaces/MdKitDocumentAdapter.md)
+
+
+---
+
+<!-- source: reference/index/functions/detectMdKitDocumentConflict.md -->
+
+# Function: detectMdKitDocumentConflict()
+
+```ts
+function detectMdKitDocumentConflict(input: {
+  baseVersion: MdKitDocumentVersionToken;
+  currentVersion: MdKitDocumentVersionToken;
+}): boolean;
+```
+
+Defined in: [packages/mdkit/src/core/documentEngine.ts:51](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L51)
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `input` | \{ `baseVersion`: [`MdKitDocumentVersionToken`](../type-aliases/MdKitDocumentVersionToken.md); `currentVersion`: [`MdKitDocumentVersionToken`](../type-aliases/MdKitDocumentVersionToken.md); \} |
+| `input.baseVersion` | [`MdKitDocumentVersionToken`](../type-aliases/MdKitDocumentVersionToken.md) |
+| `input.currentVersion` | [`MdKitDocumentVersionToken`](../type-aliases/MdKitDocumentVersionToken.md) |
+
+## Returns
+
+`boolean`
+
+
+---
+
+<!-- source: reference/index/functions/extractYamlFrontMatter.md -->
+
+# Function: extractYamlFrontMatter()
+
+```ts
+function extractYamlFrontMatter(markdown: string): MdKitYamlFrontMatterExtraction;
+```
+
+Defined in: [packages/mdkit/src/markdown/yamlFrontMatter.ts:68](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/yamlFrontMatter.ts#L68)
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `markdown` | `string` |
+
+## Returns
+
+[`MdKitYamlFrontMatterExtraction`](../type-aliases/MdKitYamlFrontMatterExtraction.md)
+
+
+---
+
+<!-- source: reference/index/functions/hasYamlFrontMatter.md -->
+
+# Function: hasYamlFrontMatter()
+
+```ts
+function hasYamlFrontMatter(markdown: string): boolean;
+```
+
+Defined in: [packages/mdkit/src/markdown/yamlFrontMatter.ts:118](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/yamlFrontMatter.ts#L118)
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `markdown` | `string` |
+
+## Returns
+
+`boolean`
+
+
+---
+
+<!-- source: reference/index/functions/MdKitConflictPanel.md -->
+
+# Function: MdKitConflictPanel()
+
+```ts
+function MdKitConflictPanel(__namedParameters: MdKitConflictPanelProps): Element | null;
+```
+
+Defined in: [packages/mdkit/src/document/MdKitConflictPanel.tsx:15](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/MdKitConflictPanel.tsx#L15)
+
+Base panel for resolving a save conflict. Previews remote and local content
+and keeps one side. Renders `null` when the document has no conflict.
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `__namedParameters` | [`MdKitConflictPanelProps`](../type-aliases/MdKitConflictPanelProps.md) |
+
+## Returns
+
+`Element` \| `null`
+
+
+---
+
+<!-- source: reference/index/functions/MdKitDocumentToolbar.md -->
+
+# Function: MdKitDocumentToolbar()
+
+```ts
+function MdKitDocumentToolbar(__namedParameters: MdKitDocumentToolbarProps): Element;
+```
+
+Defined in: [packages/mdkit/src/document/MdKitDocumentToolbar.tsx:30](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/MdKitDocumentToolbar.tsx#L30)
+
+Unstyled workflow controls for a connected document: save/collaboration
+status plus entry points for version history and conflict resolution. Starter
+UI — drop it for your own controls when it doesn't fit.
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `__namedParameters` | [`MdKitDocumentToolbarProps`](../type-aliases/MdKitDocumentToolbarProps.md) |
+
+## Returns
+
+`Element`
+
+
+---
+
+<!-- source: reference/index/functions/MdKitEditor.md -->
+
+# Function: MdKitEditor()
+
+```ts
+function MdKitEditor(props: MdKitEditorProps): Element;
+```
+
+Defined in: [packages/mdkit/src/markdown/MdKitEditor.tsx:43](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitEditor.tsx#L43)
+
+Markdown-first rich text editor. Behaves like a controlled textarea in local
+mode and switches to a Yjs-backed engine when given a collaboration session.
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `props` | [`MdKitEditorProps`](../type-aliases/MdKitEditorProps.md) |
+
+## Returns
+
+`Element`
+
+## Remarks
+
+In collaborative mode the Yjs document is the content source; external
+`value` changes are not applied into the shared document.
+
+
+---
+
+<!-- source: reference/index/functions/MdKitThemeEditor.md -->
+
+# Function: MdKitThemeEditor()
+
+```ts
+function MdKitThemeEditor(__namedParameters: MdKitThemeEditorProps): Element;
+```
+
+Defined in: [packages/mdkit/src/theme/MdKitThemeEditor.tsx:14](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/theme/MdKitThemeEditor.tsx#L14)
+
+Optional controls for editing an [MdKitEditorTheme](../type-aliases/MdKitEditorTheme.md). Intended for theme
+builders, docs, and debug tools rather than production editing surfaces.
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `__namedParameters` | [`MdKitThemeEditorProps`](../type-aliases/MdKitThemeEditorProps.md) |
+
+## Returns
+
+`Element`
+
+
+---
+
+<!-- source: reference/index/functions/MdKitView.md -->
+
+# Function: MdKitView()
+
+```ts
+function MdKitView(__namedParameters: MdKitViewProps): Element;
+```
+
+Defined in: [packages/mdkit/src/markdown/MdKitView.tsx:21](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitView.tsx#L21)
+
+Read-only markdown surface that mirrors [MdKitEditor](MdKitEditor.md)'s styling and
+sizing contract without mounting the editor runtime. Use it for previews and
+restored checkpoints.
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `__namedParameters` | [`MdKitViewProps`](../type-aliases/MdKitViewProps.md) |
+
+## Returns
+
+`Element`
+
+
+---
+
+<!-- source: reference/index/functions/measureMdKitEditDistance.md -->
+
+# Function: measureMdKitEditDistance()
+
+```ts
+function measureMdKitEditDistance(left: string, right: string): number;
+```
+
+Defined in: [packages/mdkit/src/core/checkpointPolicy.ts:32](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/checkpointPolicy.ts#L32)
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `left` | `string` |
+| `right` | `string` |
+
+## Returns
+
+`number`
+
+
+---
+
+<!-- source: reference/index/functions/normalizeMdKitVersionToken.md -->
+
+# Function: normalizeMdKitVersionToken()
+
+```ts
+function normalizeMdKitVersionToken(version: 
+  | MdKitDocumentVersionToken
+  | undefined): string | null;
+```
+
+Defined in: [packages/mdkit/src/core/documentEngine.ts:47](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L47)
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `version` | \| [`MdKitDocumentVersionToken`](../type-aliases/MdKitDocumentVersionToken.md) \| `undefined` |
+
+## Returns
+
+`string` \| `null`
+
+
+---
+
+<!-- source: reference/index/functions/parseYamlFrontMatter.md -->
+
+# Function: parseYamlFrontMatter()
+
+```ts
+function parseYamlFrontMatter(yaml: string): unknown;
+```
+
+Defined in: [packages/mdkit/src/markdown/yamlFrontMatter.ts:58](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/yamlFrontMatter.ts#L58)
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `yaml` | `string` |
+
+## Returns
+
+`unknown`
+
+
+---
+
+<!-- source: reference/index/functions/prependYamlFrontMatter.md -->
+
+# Function: prependYamlFrontMatter()
+
+```ts
+function prependYamlFrontMatter(frontMatter: 
+  | string
+  | MdKitYamlFrontMatter
+  | null, body: string): string;
+```
+
+Defined in: [packages/mdkit/src/markdown/yamlFrontMatter.ts:124](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/yamlFrontMatter.ts#L124)
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `frontMatter` | \| `string` \| [`MdKitYamlFrontMatter`](../type-aliases/MdKitYamlFrontMatter.md) \| `null` |
+| `body` | `string` |
+
+## Returns
+
+`string`
+
+
+---
+
+<!-- source: reference/index/functions/removeYamlFrontMatter.md -->
+
+# Function: removeYamlFrontMatter()
+
+```ts
+function removeYamlFrontMatter(markdown: string): string;
+```
+
+Defined in: [packages/mdkit/src/markdown/yamlFrontMatter.ts:121](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/yamlFrontMatter.ts#L121)
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `markdown` | `string` |
+
+## Returns
+
+`string`
+
+
+---
+
+<!-- source: reference/index/functions/restoreMdKitDocumentVersion.md -->
+
+# Function: restoreMdKitDocumentVersion()
+
+```ts
+function restoreMdKitDocumentVersion(record: MdKitDocumentRecord, input: RestoreMdKitDocumentVersionInput): RestoreMdKitDocumentVersionResult;
+```
+
+Defined in: [packages/mdkit/src/core/documentEngine.ts:151](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L151)
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `record` | [`MdKitDocumentRecord`](../type-aliases/MdKitDocumentRecord.md) |
+| `input` | [`RestoreMdKitDocumentVersionInput`](../type-aliases/RestoreMdKitDocumentVersionInput.md) |
+
+## Returns
+
+[`RestoreMdKitDocumentVersionResult`](../type-aliases/RestoreMdKitDocumentVersionResult.md)
+
+
+---
+
+<!-- source: reference/index/functions/useMdKitCollaboration.md -->
+
+# Function: useMdKitCollaboration()
+
+```ts
+function useMdKitCollaboration(options: UseMdKitCollaborationOptions): 
+  | MdKitCollaborationSession
+  | null;
+```
+
+Defined in: [packages/mdkit/src/collaboration/useMdKitCollaboration.ts:195](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/collaboration/useMdKitCollaboration.ts#L195)
+
+Creates a Hocuspocus/Yjs collaboration session for [MdKitEditor](MdKitEditor.md),
+managing the provider connection, local participant, and presence.
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `options` | [`UseMdKitCollaborationOptions`](../type-aliases/UseMdKitCollaborationOptions.md) |
+
+## Returns
+
+  \| [`MdKitCollaborationSession`](../type-aliases/MdKitCollaborationSession.md)
+  \| `null`
+
+
+---
+
+<!-- source: reference/index/functions/useMdKitDocument.md -->
+
+# Function: useMdKitDocument()
+
+```ts
+function useMdKitDocument(options: UseMdKitDocumentOptions): MdKitDocumentController;
+```
+
+Defined in: [packages/mdkit/src/document/useMdKitDocument.ts:54](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L54)
+
+Connects an editor to a storage adapter: loads the document, debounces
+autosave, tracks dirty/save status, and surfaces conflicts for resolution.
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `options` | [`UseMdKitDocumentOptions`](../type-aliases/UseMdKitDocumentOptions.md) |
+
+## Returns
+
+[`MdKitDocumentController`](../type-aliases/MdKitDocumentController.md)
+
+
+---
+
+<!-- source: reference/index/functions/useMdKitDocumentVersions.md -->
+
+# Function: useMdKitDocumentVersions()
+
+```ts
+function useMdKitDocumentVersions(options: UseMdKitDocumentVersionsOptions): MdKitDocumentVersionsController;
+```
+
+Defined in: [packages/mdkit/src/versioning/useMdKitDocumentVersions.ts:32](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/versioning/useMdKitDocumentVersions.ts#L32)
+
+Lists a document's checkpoints and lazily reads checkpoint detail, tracking
+loading state for checkpoint-history UI.
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `options` | [`UseMdKitDocumentVersionsOptions`](../type-aliases/UseMdKitDocumentVersionsOptions.md) |
+
+## Returns
+
+[`MdKitDocumentVersionsController`](../type-aliases/MdKitDocumentVersionsController.md)
+
+
+---
+
+<!-- source: reference/index/functions/VersionHistoryPanel.md -->
+
+# Function: VersionHistoryPanel()
+
+```ts
+function VersionHistoryPanel(__namedParameters: VersionHistoryPanelProps): Element;
+```
+
+Defined in: [packages/mdkit/src/versioning/VersionHistoryPanel.tsx:33](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/versioning/VersionHistoryPanel.tsx#L33)
+
+Renders checkpoint history from [useMdKitDocumentVersions](useMdKitDocumentVersions.md) and invokes
+the host's restore handler for a chosen checkpoint.
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `__namedParameters` | [`VersionHistoryPanelProps`](../type-aliases/VersionHistoryPanelProps.md) |
+
+## Returns
+
+`Element`
+
+
+---
+
+<!-- source: reference/index/functions/writeMdKitDocumentRecord.md -->
+
+# Function: writeMdKitDocumentRecord()
+
+```ts
+function writeMdKitDocumentRecord(record: MdKitDocumentRecord, input: WriteMdKitDocumentRecordInput): WriteMdKitDocumentRecordResult;
+```
+
+Defined in: [packages/mdkit/src/core/documentEngine.ts:102](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L102)
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `record` | [`MdKitDocumentRecord`](../type-aliases/MdKitDocumentRecord.md) |
+| `input` | [`WriteMdKitDocumentRecordInput`](../type-aliases/WriteMdKitDocumentRecordInput.md) |
+
+## Returns
+
+[`WriteMdKitDocumentRecordResult`](../type-aliases/WriteMdKitDocumentRecordResult.md)
+
+
+---
+
+<!-- source: reference/index/interfaces/MdKitDocumentAdapter.md -->
+
+# Interface: MdKitDocumentAdapter
+
+Defined in: [packages/mdkit/src/document/documentTypes.ts:48](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L48)
+
+Storage contract the document hooks talk to. Implement it over tRPC, REST, or
+anything else; only `readDocument`/`writeDocument` are required, the
+checkpoint methods are optional and enable version-history UI.
+
+## Methods
+
+### readDocument()
+
+```ts
+readDocument(documentId: string): Promise<MdKitDocumentSnapshot>;
+```
+
+Defined in: [packages/mdkit/src/document/documentTypes.ts:49](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L49)
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `documentId` | `string` |
+
+#### Returns
+
+`Promise`\<[`MdKitDocumentSnapshot`](../type-aliases/MdKitDocumentSnapshot.md)\>
+
+***
+
+### writeDocument()
+
+```ts
+writeDocument(input: MdKitDocumentWriteInput): Promise<MdKitDocumentWriteResult>;
+```
+
+Defined in: [packages/mdkit/src/document/documentTypes.ts:50](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L50)
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `input` | [`MdKitDocumentWriteInput`](../type-aliases/MdKitDocumentWriteInput.md) |
+
+#### Returns
+
+`Promise`\<[`MdKitDocumentWriteResult`](../type-aliases/MdKitDocumentWriteResult.md)\>
+
+***
+
+### resyncDocument()?
+
+```ts
+optional resyncDocument(documentId: string): Promise<MdKitDocumentSnapshot>;
+```
+
+Defined in: [packages/mdkit/src/document/documentTypes.ts:53](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L53)
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `documentId` | `string` |
+
+#### Returns
+
+`Promise`\<[`MdKitDocumentSnapshot`](../type-aliases/MdKitDocumentSnapshot.md)\>
+
+***
+
+### listDocumentVersions()?
+
+```ts
+optional listDocumentVersions(documentId: string): Promise<MdKitDocumentVersionSummary[]>;
+```
+
+Defined in: [packages/mdkit/src/document/documentTypes.ts:54](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L54)
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `documentId` | `string` |
+
+#### Returns
+
+`Promise`\<[`MdKitDocumentVersionSummary`](../type-aliases/MdKitDocumentVersionSummary.md)[]\>
+
+***
+
+### readDocumentVersion()?
+
+```ts
+optional readDocumentVersion(input: {
+  documentId: string;
+  versionId: string;
+}): Promise<
+  | MdKitDocumentVersionDetail
+| null>;
+```
+
+Defined in: [packages/mdkit/src/document/documentTypes.ts:57](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L57)
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `input` | \{ `documentId`: `string`; `versionId`: `string`; \} |
+| `input.documentId` | `string` |
+| `input.versionId` | `string` |
+
+#### Returns
+
+`Promise`\<
+  \| [`MdKitDocumentVersionDetail`](../type-aliases/MdKitDocumentVersionDetail.md)
+  \| `null`\>
+
+
+---
+
+<!-- source: reference/index/README.md -->
+
+# index
+
+## Interfaces
+
+| Interface | Description |
+| ------ | ------ |
+| [MdKitDocumentAdapter](interfaces/MdKitDocumentAdapter.md) | Storage contract the document hooks talk to. Implement it over tRPC, REST, or anything else; only `readDocument`/`writeDocument` are required, the checkpoint methods are optional and enable version-history UI. |
+
+## Type Aliases
+
+| Type Alias | Description |
+| ------ | ------ |
+| [UseMdKitCollaborationOptions](type-aliases/UseMdKitCollaborationOptions.md) | - |
+| [MdKitCheckpointPolicyInput](type-aliases/MdKitCheckpointPolicyInput.md) | - |
+| [MdKitCheckpointPolicy](type-aliases/MdKitCheckpointPolicy.md) | - |
+| [MdKitSmartCheckpointPolicyOptions](type-aliases/MdKitSmartCheckpointPolicyOptions.md) | - |
+| [MdKitDocumentRecord](type-aliases/MdKitDocumentRecord.md) | - |
+| [CreateMdKitDocumentRecordInput](type-aliases/CreateMdKitDocumentRecordInput.md) | - |
+| [WriteMdKitDocumentRecordInput](type-aliases/WriteMdKitDocumentRecordInput.md) | - |
+| [WriteMdKitDocumentRecordResult](type-aliases/WriteMdKitDocumentRecordResult.md) | - |
+| [RestoreMdKitDocumentVersionInput](type-aliases/RestoreMdKitDocumentVersionInput.md) | - |
+| [RestoreMdKitDocumentVersionResult](type-aliases/RestoreMdKitDocumentVersionResult.md) | - |
+| [MdKitConflictPanelProps](type-aliases/MdKitConflictPanelProps.md) | - |
+| [MdKitDocumentToolbarProps](type-aliases/MdKitDocumentToolbarProps.md) | - |
+| [MdKitDocumentVersionToken](type-aliases/MdKitDocumentVersionToken.md) | - |
+| [MdKitDocumentSnapshot](type-aliases/MdKitDocumentSnapshot.md) | - |
+| [MdKitDocumentWriteInput](type-aliases/MdKitDocumentWriteInput.md) | - |
+| [MdKitDocumentWriteResult](type-aliases/MdKitDocumentWriteResult.md) | - |
+| [MdKitDocumentVersionSummary](type-aliases/MdKitDocumentVersionSummary.md) | - |
+| [MdKitDocumentVersionDetail](type-aliases/MdKitDocumentVersionDetail.md) | - |
+| [MdKitCollaborationStatus](type-aliases/MdKitCollaborationStatus.md) | - |
+| [MdKitCollaborationParticipant](type-aliases/MdKitCollaborationParticipant.md) | - |
+| [MdKitCollaborationPresence](type-aliases/MdKitCollaborationPresence.md) | - |
+| [MdKitCollaborationSession](type-aliases/MdKitCollaborationSession.md) | - |
+| [UseMdKitDocumentOptions](type-aliases/UseMdKitDocumentOptions.md) | - |
+| [MdKitDocumentConflictDetails](type-aliases/MdKitDocumentConflictDetails.md) | - |
+| [MdKitDocumentController](type-aliases/MdKitDocumentController.md) | - |
+| [MdKitEditorProps](type-aliases/MdKitEditorProps.md) | - |
+| [MdKitViewProps](type-aliases/MdKitViewProps.md) | - |
+| [MdKitEditorDebugEvent](type-aliases/MdKitEditorDebugEvent.md) | - |
+| [MdKitYamlFrontMatter](type-aliases/MdKitYamlFrontMatter.md) | - |
+| [MdKitYamlFrontMatterExtraction](type-aliases/MdKitYamlFrontMatterExtraction.md) | - |
+| [MdKitThemeEditorProps](type-aliases/MdKitThemeEditorProps.md) | - |
+| [MdKitEditorTheme](type-aliases/MdKitEditorTheme.md) | - |
+| [MdKitEditorThemeStyle](type-aliases/MdKitEditorThemeStyle.md) | - |
+| [CreateMdKitRestAdapterOptions](type-aliases/CreateMdKitRestAdapterOptions.md) | - |
+| [VersionHistoryPanelProps](type-aliases/VersionHistoryPanelProps.md) | - |
+| [UseMdKitDocumentVersionsOptions](type-aliases/UseMdKitDocumentVersionsOptions.md) | - |
+| [MdKitDocumentVersionsController](type-aliases/MdKitDocumentVersionsController.md) | - |
+| [MdKitMarkdownYjsOptions](type-aliases/MdKitMarkdownYjsOptions.md) | - |
+
+## Variables
+
+| Variable | Description |
+| ------ | ------ |
+| [CheckpointPolicy](variables/CheckpointPolicy.md) | Factories for the policy that decides when a saved document becomes a checkpoint. Pass the result to `createMdKitBackend`, not to your store. |
+| [defaultMdKitEditorTheme](variables/defaultMdKitEditorTheme.md) | - |
+| [darkMdKitEditorTheme](variables/darkMdKitEditorTheme.md) | - |
+| [yjs](variables/yjs.md) | - |
+
+## Functions
+
+| Function | Description |
+| ------ | ------ |
+| [useMdKitCollaboration](functions/useMdKitCollaboration.md) | Creates a Hocuspocus/Yjs collaboration session for [MdKitEditor](functions/MdKitEditor.md), managing the provider connection, local participant, and presence. |
+| [measureMdKitEditDistance](functions/measureMdKitEditDistance.md) | - |
+| [normalizeMdKitVersionToken](functions/normalizeMdKitVersionToken.md) | - |
+| [detectMdKitDocumentConflict](functions/detectMdKitDocumentConflict.md) | - |
+| [createMdKitDocumentRecord](functions/createMdKitDocumentRecord.md) | - |
+| [writeMdKitDocumentRecord](functions/writeMdKitDocumentRecord.md) | - |
+| [restoreMdKitDocumentVersion](functions/restoreMdKitDocumentVersion.md) | - |
+| [MdKitConflictPanel](functions/MdKitConflictPanel.md) | Base panel for resolving a save conflict. Previews remote and local content and keeps one side. Renders `null` when the document has no conflict. |
+| [MdKitDocumentToolbar](functions/MdKitDocumentToolbar.md) | Unstyled workflow controls for a connected document: save/collaboration status plus entry points for version history and conflict resolution. Starter UI — drop it for your own controls when it doesn't fit. |
+| [useMdKitDocument](functions/useMdKitDocument.md) | Connects an editor to a storage adapter: loads the document, debounces autosave, tracks dirty/save status, and surfaces conflicts for resolution. |
+| [MdKitEditor](functions/MdKitEditor.md) | Markdown-first rich text editor. Behaves like a controlled textarea in local mode and switches to a Yjs-backed engine when given a collaboration session. |
+| [MdKitView](functions/MdKitView.md) | Read-only markdown surface that mirrors [MdKitEditor](functions/MdKitEditor.md)'s styling and sizing contract without mounting the editor runtime. Use it for previews and restored checkpoints. |
+| [parseYamlFrontMatter](functions/parseYamlFrontMatter.md) | - |
+| [extractYamlFrontMatter](functions/extractYamlFrontMatter.md) | - |
+| [hasYamlFrontMatter](functions/hasYamlFrontMatter.md) | - |
+| [removeYamlFrontMatter](functions/removeYamlFrontMatter.md) | - |
+| [prependYamlFrontMatter](functions/prependYamlFrontMatter.md) | - |
+| [MdKitThemeEditor](functions/MdKitThemeEditor.md) | Optional controls for editing an [MdKitEditorTheme](type-aliases/MdKitEditorTheme.md). Intended for theme builders, docs, and debug tools rather than production editing surfaces. |
+| [createMdKitEditorThemeStyle](functions/createMdKitEditorThemeStyle.md) | - |
+| [createMdKitRestAdapter](functions/createMdKitRestAdapter.md) | Builds an [MdKitDocumentAdapter](interfaces/MdKitDocumentAdapter.md) that talks to the mdkit REST endpoint shape. Restore is not part of the adapter contract, so REST restore needs a separate call from application code. |
+| [VersionHistoryPanel](functions/VersionHistoryPanel.md) | Renders checkpoint history from [useMdKitDocumentVersions](functions/useMdKitDocumentVersions.md) and invokes the host's restore handler for a chosen checkpoint. |
+| [useMdKitDocumentVersions](functions/useMdKitDocumentVersions.md) | Lists a document's checkpoints and lazily reads checkpoint detail, tracking loading state for checkpoint-history UI. |
+
+
+---
+
+<!-- source: reference/index/type-aliases/CreateMdKitDocumentRecordInput.md -->
+
+# Type Alias: CreateMdKitDocumentRecordInput
+
+```ts
+type CreateMdKitDocumentRecordInput = {
+  content?: string;
+  now?: string;
+};
+```
+
+Defined in: [packages/mdkit/src/core/documentEngine.ts:13](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L13)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="content"></a> `content?` | `string` | [packages/mdkit/src/core/documentEngine.ts:14](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L14) |
+| <a id="now"></a> `now?` | `string` | [packages/mdkit/src/core/documentEngine.ts:15](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L15) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/CreateMdKitRestAdapterOptions.md -->
+
+# Type Alias: CreateMdKitRestAdapterOptions
+
+```ts
+type CreateMdKitRestAdapterOptions = {
+  baseUrl: string;
+  fetch?: typeof fetch;
+};
+```
+
+Defined in: [packages/mdkit/src/transport/rest.ts:6](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/rest.ts#L6)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="baseurl"></a> `baseUrl` | `string` | [packages/mdkit/src/transport/rest.ts:7](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/rest.ts#L7) |
+| <a id="fetch"></a> `fetch?` | *typeof* `fetch` | [packages/mdkit/src/transport/rest.ts:8](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/rest.ts#L8) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitCheckpointPolicy.md -->
+
+# Type Alias: MdKitCheckpointPolicy
+
+```ts
+type MdKitCheckpointPolicy = {
+  shouldCheckpoint: boolean | Promise<boolean>;
+};
+```
+
+Defined in: [packages/mdkit/src/core/checkpointPolicy.ts:18](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/checkpointPolicy.ts#L18)
+
+## Methods
+
+### shouldCheckpoint()
+
+```ts
+shouldCheckpoint(input: MdKitCheckpointPolicyInput): boolean | Promise<boolean>;
+```
+
+Defined in: [packages/mdkit/src/core/checkpointPolicy.ts:19](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/checkpointPolicy.ts#L19)
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `input` | [`MdKitCheckpointPolicyInput`](MdKitCheckpointPolicyInput.md) |
+
+#### Returns
+
+`boolean` \| `Promise`\<`boolean`\>
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitCheckpointPolicyInput.md -->
+
+# Type Alias: MdKitCheckpointPolicyInput
+
+```ts
+type MdKitCheckpointPolicyInput = {
+  currentContent: string;
+  documentId: string;
+  editDistance: number;
+  previousCheckpoint: MdKitDocumentVersionDetail | null;
+  previousCheckpointContent: string | null;
+  timeSinceLastCheckpointMs: number | null;
+  writeInput: MdKitDocumentWriteInput;
+  writeResult: MdKitDocumentWriteResult;
+};
+```
+
+Defined in: [packages/mdkit/src/core/checkpointPolicy.ts:7](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/checkpointPolicy.ts#L7)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="currentcontent"></a> `currentContent` | `string` | [packages/mdkit/src/core/checkpointPolicy.ts:8](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/checkpointPolicy.ts#L8) |
+| <a id="documentid"></a> `documentId` | `string` | [packages/mdkit/src/core/checkpointPolicy.ts:9](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/checkpointPolicy.ts#L9) |
+| <a id="editdistance"></a> `editDistance` | `number` | [packages/mdkit/src/core/checkpointPolicy.ts:10](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/checkpointPolicy.ts#L10) |
+| <a id="previouscheckpoint"></a> `previousCheckpoint` | [`MdKitDocumentVersionDetail`](MdKitDocumentVersionDetail.md) \| `null` | [packages/mdkit/src/core/checkpointPolicy.ts:11](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/checkpointPolicy.ts#L11) |
+| <a id="previouscheckpointcontent"></a> `previousCheckpointContent` | `string` \| `null` | [packages/mdkit/src/core/checkpointPolicy.ts:12](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/checkpointPolicy.ts#L12) |
+| <a id="timesincelastcheckpointms"></a> `timeSinceLastCheckpointMs` | `number` \| `null` | [packages/mdkit/src/core/checkpointPolicy.ts:13](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/checkpointPolicy.ts#L13) |
+| <a id="writeinput"></a> `writeInput` | [`MdKitDocumentWriteInput`](MdKitDocumentWriteInput.md) | [packages/mdkit/src/core/checkpointPolicy.ts:14](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/checkpointPolicy.ts#L14) |
+| <a id="writeresult"></a> `writeResult` | [`MdKitDocumentWriteResult`](MdKitDocumentWriteResult.md) | [packages/mdkit/src/core/checkpointPolicy.ts:15](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/checkpointPolicy.ts#L15) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitCollaborationParticipant.md -->
+
+# Type Alias: MdKitCollaborationParticipant
+
+```ts
+type MdKitCollaborationParticipant = {
+  id: string;
+  name: string;
+  color?: string;
+  imageUrl?: string;
+};
+```
+
+Defined in: [packages/mdkit/src/document/documentTypes.ts:68](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L68)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="id"></a> `id` | `string` | [packages/mdkit/src/document/documentTypes.ts:69](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L69) |
+| <a id="name"></a> `name` | `string` | [packages/mdkit/src/document/documentTypes.ts:70](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L70) |
+| <a id="color"></a> `color?` | `string` | [packages/mdkit/src/document/documentTypes.ts:71](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L71) |
+| <a id="imageurl"></a> `imageUrl?` | `string` | [packages/mdkit/src/document/documentTypes.ts:72](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L72) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitCollaborationPresence.md -->
+
+# Type Alias: MdKitCollaborationPresence
+
+```ts
+type MdKitCollaborationPresence = MdKitCollaborationParticipant & {
+  clientId: number;
+  isLocal: boolean;
+};
+```
+
+Defined in: [packages/mdkit/src/document/documentTypes.ts:75](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L75)
+
+## Type Declaration
+
+| Name | Type | Defined in |
+| ------ | ------ | ------ |
+| `clientId` | `number` | [packages/mdkit/src/document/documentTypes.ts:76](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L76) |
+| `isLocal` | `boolean` | [packages/mdkit/src/document/documentTypes.ts:77](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L77) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitCollaborationSession.md -->
+
+# Type Alias: MdKitCollaborationSession
+
+```ts
+type MdKitCollaborationSession = {
+  collaborator: MdKitCollaborationParticipant;
+  document: Y.Doc;
+  isCollaborating: boolean;
+  otherParticipants: MdKitCollaborationPresence[];
+  participants: MdKitCollaborationPresence[];
+  provider: HocuspocusProvider | null;
+  roomName: string;
+  status: MdKitCollaborationStatus;
+};
+```
+
+Defined in: [packages/mdkit/src/document/documentTypes.ts:80](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L80)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="collaborator"></a> `collaborator` | [`MdKitCollaborationParticipant`](MdKitCollaborationParticipant.md) | [packages/mdkit/src/document/documentTypes.ts:81](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L81) |
+| <a id="document"></a> `document` | `Y.Doc` | [packages/mdkit/src/document/documentTypes.ts:82](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L82) |
+| <a id="iscollaborating"></a> `isCollaborating` | `boolean` | [packages/mdkit/src/document/documentTypes.ts:83](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L83) |
+| <a id="otherparticipants"></a> `otherParticipants` | [`MdKitCollaborationPresence`](MdKitCollaborationPresence.md)[] | [packages/mdkit/src/document/documentTypes.ts:84](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L84) |
+| <a id="participants"></a> `participants` | [`MdKitCollaborationPresence`](MdKitCollaborationPresence.md)[] | [packages/mdkit/src/document/documentTypes.ts:85](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L85) |
+| <a id="provider"></a> `provider` | `HocuspocusProvider` \| `null` | [packages/mdkit/src/document/documentTypes.ts:86](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L86) |
+| <a id="roomname"></a> `roomName` | `string` | [packages/mdkit/src/document/documentTypes.ts:87](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L87) |
+| <a id="status"></a> `status` | [`MdKitCollaborationStatus`](MdKitCollaborationStatus.md) | [packages/mdkit/src/document/documentTypes.ts:88](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L88) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitCollaborationStatus.md -->
+
+# Type Alias: MdKitCollaborationStatus
+
+```ts
+type MdKitCollaborationStatus = "connecting" | "connected" | "disconnected";
+```
+
+Defined in: [packages/mdkit/src/document/documentTypes.ts:63](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L63)
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitConflictPanelProps.md -->
+
+# Type Alias: MdKitConflictPanelProps
+
+```ts
+type MdKitConflictPanelProps = {
+  className?: string;
+  document: MdKitDocumentController;
+  title?: string;
+};
+```
+
+Defined in: [packages/mdkit/src/document/MdKitConflictPanel.tsx:5](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/MdKitConflictPanel.tsx#L5)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="classname"></a> `className?` | `string` | [packages/mdkit/src/document/MdKitConflictPanel.tsx:6](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/MdKitConflictPanel.tsx#L6) |
+| <a id="document"></a> `document` | [`MdKitDocumentController`](MdKitDocumentController.md) | [packages/mdkit/src/document/MdKitConflictPanel.tsx:7](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/MdKitConflictPanel.tsx#L7) |
+| <a id="title"></a> `title?` | `string` | [packages/mdkit/src/document/MdKitConflictPanel.tsx:8](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/MdKitConflictPanel.tsx#L8) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitDocumentConflictDetails.md -->
+
+# Type Alias: MdKitDocumentConflictDetails
+
+```ts
+type MdKitDocumentConflictDetails = {
+  baseContent: string;
+  localContent: string;
+  remoteContent: string | null;
+  remoteUpdatedAt: string | null;
+  remoteVersion: MdKitDocumentVersionToken;
+};
+```
+
+Defined in: [packages/mdkit/src/document/useMdKitDocument.ts:17](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L17)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="basecontent"></a> `baseContent` | `string` | [packages/mdkit/src/document/useMdKitDocument.ts:18](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L18) |
+| <a id="localcontent"></a> `localContent` | `string` | [packages/mdkit/src/document/useMdKitDocument.ts:19](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L19) |
+| <a id="remotecontent"></a> `remoteContent` | `string` \| `null` | [packages/mdkit/src/document/useMdKitDocument.ts:20](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L20) |
+| <a id="remoteupdatedat"></a> `remoteUpdatedAt` | `string` \| `null` | [packages/mdkit/src/document/useMdKitDocument.ts:21](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L21) |
+| <a id="remoteversion"></a> `remoteVersion` | [`MdKitDocumentVersionToken`](MdKitDocumentVersionToken.md) | [packages/mdkit/src/document/useMdKitDocument.ts:22](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L22) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitDocumentController.md -->
+
+# Type Alias: MdKitDocumentController
+
+```ts
+type MdKitDocumentController = {
+  conflict: boolean;
+  conflictDetails:   | MdKitDocumentConflictDetails
+     | null;
+  error: string | null;
+  isDirty: boolean;
+  isFocused: boolean;
+  isLoading: boolean;
+  revision: number;
+  saveNow: () => Promise<boolean>;
+  saveStatus: "idle" | "pending" | "saving" | "saved";
+  forceSave: () => Promise<boolean>;
+  resync: () => Promise<void>;
+  setContent: (next: string) => void;
+  setFocused: (focused: boolean) => void;
+  updatedAt: string | null;
+  value: string;
+  version: MdKitDocumentVersionToken;
+};
+```
+
+Defined in: [packages/mdkit/src/document/useMdKitDocument.ts:25](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L25)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="conflict"></a> `conflict` | `boolean` | [packages/mdkit/src/document/useMdKitDocument.ts:26](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L26) |
+| <a id="conflictdetails"></a> `conflictDetails` | \| [`MdKitDocumentConflictDetails`](MdKitDocumentConflictDetails.md) \| `null` | [packages/mdkit/src/document/useMdKitDocument.ts:27](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L27) |
+| <a id="error"></a> `error` | `string` \| `null` | [packages/mdkit/src/document/useMdKitDocument.ts:28](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L28) |
+| <a id="isdirty"></a> `isDirty` | `boolean` | [packages/mdkit/src/document/useMdKitDocument.ts:29](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L29) |
+| <a id="isfocused"></a> `isFocused` | `boolean` | [packages/mdkit/src/document/useMdKitDocument.ts:30](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L30) |
+| <a id="isloading"></a> `isLoading` | `boolean` | [packages/mdkit/src/document/useMdKitDocument.ts:31](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L31) |
+| <a id="revision"></a> `revision` | `number` | [packages/mdkit/src/document/useMdKitDocument.ts:32](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L32) |
+| <a id="savenow"></a> `saveNow` | () => `Promise`\<`boolean`\> | [packages/mdkit/src/document/useMdKitDocument.ts:33](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L33) |
+| <a id="savestatus"></a> `saveStatus` | `"idle"` \| `"pending"` \| `"saving"` \| `"saved"` | [packages/mdkit/src/document/useMdKitDocument.ts:34](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L34) |
+| <a id="forcesave"></a> `forceSave` | () => `Promise`\<`boolean`\> | [packages/mdkit/src/document/useMdKitDocument.ts:35](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L35) |
+| <a id="resync"></a> `resync` | () => `Promise`\<`void`\> | [packages/mdkit/src/document/useMdKitDocument.ts:36](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L36) |
+| <a id="setcontent"></a> `setContent` | (`next`: `string`) => `void` | [packages/mdkit/src/document/useMdKitDocument.ts:37](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L37) |
+| <a id="setfocused"></a> `setFocused` | (`focused`: `boolean`) => `void` | [packages/mdkit/src/document/useMdKitDocument.ts:38](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L38) |
+| <a id="updatedat"></a> `updatedAt` | `string` \| `null` | [packages/mdkit/src/document/useMdKitDocument.ts:39](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L39) |
+| <a id="value"></a> `value` | `string` | [packages/mdkit/src/document/useMdKitDocument.ts:40](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L40) |
+| <a id="version"></a> `version` | [`MdKitDocumentVersionToken`](MdKitDocumentVersionToken.md) | [packages/mdkit/src/document/useMdKitDocument.ts:41](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L41) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitDocumentRecord.md -->
+
+# Type Alias: MdKitDocumentRecord
+
+```ts
+type MdKitDocumentRecord = {
+  current: MdKitDocumentSnapshot;
+  versions: MdKitDocumentVersionDetail[];
+};
+```
+
+Defined in: [packages/mdkit/src/core/documentEngine.ts:8](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L8)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="current"></a> `current` | [`MdKitDocumentSnapshot`](MdKitDocumentSnapshot.md) | [packages/mdkit/src/core/documentEngine.ts:9](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L9) |
+| <a id="versions"></a> `versions` | [`MdKitDocumentVersionDetail`](MdKitDocumentVersionDetail.md)[] | [packages/mdkit/src/core/documentEngine.ts:10](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L10) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitDocumentSnapshot.md -->
+
+# Type Alias: MdKitDocumentSnapshot
+
+```ts
+type MdKitDocumentSnapshot = {
+  content: string;
+  version: MdKitDocumentVersionToken;
+  updatedAt?: string | null;
+};
+```
+
+Defined in: [packages/mdkit/src/document/documentTypes.ts:6](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L6)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="content"></a> `content` | `string` | [packages/mdkit/src/document/documentTypes.ts:7](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L7) |
+| <a id="version"></a> `version` | [`MdKitDocumentVersionToken`](MdKitDocumentVersionToken.md) | [packages/mdkit/src/document/documentTypes.ts:8](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L8) |
+| <a id="updatedat"></a> `updatedAt?` | `string` \| `null` | [packages/mdkit/src/document/documentTypes.ts:9](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L9) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitDocumentToolbarProps.md -->
+
+# Type Alias: MdKitDocumentToolbarProps
+
+```ts
+type MdKitDocumentToolbarProps = {
+  className?: string;
+  collaboration?: MdKitCollaborationSession | null;
+  document: MdKitDocumentController;
+  onOpenConflict?: () => Promise<void> | void;
+  onOpenVersionHistory?: () => Promise<void> | void;
+  showConflictActions?: boolean;
+  versions?:   | MdKitDocumentVersionsController
+     | null;
+};
+```
+
+Defined in: [packages/mdkit/src/document/MdKitDocumentToolbar.tsx:7](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/MdKitDocumentToolbar.tsx#L7)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="classname"></a> `className?` | `string` | [packages/mdkit/src/document/MdKitDocumentToolbar.tsx:8](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/MdKitDocumentToolbar.tsx#L8) |
+| <a id="collaboration"></a> `collaboration?` | [`MdKitCollaborationSession`](MdKitCollaborationSession.md) \| `null` | [packages/mdkit/src/document/MdKitDocumentToolbar.tsx:9](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/MdKitDocumentToolbar.tsx#L9) |
+| <a id="document"></a> `document` | [`MdKitDocumentController`](MdKitDocumentController.md) | [packages/mdkit/src/document/MdKitDocumentToolbar.tsx:10](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/MdKitDocumentToolbar.tsx#L10) |
+| <a id="onopenconflict"></a> `onOpenConflict?` | () => `Promise`\<`void`\> \| `void` | [packages/mdkit/src/document/MdKitDocumentToolbar.tsx:11](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/MdKitDocumentToolbar.tsx#L11) |
+| <a id="onopenversionhistory"></a> `onOpenVersionHistory?` | () => `Promise`\<`void`\> \| `void` | [packages/mdkit/src/document/MdKitDocumentToolbar.tsx:12](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/MdKitDocumentToolbar.tsx#L12) |
+| <a id="showconflictactions"></a> `showConflictActions?` | `boolean` | [packages/mdkit/src/document/MdKitDocumentToolbar.tsx:13](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/MdKitDocumentToolbar.tsx#L13) |
+| <a id="versions"></a> `versions?` | \| [`MdKitDocumentVersionsController`](MdKitDocumentVersionsController.md) \| `null` | [packages/mdkit/src/document/MdKitDocumentToolbar.tsx:14](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/MdKitDocumentToolbar.tsx#L14) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitDocumentVersionDetail.md -->
+
+# Type Alias: MdKitDocumentVersionDetail
+
+```ts
+type MdKitDocumentVersionDetail = MdKitDocumentVersionSummary & {
+  content: string;
+};
+```
+
+Defined in: [packages/mdkit/src/document/documentTypes.ts:39](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L39)
+
+## Type Declaration
+
+| Name | Type | Defined in |
+| ------ | ------ | ------ |
+| `content` | `string` | [packages/mdkit/src/document/documentTypes.ts:40](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L40) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitDocumentVersionsController.md -->
+
+# Type Alias: MdKitDocumentVersionsController
+
+```ts
+type MdKitDocumentVersionsController = {
+  error: string | null;
+  hasVersioning: boolean;
+  isLoading: boolean;
+  openVersion: (versionId: string) => Promise<void>;
+  refresh: () => Promise<void>;
+  selectedVersion: MdKitDocumentVersionDetail | null;
+  selectedVersionId: string | null;
+  versions: MdKitDocumentVersionSummary[];
+};
+```
+
+Defined in: [packages/mdkit/src/versioning/useMdKitDocumentVersions.ts:17](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/versioning/useMdKitDocumentVersions.ts#L17)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="error"></a> `error` | `string` \| `null` | [packages/mdkit/src/versioning/useMdKitDocumentVersions.ts:18](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/versioning/useMdKitDocumentVersions.ts#L18) |
+| <a id="hasversioning"></a> `hasVersioning` | `boolean` | [packages/mdkit/src/versioning/useMdKitDocumentVersions.ts:19](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/versioning/useMdKitDocumentVersions.ts#L19) |
+| <a id="isloading"></a> `isLoading` | `boolean` | [packages/mdkit/src/versioning/useMdKitDocumentVersions.ts:20](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/versioning/useMdKitDocumentVersions.ts#L20) |
+| <a id="openversion"></a> `openVersion` | (`versionId`: `string`) => `Promise`\<`void`\> | [packages/mdkit/src/versioning/useMdKitDocumentVersions.ts:21](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/versioning/useMdKitDocumentVersions.ts#L21) |
+| <a id="refresh"></a> `refresh` | () => `Promise`\<`void`\> | [packages/mdkit/src/versioning/useMdKitDocumentVersions.ts:22](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/versioning/useMdKitDocumentVersions.ts#L22) |
+| <a id="selectedversion"></a> `selectedVersion` | [`MdKitDocumentVersionDetail`](MdKitDocumentVersionDetail.md) \| `null` | [packages/mdkit/src/versioning/useMdKitDocumentVersions.ts:23](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/versioning/useMdKitDocumentVersions.ts#L23) |
+| <a id="selectedversionid"></a> `selectedVersionId` | `string` \| `null` | [packages/mdkit/src/versioning/useMdKitDocumentVersions.ts:24](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/versioning/useMdKitDocumentVersions.ts#L24) |
+| <a id="versions"></a> `versions` | [`MdKitDocumentVersionSummary`](MdKitDocumentVersionSummary.md)[] | [packages/mdkit/src/versioning/useMdKitDocumentVersions.ts:25](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/versioning/useMdKitDocumentVersions.ts#L25) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitDocumentVersionSummary.md -->
+
+# Type Alias: MdKitDocumentVersionSummary
+
+```ts
+type MdKitDocumentVersionSummary = {
+  id: string;
+  label?: string;
+  createdAt: string;
+  authorLabel?: string | null;
+  updatedAt?: string | null;
+  version?: MdKitDocumentVersionToken;
+};
+```
+
+Defined in: [packages/mdkit/src/document/documentTypes.ts:30](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L30)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="id"></a> `id` | `string` | [packages/mdkit/src/document/documentTypes.ts:31](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L31) |
+| <a id="label"></a> `label?` | `string` | [packages/mdkit/src/document/documentTypes.ts:32](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L32) |
+| <a id="createdat"></a> `createdAt` | `string` | [packages/mdkit/src/document/documentTypes.ts:33](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L33) |
+| <a id="authorlabel"></a> `authorLabel?` | `string` \| `null` | [packages/mdkit/src/document/documentTypes.ts:34](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L34) |
+| <a id="updatedat"></a> `updatedAt?` | `string` \| `null` | [packages/mdkit/src/document/documentTypes.ts:35](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L35) |
+| <a id="version"></a> `version?` | [`MdKitDocumentVersionToken`](MdKitDocumentVersionToken.md) | [packages/mdkit/src/document/documentTypes.ts:36](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L36) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitDocumentVersionToken.md -->
+
+# Type Alias: MdKitDocumentVersionToken
+
+```ts
+type MdKitDocumentVersionToken = string | number | null;
+```
+
+Defined in: [packages/mdkit/src/document/documentTypes.ts:4](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L4)
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitDocumentWriteInput.md -->
+
+# Type Alias: MdKitDocumentWriteInput
+
+```ts
+type MdKitDocumentWriteInput = {
+  documentId: string;
+  content: string;
+  baseVersion: MdKitDocumentVersionToken;
+  force?: boolean;
+};
+```
+
+Defined in: [packages/mdkit/src/document/documentTypes.ts:12](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L12)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="documentid"></a> `documentId` | `string` | [packages/mdkit/src/document/documentTypes.ts:13](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L13) |
+| <a id="content"></a> `content` | `string` | [packages/mdkit/src/document/documentTypes.ts:14](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L14) |
+| <a id="baseversion"></a> `baseVersion` | [`MdKitDocumentVersionToken`](MdKitDocumentVersionToken.md) | [packages/mdkit/src/document/documentTypes.ts:15](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L15) |
+| <a id="force"></a> `force?` | `boolean` | [packages/mdkit/src/document/documentTypes.ts:16](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L16) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitDocumentWriteResult.md -->
+
+# Type Alias: MdKitDocumentWriteResult
+
+```ts
+type MdKitDocumentWriteResult = 
+  | {
+  version: MdKitDocumentVersionToken;
+  updatedAt?: string | null;
+}
+  | {
+  conflict: true;
+  version?: MdKitDocumentVersionToken;
+  updatedAt?: string | null;
+};
+```
+
+Defined in: [packages/mdkit/src/document/documentTypes.ts:19](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L19)
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitEditorDebugEvent.md -->
+
+# Type Alias: MdKitEditorDebugEvent
+
+```ts
+type MdKitEditorDebugEvent = {
+  detail: Record<string, unknown>;
+  timestamp: number;
+  type: string;
+};
+```
+
+Defined in: [packages/mdkit/src/markdown/editorDebug.ts:1](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/editorDebug.ts#L1)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="detail"></a> `detail` | `Record`\<`string`, `unknown`\> | [packages/mdkit/src/markdown/editorDebug.ts:2](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/editorDebug.ts#L2) |
+| <a id="timestamp"></a> `timestamp` | `number` | [packages/mdkit/src/markdown/editorDebug.ts:3](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/editorDebug.ts#L3) |
+| <a id="type"></a> `type` | `string` | [packages/mdkit/src/markdown/editorDebug.ts:4](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/editorDebug.ts#L4) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitEditorProps.md -->
+
+# Type Alias: MdKitEditorProps
+
+```ts
+type MdKitEditorProps = CollaborativeMdKitEditorProps | LocalMdKitEditorProps;
+```
+
+Defined in: [packages/mdkit/src/markdown/MdKitEditor.tsx:31](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitEditor.tsx#L31)
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitEditorTheme.md -->
+
+# Type Alias: MdKitEditorTheme
+
+```ts
+type MdKitEditorTheme = {
+  background: string;
+  blockGap: string;
+  border: string;
+  codeBackground: string;
+  codeRadius: string;
+  fontFamily: string;
+  fontSize: string;
+  foreground: string;
+  lineHeight: string;
+  link: string;
+  muted: string;
+  mutedForeground: string;
+  surfacePadding: string;
+};
+```
+
+Defined in: [packages/mdkit/src/theme/editorTheme.ts:3](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/theme/editorTheme.ts#L3)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="background"></a> `background` | `string` | [packages/mdkit/src/theme/editorTheme.ts:4](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/theme/editorTheme.ts#L4) |
+| <a id="blockgap"></a> `blockGap` | `string` | [packages/mdkit/src/theme/editorTheme.ts:5](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/theme/editorTheme.ts#L5) |
+| <a id="border"></a> `border` | `string` | [packages/mdkit/src/theme/editorTheme.ts:6](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/theme/editorTheme.ts#L6) |
+| <a id="codebackground"></a> `codeBackground` | `string` | [packages/mdkit/src/theme/editorTheme.ts:7](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/theme/editorTheme.ts#L7) |
+| <a id="coderadius"></a> `codeRadius` | `string` | [packages/mdkit/src/theme/editorTheme.ts:8](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/theme/editorTheme.ts#L8) |
+| <a id="fontfamily"></a> `fontFamily` | `string` | [packages/mdkit/src/theme/editorTheme.ts:9](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/theme/editorTheme.ts#L9) |
+| <a id="fontsize"></a> `fontSize` | `string` | [packages/mdkit/src/theme/editorTheme.ts:10](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/theme/editorTheme.ts#L10) |
+| <a id="foreground"></a> `foreground` | `string` | [packages/mdkit/src/theme/editorTheme.ts:11](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/theme/editorTheme.ts#L11) |
+| <a id="lineheight"></a> `lineHeight` | `string` | [packages/mdkit/src/theme/editorTheme.ts:12](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/theme/editorTheme.ts#L12) |
+| <a id="link"></a> `link` | `string` | [packages/mdkit/src/theme/editorTheme.ts:13](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/theme/editorTheme.ts#L13) |
+| <a id="muted"></a> `muted` | `string` | [packages/mdkit/src/theme/editorTheme.ts:14](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/theme/editorTheme.ts#L14) |
+| <a id="mutedforeground"></a> `mutedForeground` | `string` | [packages/mdkit/src/theme/editorTheme.ts:15](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/theme/editorTheme.ts#L15) |
+| <a id="surfacepadding"></a> `surfacePadding` | `string` | [packages/mdkit/src/theme/editorTheme.ts:16](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/theme/editorTheme.ts#L16) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitEditorThemeStyle.md -->
+
+# Type Alias: MdKitEditorThemeStyle
+
+```ts
+type MdKitEditorThemeStyle = CSSProperties & Record<`--mp-lb-mdkit-${string}`, string>;
+```
+
+Defined in: [packages/mdkit/src/theme/editorTheme.ts:19](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/theme/editorTheme.ts#L19)
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitMarkdownYjsOptions.md -->
+
+# Type Alias: MdKitMarkdownYjsOptions
+
+```ts
+type MdKitMarkdownYjsOptions = {
+  fragmentName?: string;
+  ignoreYamlFrontMatter?: boolean;
+};
+```
+
+Defined in: [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:16](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L16)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="fragmentname"></a> `fragmentName?` | `string` | [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:17](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L17) |
+| <a id="ignoreyamlfrontmatter"></a> `ignoreYamlFrontMatter?` | `boolean` | [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:18](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L18) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitSmartCheckpointPolicyOptions.md -->
+
+# Type Alias: MdKitSmartCheckpointPolicyOptions
+
+```ts
+type MdKitSmartCheckpointPolicyOptions = {
+  minEditDistance?: number;
+  minIntervalMs?: number;
+};
+```
+
+Defined in: [packages/mdkit/src/core/checkpointPolicy.ts:24](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/checkpointPolicy.ts#L24)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="mineditdistance"></a> `minEditDistance?` | `number` | [packages/mdkit/src/core/checkpointPolicy.ts:25](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/checkpointPolicy.ts#L25) |
+| <a id="minintervalms"></a> `minIntervalMs?` | `number` | [packages/mdkit/src/core/checkpointPolicy.ts:26](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/checkpointPolicy.ts#L26) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitThemeEditorProps.md -->
+
+# Type Alias: MdKitThemeEditorProps
+
+```ts
+type MdKitThemeEditorProps = {
+  className?: string;
+  onChange: (theme: MdKitEditorTheme) => void;
+  onReset?: () => void;
+  theme: MdKitEditorTheme;
+};
+```
+
+Defined in: [packages/mdkit/src/theme/MdKitThemeEditor.tsx:3](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/theme/MdKitThemeEditor.tsx#L3)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="classname"></a> `className?` | `string` | [packages/mdkit/src/theme/MdKitThemeEditor.tsx:4](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/theme/MdKitThemeEditor.tsx#L4) |
+| <a id="onchange"></a> `onChange` | (`theme`: [`MdKitEditorTheme`](MdKitEditorTheme.md)) => `void` | [packages/mdkit/src/theme/MdKitThemeEditor.tsx:5](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/theme/MdKitThemeEditor.tsx#L5) |
+| <a id="onreset"></a> `onReset?` | () => `void` | [packages/mdkit/src/theme/MdKitThemeEditor.tsx:6](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/theme/MdKitThemeEditor.tsx#L6) |
+| <a id="theme"></a> `theme` | [`MdKitEditorTheme`](MdKitEditorTheme.md) | [packages/mdkit/src/theme/MdKitThemeEditor.tsx:7](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/theme/MdKitThemeEditor.tsx#L7) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitViewProps.md -->
+
+# Type Alias: MdKitViewProps
+
+```ts
+type MdKitViewProps = {
+  className?: string;
+  fillHeight?: boolean;
+  ignoreYamlFrontMatter?: boolean;
+  placeholder?: string;
+  style?: CSSProperties;
+  value: string;
+};
+```
+
+Defined in: [packages/mdkit/src/markdown/MdKitView.tsx:7](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitView.tsx#L7)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="classname"></a> `className?` | `string` | [packages/mdkit/src/markdown/MdKitView.tsx:8](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitView.tsx#L8) |
+| <a id="fillheight"></a> `fillHeight?` | `boolean` | [packages/mdkit/src/markdown/MdKitView.tsx:9](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitView.tsx#L9) |
+| <a id="ignoreyamlfrontmatter"></a> `ignoreYamlFrontMatter?` | `boolean` | [packages/mdkit/src/markdown/MdKitView.tsx:10](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitView.tsx#L10) |
+| <a id="placeholder"></a> `placeholder?` | `string` | [packages/mdkit/src/markdown/MdKitView.tsx:11](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitView.tsx#L11) |
+| <a id="style"></a> `style?` | `CSSProperties` | [packages/mdkit/src/markdown/MdKitView.tsx:12](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitView.tsx#L12) |
+| <a id="value"></a> `value` | `string` | [packages/mdkit/src/markdown/MdKitView.tsx:13](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitView.tsx#L13) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitYamlFrontMatter.md -->
+
+# Type Alias: MdKitYamlFrontMatter
+
+```ts
+type MdKitYamlFrontMatter = {
+  data: unknown;
+  raw: string;
+  trailingWhitespace: string;
+  yaml: string;
+};
+```
+
+Defined in: [packages/mdkit/src/markdown/yamlFrontMatter.ts:3](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/yamlFrontMatter.ts#L3)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="data"></a> `data` | `unknown` | [packages/mdkit/src/markdown/yamlFrontMatter.ts:4](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/yamlFrontMatter.ts#L4) |
+| <a id="raw"></a> `raw` | `string` | [packages/mdkit/src/markdown/yamlFrontMatter.ts:5](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/yamlFrontMatter.ts#L5) |
+| <a id="trailingwhitespace"></a> `trailingWhitespace` | `string` | [packages/mdkit/src/markdown/yamlFrontMatter.ts:6](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/yamlFrontMatter.ts#L6) |
+| <a id="yaml"></a> `yaml` | `string` | [packages/mdkit/src/markdown/yamlFrontMatter.ts:7](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/yamlFrontMatter.ts#L7) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitYamlFrontMatterExtraction.md -->
+
+# Type Alias: MdKitYamlFrontMatterExtraction
+
+```ts
+type MdKitYamlFrontMatterExtraction = {
+  body: string;
+  errors: string[];
+  frontMatter: MdKitYamlFrontMatter | null;
+};
+```
+
+Defined in: [packages/mdkit/src/markdown/yamlFrontMatter.ts:10](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/yamlFrontMatter.ts#L10)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="body"></a> `body` | `string` | [packages/mdkit/src/markdown/yamlFrontMatter.ts:11](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/yamlFrontMatter.ts#L11) |
+| <a id="errors"></a> `errors` | `string`[] | [packages/mdkit/src/markdown/yamlFrontMatter.ts:12](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/yamlFrontMatter.ts#L12) |
+| <a id="frontmatter"></a> `frontMatter` | [`MdKitYamlFrontMatter`](MdKitYamlFrontMatter.md) \| `null` | [packages/mdkit/src/markdown/yamlFrontMatter.ts:13](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/yamlFrontMatter.ts#L13) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/RestoreMdKitDocumentVersionInput.md -->
+
+# Type Alias: RestoreMdKitDocumentVersionInput
+
+```ts
+type RestoreMdKitDocumentVersionInput = {
+  label?: string;
+  now?: string;
+  versionId: string;
+};
+```
+
+Defined in: [packages/mdkit/src/core/documentEngine.ts:31](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L31)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="label"></a> `label?` | `string` | [packages/mdkit/src/core/documentEngine.ts:32](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L32) |
+| <a id="now"></a> `now?` | `string` | [packages/mdkit/src/core/documentEngine.ts:33](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L33) |
+| <a id="versionid"></a> `versionId` | `string` | [packages/mdkit/src/core/documentEngine.ts:34](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L34) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/RestoreMdKitDocumentVersionResult.md -->
+
+# Type Alias: RestoreMdKitDocumentVersionResult
+
+```ts
+type RestoreMdKitDocumentVersionResult = {
+  record: MdKitDocumentRecord;
+  restoredVersion: MdKitDocumentVersionDetail;
+  result: MdKitDocumentWriteResult;
+};
+```
+
+Defined in: [packages/mdkit/src/core/documentEngine.ts:37](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L37)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="record"></a> `record` | [`MdKitDocumentRecord`](MdKitDocumentRecord.md) | [packages/mdkit/src/core/documentEngine.ts:38](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L38) |
+| <a id="restoredversion"></a> `restoredVersion` | [`MdKitDocumentVersionDetail`](MdKitDocumentVersionDetail.md) | [packages/mdkit/src/core/documentEngine.ts:39](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L39) |
+| <a id="result"></a> `result` | [`MdKitDocumentWriteResult`](MdKitDocumentWriteResult.md) | [packages/mdkit/src/core/documentEngine.ts:40](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L40) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/UseMdKitCollaborationOptions.md -->
+
+# Type Alias: UseMdKitCollaborationOptions
+
+```ts
+type UseMdKitCollaborationOptions = {
+  collaborator: MdKitCollaborationParticipant;
+  documentId: string | null;
+  enabled?: boolean;
+  endpoint: string | null;
+  getToken?: () => Promise<string | null>;
+  resolveRoomName?: (documentId: string) => string;
+};
+```
+
+Defined in: [packages/mdkit/src/collaboration/useMdKitCollaboration.ts:11](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/collaboration/useMdKitCollaboration.ts#L11)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="collaborator"></a> `collaborator` | [`MdKitCollaborationParticipant`](MdKitCollaborationParticipant.md) | [packages/mdkit/src/collaboration/useMdKitCollaboration.ts:12](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/collaboration/useMdKitCollaboration.ts#L12) |
+| <a id="documentid"></a> `documentId` | `string` \| `null` | [packages/mdkit/src/collaboration/useMdKitCollaboration.ts:13](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/collaboration/useMdKitCollaboration.ts#L13) |
+| <a id="enabled"></a> `enabled?` | `boolean` | [packages/mdkit/src/collaboration/useMdKitCollaboration.ts:14](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/collaboration/useMdKitCollaboration.ts#L14) |
+| <a id="endpoint"></a> `endpoint` | `string` \| `null` | [packages/mdkit/src/collaboration/useMdKitCollaboration.ts:15](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/collaboration/useMdKitCollaboration.ts#L15) |
+| <a id="gettoken"></a> `getToken?` | () => `Promise`\<`string` \| `null`\> | [packages/mdkit/src/collaboration/useMdKitCollaboration.ts:16](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/collaboration/useMdKitCollaboration.ts#L16) |
+| <a id="resolveroomname"></a> `resolveRoomName?` | (`documentId`: `string`) => `string` | [packages/mdkit/src/collaboration/useMdKitCollaboration.ts:17](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/collaboration/useMdKitCollaboration.ts#L17) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/UseMdKitDocumentOptions.md -->
+
+# Type Alias: UseMdKitDocumentOptions
+
+```ts
+type UseMdKitDocumentOptions = {
+  adapter: Pick<MdKitDocumentAdapter, "readDocument" | "writeDocument" | "resyncDocument">;
+  debounceMs?: number;
+  documentId: string | null;
+  pollMs?: number;
+};
+```
+
+Defined in: [packages/mdkit/src/document/useMdKitDocument.ts:7](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L7)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="adapter"></a> `adapter` | `Pick`\<[`MdKitDocumentAdapter`](../interfaces/MdKitDocumentAdapter.md), `"readDocument"` \| `"writeDocument"` \| `"resyncDocument"`\> | [packages/mdkit/src/document/useMdKitDocument.ts:8](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L8) |
+| <a id="debouncems"></a> `debounceMs?` | `number` | [packages/mdkit/src/document/useMdKitDocument.ts:12](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L12) |
+| <a id="documentid"></a> `documentId` | `string` \| `null` | [packages/mdkit/src/document/useMdKitDocument.ts:13](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L13) |
+| <a id="pollms"></a> `pollMs?` | `number` | [packages/mdkit/src/document/useMdKitDocument.ts:14](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/useMdKitDocument.ts#L14) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/UseMdKitDocumentVersionsOptions.md -->
+
+# Type Alias: UseMdKitDocumentVersionsOptions
+
+```ts
+type UseMdKitDocumentVersionsOptions = {
+  adapter: Pick<MdKitDocumentAdapter, "listDocumentVersions" | "readDocumentVersion">;
+  documentId: string | null;
+  enabled?: boolean;
+};
+```
+
+Defined in: [packages/mdkit/src/versioning/useMdKitDocumentVersions.ts:8](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/versioning/useMdKitDocumentVersions.ts#L8)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="adapter"></a> `adapter` | `Pick`\<[`MdKitDocumentAdapter`](../interfaces/MdKitDocumentAdapter.md), `"listDocumentVersions"` \| `"readDocumentVersion"`\> | [packages/mdkit/src/versioning/useMdKitDocumentVersions.ts:9](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/versioning/useMdKitDocumentVersions.ts#L9) |
+| <a id="documentid"></a> `documentId` | `string` \| `null` | [packages/mdkit/src/versioning/useMdKitDocumentVersions.ts:13](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/versioning/useMdKitDocumentVersions.ts#L13) |
+| <a id="enabled"></a> `enabled?` | `boolean` | [packages/mdkit/src/versioning/useMdKitDocumentVersions.ts:14](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/versioning/useMdKitDocumentVersions.ts#L14) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/VersionHistoryPanelProps.md -->
+
+# Type Alias: VersionHistoryPanelProps
+
+```ts
+type VersionHistoryPanelProps = {
+  className?: string;
+  controller: MdKitDocumentVersionsController;
+  onRestoreVersion?: (version: MdKitDocumentVersionDetail) => Promise<void> | void;
+  title?: string;
+};
+```
+
+Defined in: [packages/mdkit/src/versioning/VersionHistoryPanel.tsx:6](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/versioning/VersionHistoryPanel.tsx#L6)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="classname"></a> `className?` | `string` | [packages/mdkit/src/versioning/VersionHistoryPanel.tsx:7](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/versioning/VersionHistoryPanel.tsx#L7) |
+| <a id="controller"></a> `controller` | [`MdKitDocumentVersionsController`](MdKitDocumentVersionsController.md) | [packages/mdkit/src/versioning/VersionHistoryPanel.tsx:8](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/versioning/VersionHistoryPanel.tsx#L8) |
+| <a id="onrestoreversion"></a> `onRestoreVersion?` | (`version`: [`MdKitDocumentVersionDetail`](MdKitDocumentVersionDetail.md)) => `Promise`\<`void`\> \| `void` | [packages/mdkit/src/versioning/VersionHistoryPanel.tsx:9](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/versioning/VersionHistoryPanel.tsx#L9) |
+| <a id="title"></a> `title?` | `string` | [packages/mdkit/src/versioning/VersionHistoryPanel.tsx:12](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/versioning/VersionHistoryPanel.tsx#L12) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/WriteMdKitDocumentRecordInput.md -->
+
+# Type Alias: WriteMdKitDocumentRecordInput
+
+```ts
+type WriteMdKitDocumentRecordInput = {
+  baseVersion: MdKitDocumentVersionToken;
+  content: string;
+  force?: boolean;
+  label?: string;
+  now?: string;
+};
+```
+
+Defined in: [packages/mdkit/src/core/documentEngine.ts:18](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L18)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="baseversion"></a> `baseVersion` | [`MdKitDocumentVersionToken`](MdKitDocumentVersionToken.md) | [packages/mdkit/src/core/documentEngine.ts:19](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L19) |
+| <a id="content"></a> `content` | `string` | [packages/mdkit/src/core/documentEngine.ts:20](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L20) |
+| <a id="force"></a> `force?` | `boolean` | [packages/mdkit/src/core/documentEngine.ts:21](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L21) |
+| <a id="label"></a> `label?` | `string` | [packages/mdkit/src/core/documentEngine.ts:22](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L22) |
+| <a id="now"></a> `now?` | `string` | [packages/mdkit/src/core/documentEngine.ts:23](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L23) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/WriteMdKitDocumentRecordResult.md -->
+
+# Type Alias: WriteMdKitDocumentRecordResult
+
+```ts
+type WriteMdKitDocumentRecordResult = {
+  record: MdKitDocumentRecord;
+  result: MdKitDocumentWriteResult;
+};
+```
+
+Defined in: [packages/mdkit/src/core/documentEngine.ts:26](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L26)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="record"></a> `record` | [`MdKitDocumentRecord`](MdKitDocumentRecord.md) | [packages/mdkit/src/core/documentEngine.ts:27](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L27) |
+| <a id="result"></a> `result` | [`MdKitDocumentWriteResult`](MdKitDocumentWriteResult.md) | [packages/mdkit/src/core/documentEngine.ts:28](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/documentEngine.ts#L28) |
+
+
+---
+
+<!-- source: reference/index/variables/CheckpointPolicy.md -->
+
+# Variable: CheckpointPolicy
+
+```ts
+const CheckpointPolicy: {
+  always: () => MdKitCheckpointPolicy;
+  function: (shouldCheckpoint: (input: MdKitCheckpointPolicyInput) => boolean | Promise<boolean>) => MdKitCheckpointPolicy;
+  never: () => MdKitCheckpointPolicy;
+  smart: (options: MdKitSmartCheckpointPolicyOptions) => MdKitCheckpointPolicy;
+};
+```
+
+Defined in: [packages/mdkit/src/core/checkpointPolicy.ts:76](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/checkpointPolicy.ts#L76)
+
+Factories for the policy that decides when a saved document becomes a
+checkpoint. Pass the result to `createMdKitBackend`, not to your store.
+
+## Type Declaration
+
+| Name | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="property-always"></a> `always()` | () => [`MdKitCheckpointPolicy`](../type-aliases/MdKitCheckpointPolicy.md) | [packages/mdkit/src/core/checkpointPolicy.ts:77](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/checkpointPolicy.ts#L77) |
+| <a id="property-function"></a> `function()` | (`shouldCheckpoint`: (`input`: [`MdKitCheckpointPolicyInput`](../type-aliases/MdKitCheckpointPolicyInput.md)) => `boolean` \| `Promise`\<`boolean`\>) => [`MdKitCheckpointPolicy`](../type-aliases/MdKitCheckpointPolicy.md) | [packages/mdkit/src/core/checkpointPolicy.ts:80](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/checkpointPolicy.ts#L80) |
+| <a id="property-never"></a> `never()` | () => [`MdKitCheckpointPolicy`](../type-aliases/MdKitCheckpointPolicy.md) | [packages/mdkit/src/core/checkpointPolicy.ts:85](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/checkpointPolicy.ts#L85) |
+| <a id="property-smart"></a> `smart()` | (`options`: [`MdKitSmartCheckpointPolicyOptions`](../type-aliases/MdKitSmartCheckpointPolicyOptions.md)) => [`MdKitCheckpointPolicy`](../type-aliases/MdKitCheckpointPolicy.md) | [packages/mdkit/src/core/checkpointPolicy.ts:88](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/checkpointPolicy.ts#L88) |
+
+## Remarks
+
+`smart()` applies the default autosave-friendly heuristic; `function()`
+receives mdkit's computed edit distance alongside the raw content so you can
+build a custom rule.
+
+
+---
+
+<!-- source: reference/index/variables/darkMdKitEditorTheme.md -->
+
+# Variable: darkMdKitEditorTheme
+
+```ts
+const darkMdKitEditorTheme: MdKitEditorTheme;
+```
+
+Defined in: [packages/mdkit/src/theme/editorTheme.ts:38](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/theme/editorTheme.ts#L38)
+
+
+---
+
+<!-- source: reference/index/variables/defaultMdKitEditorTheme.md -->
+
+# Variable: defaultMdKitEditorTheme
+
+```ts
+const defaultMdKitEditorTheme: MdKitEditorTheme;
+```
+
+Defined in: [packages/mdkit/src/theme/editorTheme.ts:22](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/theme/editorTheme.ts#L22)
+
+
+---
+
+<!-- source: reference/index/variables/yjs.md -->
+
+# Variable: yjs
+
+```ts
+const yjs: {
+  markdownToMdKitYjs: (markdown: string, options?: MdKitMarkdownYjsOptions) => Uint8Array;
+  mdKitYjsToMarkdown: (yjsState: Uint8Array, options?: MdKitMarkdownYjsOptions) => string;
+  replaceMdKitYjsMarkdown: (ydoc: Doc, markdown: string, options?: MdKitMarkdownYjsOptions) => Uint8Array;
+};
+```
+
+Defined in: [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:107](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L107)
+
+## Type Declaration
+
+| Name | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="property-markdowntomdkityjs"></a> `markdownToMdKitYjs()` | (`markdown`: `string`, `options?`: [`MdKitMarkdownYjsOptions`](../type-aliases/MdKitMarkdownYjsOptions.md)) => `Uint8Array` | [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:108](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L108) |
+| <a id="property-mdkityjstomarkdown"></a> `mdKitYjsToMarkdown()` | (`yjsState`: `Uint8Array`, `options?`: [`MdKitMarkdownYjsOptions`](../type-aliases/MdKitMarkdownYjsOptions.md)) => `string` | [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:109](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L109) |
+| <a id="property-replacemdkityjsmarkdown"></a> `replaceMdKitYjsMarkdown()` | (`ydoc`: `Doc`, `markdown`: `string`, `options?`: [`MdKitMarkdownYjsOptions`](../type-aliases/MdKitMarkdownYjsOptions.md)) => `Uint8Array` | [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:110](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L110) |
+
+
+---
+
+<!-- source: reference/README.md -->
+
+# @mp-lb/mdkit
+
+## Modules
+
+| Module | Description |
+| ------ | ------ |
+| [core](core/README.md) | - |
+| [fastify](fastify/README.md) | - |
+| [index](index/README.md) | - |
+| [server](server/README.md) | - |
+| [trpc](trpc/README.md) | - |
+| [trpc/client](trpc/client/README.md) | - |
+| [trpc/server](trpc/server/README.md) | - |
+| [yjs](yjs/README.md) | - |
+
+
+---
+
+<!-- source: reference/server/functions/createMdKitBackend.md -->
+
+# Function: createMdKitBackend()
+
+```ts
+function createMdKitBackend(__namedParameters: CreateMdKitBackendOptions): MdKitTransportStore;
+```
+
+Defined in: [packages/mdkit/src/transport/backend.ts:200](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/backend.ts#L200)
+
+Wraps an application [MdKitBackendStore](../type-aliases/MdKitBackendStore.md) with checkpoint-policy
+orchestration, producing the transport-ready surface the Fastify and tRPC
+helpers mount. The store owns persistence, auth, and metadata; this owns
+checkpoint timing and restore ordering.
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `__namedParameters` | [`CreateMdKitBackendOptions`](../type-aliases/CreateMdKitBackendOptions.md) |
+
+## Returns
+
+[`MdKitTransportStore`](../../fastify/type-aliases/MdKitTransportStore.md)
+
+
+---
+
+<!-- source: reference/server/README.md -->
+
+# server
+
+## Type Aliases
+
+| Type Alias | Description |
+| ------ | ------ |
+| [MdKitCreateCheckpointInput](type-aliases/MdKitCreateCheckpointInput.md) | - |
+| [MdKitBackendStore](type-aliases/MdKitBackendStore.md) | Application-owned persistence contract consumed by [createMdKitBackend](functions/createMdKitBackend.md). Implement it with your database; mdkit calls `createCheckpoint` when the configured [CheckpointPolicy](../index/variables/CheckpointPolicy.md) triggers — the store never interprets the policy itself. |
+| [CreateMdKitBackendOptions](type-aliases/CreateMdKitBackendOptions.md) | - |
+
+## Functions
+
+| Function | Description |
+| ------ | ------ |
+| [createMdKitBackend](functions/createMdKitBackend.md) | Wraps an application [MdKitBackendStore](type-aliases/MdKitBackendStore.md) with checkpoint-policy orchestration, producing the transport-ready surface the Fastify and tRPC helpers mount. The store owns persistence, auth, and metadata; this owns checkpoint timing and restore ordering. |
+
+
+---
+
+<!-- source: reference/server/type-aliases/CreateMdKitBackendOptions.md -->
+
+# Type Alias: CreateMdKitBackendOptions
+
+```ts
+type CreateMdKitBackendOptions = {
+  checkpointPolicy?: MdKitCheckpointPolicy;
+  store: MdKitBackendStore;
+};
+```
+
+Defined in: [packages/mdkit/src/transport/backend.ts:70](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/backend.ts#L70)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="checkpointpolicy"></a> `checkpointPolicy?` | [`MdKitCheckpointPolicy`](../../index/type-aliases/MdKitCheckpointPolicy.md) | [packages/mdkit/src/transport/backend.ts:71](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/backend.ts#L71) |
+| <a id="store"></a> `store` | [`MdKitBackendStore`](MdKitBackendStore.md) | [packages/mdkit/src/transport/backend.ts:72](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/backend.ts#L72) |
+
+
+---
+
+<!-- source: reference/server/type-aliases/MdKitBackendStore.md -->
+
+# Type Alias: MdKitBackendStore
+
+```ts
+type MdKitBackendStore = {
+  createCheckpoint?:   | MdKitDocumentVersionSummary
+     | Promise<MdKitDocumentVersionSummary>;
+  getLatestCheckpoint?:   | MdKitDocumentVersionDetail
+     | Promise<
+     | MdKitDocumentVersionDetail
+     | null>
+     | null;
+  listDocumentVersions?:   | MdKitDocumentVersionSummary[]
+     | Promise<MdKitDocumentVersionSummary[]>;
+  readCollaborationState?:   | Uint8Array<ArrayBufferLike>
+     | Promise<Uint8Array<ArrayBufferLike> | null>
+     | null;
+  readDocument:   | MdKitDocumentSnapshot
+     | Promise<MdKitDocumentSnapshot>;
+  readDocumentVersion?:   | MdKitDocumentVersionDetail
+     | Promise<
+     | MdKitDocumentVersionDetail
+     | null>
+     | null;
+  resyncDocument?:   | MdKitDocumentSnapshot
+     | Promise<MdKitDocumentSnapshot>;
+  restoreDocumentVersion?:   | MdKitDocumentWriteResult
+     | Promise<MdKitDocumentWriteResult>;
+  writeCollaborationState?: void | Promise<void>;
+  writeDocument:   | MdKitDocumentWriteResult
+     | Promise<MdKitDocumentWriteResult>;
+};
+```
+
+Defined in: [packages/mdkit/src/transport/backend.ts:32](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/backend.ts#L32)
+
+Application-owned persistence contract consumed by [createMdKitBackend](../functions/createMdKitBackend.md).
+Implement it with your database; mdkit calls `createCheckpoint` when the
+configured [CheckpointPolicy](../../index/variables/CheckpointPolicy.md) triggers — the store never interprets the
+policy itself.
+
+## Methods
+
+### createCheckpoint()?
+
+```ts
+optional createCheckpoint(input: MdKitCreateCheckpointInput): 
+  | MdKitDocumentVersionSummary
+| Promise<MdKitDocumentVersionSummary>;
+```
+
+Defined in: [packages/mdkit/src/transport/backend.ts:33](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/backend.ts#L33)
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `input` | [`MdKitCreateCheckpointInput`](MdKitCreateCheckpointInput.md) |
+
+#### Returns
+
+  \| [`MdKitDocumentVersionSummary`](../../index/type-aliases/MdKitDocumentVersionSummary.md)
+  \| `Promise`\<[`MdKitDocumentVersionSummary`](../../index/type-aliases/MdKitDocumentVersionSummary.md)\>
+
+***
+
+### getLatestCheckpoint()?
+
+```ts
+optional getLatestCheckpoint(documentId: string): 
+  | MdKitDocumentVersionDetail
+  | Promise<
+  | MdKitDocumentVersionDetail
+  | null>
+  | null;
+```
+
+Defined in: [packages/mdkit/src/transport/backend.ts:36](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/backend.ts#L36)
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `documentId` | `string` |
+
+#### Returns
+
+  \| [`MdKitDocumentVersionDetail`](../../index/type-aliases/MdKitDocumentVersionDetail.md)
+  \| `Promise`\<
+  \| [`MdKitDocumentVersionDetail`](../../index/type-aliases/MdKitDocumentVersionDetail.md)
+  \| `null`\>
+  \| `null`
+
+***
+
+### listDocumentVersions()?
+
+```ts
+optional listDocumentVersions(documentId: string): 
+  | MdKitDocumentVersionSummary[]
+| Promise<MdKitDocumentVersionSummary[]>;
+```
+
+Defined in: [packages/mdkit/src/transport/backend.ts:39](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/backend.ts#L39)
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `documentId` | `string` |
+
+#### Returns
+
+  \| [`MdKitDocumentVersionSummary`](../../index/type-aliases/MdKitDocumentVersionSummary.md)[]
+  \| `Promise`\<[`MdKitDocumentVersionSummary`](../../index/type-aliases/MdKitDocumentVersionSummary.md)[]\>
+
+***
+
+### readCollaborationState()?
+
+```ts
+optional readCollaborationState(documentName: string): 
+  | Uint8Array<ArrayBufferLike>
+  | Promise<Uint8Array<ArrayBufferLike> | null>
+  | null;
+```
+
+Defined in: [packages/mdkit/src/transport/backend.ts:42](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/backend.ts#L42)
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `documentName` | `string` |
+
+#### Returns
+
+  \| `Uint8Array`\<`ArrayBufferLike`\>
+  \| `Promise`\<`Uint8Array`\<`ArrayBufferLike`\> \| `null`\>
+  \| `null`
+
+***
+
+### readDocument()
+
+```ts
+readDocument(documentId: string): 
+  | MdKitDocumentSnapshot
+| Promise<MdKitDocumentSnapshot>;
+```
+
+Defined in: [packages/mdkit/src/transport/backend.ts:45](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/backend.ts#L45)
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `documentId` | `string` |
+
+#### Returns
+
+  \| [`MdKitDocumentSnapshot`](../../index/type-aliases/MdKitDocumentSnapshot.md)
+  \| `Promise`\<[`MdKitDocumentSnapshot`](../../index/type-aliases/MdKitDocumentSnapshot.md)\>
+
+***
+
+### readDocumentVersion()?
+
+```ts
+optional readDocumentVersion(input: {
+  documentId: string;
+  versionId: string;
+}): 
+  | MdKitDocumentVersionDetail
+  | Promise<
+  | MdKitDocumentVersionDetail
+  | null>
+  | null;
+```
+
+Defined in: [packages/mdkit/src/transport/backend.ts:48](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/backend.ts#L48)
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `input` | \{ `documentId`: `string`; `versionId`: `string`; \} |
+| `input.documentId` | `string` |
+| `input.versionId` | `string` |
+
+#### Returns
+
+  \| [`MdKitDocumentVersionDetail`](../../index/type-aliases/MdKitDocumentVersionDetail.md)
+  \| `Promise`\<
+  \| [`MdKitDocumentVersionDetail`](../../index/type-aliases/MdKitDocumentVersionDetail.md)
+  \| `null`\>
+  \| `null`
+
+***
+
+### resyncDocument()?
+
+```ts
+optional resyncDocument(documentId: string): 
+  | MdKitDocumentSnapshot
+| Promise<MdKitDocumentSnapshot>;
+```
+
+Defined in: [packages/mdkit/src/transport/backend.ts:55](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/backend.ts#L55)
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `documentId` | `string` |
+
+#### Returns
+
+  \| [`MdKitDocumentSnapshot`](../../index/type-aliases/MdKitDocumentSnapshot.md)
+  \| `Promise`\<[`MdKitDocumentSnapshot`](../../index/type-aliases/MdKitDocumentSnapshot.md)\>
+
+***
+
+### restoreDocumentVersion()?
+
+```ts
+optional restoreDocumentVersion(input: MdKitRestoreDocumentVersionInput): 
+  | MdKitDocumentWriteResult
+| Promise<MdKitDocumentWriteResult>;
+```
+
+Defined in: [packages/mdkit/src/transport/backend.ts:58](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/backend.ts#L58)
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `input` | [`MdKitRestoreDocumentVersionInput`](../../fastify/type-aliases/MdKitRestoreDocumentVersionInput.md) |
+
+#### Returns
+
+  \| [`MdKitDocumentWriteResult`](../../index/type-aliases/MdKitDocumentWriteResult.md)
+  \| `Promise`\<[`MdKitDocumentWriteResult`](../../index/type-aliases/MdKitDocumentWriteResult.md)\>
+
+***
+
+### writeCollaborationState()?
+
+```ts
+optional writeCollaborationState(documentName: string, state: Uint8Array): void | Promise<void>;
+```
+
+Defined in: [packages/mdkit/src/transport/backend.ts:61](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/backend.ts#L61)
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `documentName` | `string` |
+| `state` | `Uint8Array` |
+
+#### Returns
+
+`void` \| `Promise`\<`void`\>
+
+***
+
+### writeDocument()
+
+```ts
+writeDocument(input: MdKitDocumentWriteInput): 
+  | MdKitDocumentWriteResult
+| Promise<MdKitDocumentWriteResult>;
+```
+
+Defined in: [packages/mdkit/src/transport/backend.ts:65](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/backend.ts#L65)
+
+#### Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `input` | [`MdKitDocumentWriteInput`](../../index/type-aliases/MdKitDocumentWriteInput.md) |
+
+#### Returns
+
+  \| [`MdKitDocumentWriteResult`](../../index/type-aliases/MdKitDocumentWriteResult.md)
+  \| `Promise`\<[`MdKitDocumentWriteResult`](../../index/type-aliases/MdKitDocumentWriteResult.md)\>
+
+
+---
+
+<!-- source: reference/server/type-aliases/MdKitCreateCheckpointInput.md -->
+
+# Type Alias: MdKitCreateCheckpointInput
+
+```ts
+type MdKitCreateCheckpointInput = {
+  content: string;
+  documentId: string;
+  metadata?: unknown;
+  sourceRevision: MdKitDocumentVersionToken;
+};
+```
+
+Defined in: [packages/mdkit/src/transport/backend.ts:19](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/backend.ts#L19)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="content"></a> `content` | `string` | [packages/mdkit/src/transport/backend.ts:20](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/backend.ts#L20) |
+| <a id="documentid"></a> `documentId` | `string` | [packages/mdkit/src/transport/backend.ts:21](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/backend.ts#L21) |
+| <a id="metadata"></a> `metadata?` | `unknown` | [packages/mdkit/src/transport/backend.ts:22](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/backend.ts#L22) |
+| <a id="sourcerevision"></a> `sourceRevision` | [`MdKitDocumentVersionToken`](../../index/type-aliases/MdKitDocumentVersionToken.md) | [packages/mdkit/src/transport/backend.ts:23](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/backend.ts#L23) |
+
+
+---
+
+<!-- source: reference/trpc/client/README.md -->
+
+# trpc/client
+
+## References
+
+### createMdKitTrpcAdapter
+
+Re-exports [createMdKitTrpcAdapter](../functions/createMdKitTrpcAdapter.md)
+
+***
+
+### createMdKitTrpcClient
+
+Re-exports [createMdKitTrpcClient](../functions/createMdKitTrpcClient.md)
+
+***
+
+### createMdKitTrpcClientAdapter
+
+Re-exports [createMdKitTrpcClientAdapter](../functions/createMdKitTrpcClientAdapter.md)
+
+***
+
+### CreateMdKitTrpcAdapterOptions
+
+Re-exports [CreateMdKitTrpcAdapterOptions](../type-aliases/CreateMdKitTrpcAdapterOptions.md)
+
+***
+
+### CreateMdKitTrpcClientAdapterOptions
+
+Re-exports [CreateMdKitTrpcClientAdapterOptions](../type-aliases/CreateMdKitTrpcClientAdapterOptions.md)
+
+***
+
+### MdKitTrpcClient
+
+Re-exports [MdKitTrpcClient](../type-aliases/MdKitTrpcClient.md)
+
+***
+
+### MdKitTrpcRouter
+
+Re-exports [MdKitTrpcRouter](../type-aliases/MdKitTrpcRouter.md)
+
+
+---
+
+<!-- source: reference/trpc/functions/createMdKitTrpcAdapter.md -->
+
+# Function: createMdKitTrpcAdapter()
+
+```ts
+function createMdKitTrpcAdapter(__namedParameters: CreateMdKitTrpcAdapterOptions): MdKitDocumentAdapter;
+```
+
+Defined in: [packages/mdkit/src/transport/trpcClient.ts:58](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/trpcClient.ts#L58)
+
+Turns an mdkit tRPC client (standalone or a nested sub-client of your app
+router) into an [MdKitDocumentAdapter](../../index/interfaces/MdKitDocumentAdapter.md) for the document hooks.
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `__namedParameters` | [`CreateMdKitTrpcAdapterOptions`](../type-aliases/CreateMdKitTrpcAdapterOptions.md) |
+
+## Returns
+
+[`MdKitDocumentAdapter`](../../index/interfaces/MdKitDocumentAdapter.md)
+
+
+---
+
+<!-- source: reference/trpc/functions/createMdKitTrpcClient.md -->
+
+# Function: createMdKitTrpcClient()
+
+```ts
+function createMdKitTrpcClient(__namedParameters: CreateMdKitTrpcClientAdapterOptions): TRPCClient<BuiltRouter<{
+  ctx: object;
+  meta: object;
+  errorShape: DefaultErrorShape;
+  transformer: false;
+}, DecorateCreateRouterOptions<{
+  listDocumentVersions: QueryProcedure<{
+     input: {
+        documentId: string;
+     };
+     output: {
+        versions: MdKitDocumentVersionSummary[];
+     };
+     meta: object;
+  }>;
+  readDocument: QueryProcedure<{
+     input: {
+        documentId: string;
+     };
+     output: MdKitDocumentSnapshot;
+     meta: object;
+  }>;
+  readDocumentVersion: QueryProcedure<{
+     input: {
+        documentId: string;
+        versionId: string;
+     };
+     output:   | MdKitDocumentVersionDetail
+        | null;
+     meta: object;
+  }>;
+  resyncDocument: MutationProcedure<{
+     input: {
+        documentId: string;
+     };
+     output: MdKitDocumentSnapshot;
+     meta: object;
+  }>;
+  restoreDocumentVersion: MutationProcedure<{
+     input: {
+        documentId: string;
+        versionId: string;
+     };
+     output:   | {
+        version: MdKitDocumentVersionToken;
+        updatedAt?: string | null;
+      }
+        | {
+        conflict: true;
+        version?: MdKitDocumentVersionToken;
+        updatedAt?: string | null;
+      };
+     meta: object;
+  }>;
+  writeDocument: MutationProcedure<{
+     input: {
+        baseVersion: string | number | null;
+        content: string;
+        documentId: string;
+        force?: boolean;
+     };
+     output:   | {
+        version: MdKitDocumentVersionToken;
+        updatedAt?: string | null;
+      }
+        | {
+        conflict: true;
+        version?: MdKitDocumentVersionToken;
+        updatedAt?: string | null;
+      };
+     meta: object;
+  }>;
+}>>>;
+```
+
+Defined in: [packages/mdkit/src/transport/trpcClient.ts:74](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/trpcClient.ts#L74)
+
+Creates a typed tRPC proxy client for the mdkit router at `url`.
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `__namedParameters` | [`CreateMdKitTrpcClientAdapterOptions`](../type-aliases/CreateMdKitTrpcClientAdapterOptions.md) |
+
+## Returns
+
+`TRPCClient`\<`BuiltRouter`\<\{
+  `ctx`: `object`;
+  `meta`: `object`;
+  `errorShape`: `DefaultErrorShape`;
+  `transformer`: `false`;
+\}, `DecorateCreateRouterOptions`\<\{
+  `listDocumentVersions`: `QueryProcedure`\<\{
+     `input`: \{
+        `documentId`: `string`;
+     \};
+     `output`: \{
+        `versions`: [`MdKitDocumentVersionSummary`](../../index/type-aliases/MdKitDocumentVersionSummary.md)[];
+     \};
+     `meta`: `object`;
+  \}\>;
+  `readDocument`: `QueryProcedure`\<\{
+     `input`: \{
+        `documentId`: `string`;
+     \};
+     `output`: [`MdKitDocumentSnapshot`](../../index/type-aliases/MdKitDocumentSnapshot.md);
+     `meta`: `object`;
+  \}\>;
+  `readDocumentVersion`: `QueryProcedure`\<\{
+     `input`: \{
+        `documentId`: `string`;
+        `versionId`: `string`;
+     \};
+     `output`:   \| [`MdKitDocumentVersionDetail`](../../index/type-aliases/MdKitDocumentVersionDetail.md)
+        \| `null`;
+     `meta`: `object`;
+  \}\>;
+  `resyncDocument`: `MutationProcedure`\<\{
+     `input`: \{
+        `documentId`: `string`;
+     \};
+     `output`: [`MdKitDocumentSnapshot`](../../index/type-aliases/MdKitDocumentSnapshot.md);
+     `meta`: `object`;
+  \}\>;
+  `restoreDocumentVersion`: `MutationProcedure`\<\{
+     `input`: \{
+        `documentId`: `string`;
+        `versionId`: `string`;
+     \};
+     `output`:   \| \{
+        `version`: [`MdKitDocumentVersionToken`](../../index/type-aliases/MdKitDocumentVersionToken.md);
+        `updatedAt?`: `string` \| `null`;
+      \}
+        \| \{
+        `conflict`: `true`;
+        `version?`: [`MdKitDocumentVersionToken`](../../index/type-aliases/MdKitDocumentVersionToken.md);
+        `updatedAt?`: `string` \| `null`;
+      \};
+     `meta`: `object`;
+  \}\>;
+  `writeDocument`: `MutationProcedure`\<\{
+     `input`: \{
+        `baseVersion`: `string` \| `number` \| `null`;
+        `content`: `string`;
+        `documentId`: `string`;
+        `force?`: `boolean`;
+     \};
+     `output`:   \| \{
+        `version`: [`MdKitDocumentVersionToken`](../../index/type-aliases/MdKitDocumentVersionToken.md);
+        `updatedAt?`: `string` \| `null`;
+      \}
+        \| \{
+        `conflict`: `true`;
+        `version?`: [`MdKitDocumentVersionToken`](../../index/type-aliases/MdKitDocumentVersionToken.md);
+        `updatedAt?`: `string` \| `null`;
+      \};
+     `meta`: `object`;
+  \}\>;
+\}\>\>\>
+
+
+---
+
+<!-- source: reference/trpc/functions/createMdKitTrpcClientAdapter.md -->
+
+# Function: createMdKitTrpcClientAdapter()
+
+```ts
+function createMdKitTrpcClientAdapter(__namedParameters: CreateMdKitTrpcClientAdapterOptions): MdKitDocumentAdapter;
+```
+
+Defined in: [packages/mdkit/src/transport/trpcClient.ts:85](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/trpcClient.ts#L85)
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `__namedParameters` | [`CreateMdKitTrpcClientAdapterOptions`](../type-aliases/CreateMdKitTrpcClientAdapterOptions.md) |
+
+## Returns
+
+[`MdKitDocumentAdapter`](../../index/interfaces/MdKitDocumentAdapter.md)
+
+
+---
+
+<!-- source: reference/trpc/README.md -->
+
+# trpc
+
+## Type Aliases
+
+| Type Alias | Description |
+| ------ | ------ |
+| [CreateMdKitTrpcClientAdapterOptions](type-aliases/CreateMdKitTrpcClientAdapterOptions.md) | - |
+| [MdKitTrpcClient](type-aliases/MdKitTrpcClient.md) | - |
+| [CreateMdKitTrpcAdapterOptions](type-aliases/CreateMdKitTrpcAdapterOptions.md) | - |
+| [MdKitTrpcRouter](type-aliases/MdKitTrpcRouter.md) | - |
+
+## Functions
+
+| Function | Description |
+| ------ | ------ |
+| [createMdKitTrpcAdapter](functions/createMdKitTrpcAdapter.md) | Turns an mdkit tRPC client (standalone or a nested sub-client of your app router) into an [MdKitDocumentAdapter](../index/interfaces/MdKitDocumentAdapter.md) for the document hooks. |
+| [createMdKitTrpcClient](functions/createMdKitTrpcClient.md) | Creates a typed tRPC proxy client for the mdkit router at `url`. |
+| [createMdKitTrpcClientAdapter](functions/createMdKitTrpcClientAdapter.md) | - |
+
+
+---
+
+<!-- source: reference/trpc/server/functions/createMdKitTrpcRouter.md -->
+
+# Function: createMdKitTrpcRouter()
+
+```ts
+function createMdKitTrpcRouter(store: MdKitTransportStore): BuiltRouter<{
+  ctx: object;
+  meta: object;
+  errorShape: DefaultErrorShape;
+  transformer: false;
+}, DecorateCreateRouterOptions<{
+  listDocumentVersions: QueryProcedure<{
+     input: {
+        documentId: string;
+     };
+     output: {
+        versions: MdKitDocumentVersionSummary[];
+     };
+     meta: object;
+  }>;
+  readDocument: QueryProcedure<{
+     input: {
+        documentId: string;
+     };
+     output: MdKitDocumentSnapshot;
+     meta: object;
+  }>;
+  readDocumentVersion: QueryProcedure<{
+     input: {
+        documentId: string;
+        versionId: string;
+     };
+     output:   | MdKitDocumentVersionDetail
+        | null;
+     meta: object;
+  }>;
+  resyncDocument: MutationProcedure<{
+     input: {
+        documentId: string;
+     };
+     output: MdKitDocumentSnapshot;
+     meta: object;
+  }>;
+  restoreDocumentVersion: MutationProcedure<{
+     input: {
+        documentId: string;
+        versionId: string;
+     };
+     output:   | {
+        version: MdKitDocumentVersionToken;
+        updatedAt?: string | null;
+      }
+        | {
+        conflict: true;
+        version?: MdKitDocumentVersionToken;
+        updatedAt?: string | null;
+      };
+     meta: object;
+  }>;
+  writeDocument: MutationProcedure<{
+     input: {
+        baseVersion: string | number | null;
+        content: string;
+        documentId: string;
+        force?: boolean;
+     };
+     output:   | {
+        version: MdKitDocumentVersionToken;
+        updatedAt?: string | null;
+      }
+        | {
+        conflict: true;
+        version?: MdKitDocumentVersionToken;
+        updatedAt?: string | null;
+      };
+     meta: object;
+  }>;
+}>>;
+```
+
+Defined in: [packages/mdkit/src/transport/trpcServer.ts:30](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/trpcServer.ts#L30)
+
+Builds a tRPC router exposing document read/write/resync, checkpoint
+list/read, and restore over a transport store (typically from
+`createMdKitBackend`). Mount it standalone or nested in an app router.
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `store` | [`MdKitTransportStore`](../../../fastify/type-aliases/MdKitTransportStore.md) |
+
+## Returns
+
+`BuiltRouter`\<\{
+  `ctx`: `object`;
+  `meta`: `object`;
+  `errorShape`: `DefaultErrorShape`;
+  `transformer`: `false`;
+\}, `DecorateCreateRouterOptions`\<\{
+  `listDocumentVersions`: `QueryProcedure`\<\{
+     `input`: \{
+        `documentId`: `string`;
+     \};
+     `output`: \{
+        `versions`: [`MdKitDocumentVersionSummary`](../../../index/type-aliases/MdKitDocumentVersionSummary.md)[];
+     \};
+     `meta`: `object`;
+  \}\>;
+  `readDocument`: `QueryProcedure`\<\{
+     `input`: \{
+        `documentId`: `string`;
+     \};
+     `output`: [`MdKitDocumentSnapshot`](../../../index/type-aliases/MdKitDocumentSnapshot.md);
+     `meta`: `object`;
+  \}\>;
+  `readDocumentVersion`: `QueryProcedure`\<\{
+     `input`: \{
+        `documentId`: `string`;
+        `versionId`: `string`;
+     \};
+     `output`:   \| [`MdKitDocumentVersionDetail`](../../../index/type-aliases/MdKitDocumentVersionDetail.md)
+        \| `null`;
+     `meta`: `object`;
+  \}\>;
+  `resyncDocument`: `MutationProcedure`\<\{
+     `input`: \{
+        `documentId`: `string`;
+     \};
+     `output`: [`MdKitDocumentSnapshot`](../../../index/type-aliases/MdKitDocumentSnapshot.md);
+     `meta`: `object`;
+  \}\>;
+  `restoreDocumentVersion`: `MutationProcedure`\<\{
+     `input`: \{
+        `documentId`: `string`;
+        `versionId`: `string`;
+     \};
+     `output`:   \| \{
+        `version`: [`MdKitDocumentVersionToken`](../../../index/type-aliases/MdKitDocumentVersionToken.md);
+        `updatedAt?`: `string` \| `null`;
+      \}
+        \| \{
+        `conflict`: `true`;
+        `version?`: [`MdKitDocumentVersionToken`](../../../index/type-aliases/MdKitDocumentVersionToken.md);
+        `updatedAt?`: `string` \| `null`;
+      \};
+     `meta`: `object`;
+  \}\>;
+  `writeDocument`: `MutationProcedure`\<\{
+     `input`: \{
+        `baseVersion`: `string` \| `number` \| `null`;
+        `content`: `string`;
+        `documentId`: `string`;
+        `force?`: `boolean`;
+     \};
+     `output`:   \| \{
+        `version`: [`MdKitDocumentVersionToken`](../../../index/type-aliases/MdKitDocumentVersionToken.md);
+        `updatedAt?`: `string` \| `null`;
+      \}
+        \| \{
+        `conflict`: `true`;
+        `version?`: [`MdKitDocumentVersionToken`](../../../index/type-aliases/MdKitDocumentVersionToken.md);
+        `updatedAt?`: `string` \| `null`;
+      \};
+     `meta`: `object`;
+  \}\>;
+\}\>\>
+
+
+---
+
+<!-- source: reference/trpc/server/README.md -->
+
+# trpc/server
+
+## Functions
+
+| Function | Description |
+| ------ | ------ |
+| [createMdKitTrpcRouter](functions/createMdKitTrpcRouter.md) | Builds a tRPC router exposing document read/write/resync, checkpoint list/read, and restore over a transport store (typically from `createMdKitBackend`). Mount it standalone or nested in an app router. |
+
+## References
+
+### createMdKitBackend
+
+Re-exports [createMdKitBackend](../../server/functions/createMdKitBackend.md)
+
+***
+
+### CreateMdKitBackendOptions
+
+Re-exports [CreateMdKitBackendOptions](../../server/type-aliases/CreateMdKitBackendOptions.md)
+
+***
+
+### MdKitBackendStore
+
+Re-exports [MdKitBackendStore](../../server/type-aliases/MdKitBackendStore.md)
+
+***
+
+### MdKitCreateCheckpointInput
+
+Re-exports [MdKitCreateCheckpointInput](../../server/type-aliases/MdKitCreateCheckpointInput.md)
+
+***
+
+### MdKitTrpcRouter
+
+Re-exports [MdKitTrpcRouter](../type-aliases/MdKitTrpcRouter.md)
+
+***
+
+### MdKitRestoreDocumentVersionInput
+
+Re-exports [MdKitRestoreDocumentVersionInput](../../fastify/type-aliases/MdKitRestoreDocumentVersionInput.md)
+
+***
+
+### MdKitTransportStore
+
+Re-exports [MdKitTransportStore](../../fastify/type-aliases/MdKitTransportStore.md)
+
+
+---
+
+<!-- source: reference/trpc/type-aliases/CreateMdKitTrpcAdapterOptions.md -->
+
+# Type Alias: CreateMdKitTrpcAdapterOptions
+
+```ts
+type CreateMdKitTrpcAdapterOptions = {
+  client: MdKitTrpcClient;
+};
+```
+
+Defined in: [packages/mdkit/src/transport/trpcClient.ts:50](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/trpcClient.ts#L50)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="client"></a> `client` | [`MdKitTrpcClient`](MdKitTrpcClient.md) | [packages/mdkit/src/transport/trpcClient.ts:51](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/trpcClient.ts#L51) |
+
+
+---
+
+<!-- source: reference/trpc/type-aliases/CreateMdKitTrpcClientAdapterOptions.md -->
+
+# Type Alias: CreateMdKitTrpcClientAdapterOptions
+
+```ts
+type CreateMdKitTrpcClientAdapterOptions = {
+  url: string;
+};
+```
+
+Defined in: [packages/mdkit/src/transport/trpcClient.ts:12](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/trpcClient.ts#L12)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="url"></a> `url` | `string` | [packages/mdkit/src/transport/trpcClient.ts:13](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/trpcClient.ts#L13) |
+
+
+---
+
+<!-- source: reference/trpc/type-aliases/MdKitTrpcClient.md -->
+
+# Type Alias: MdKitTrpcClient
+
+```ts
+type MdKitTrpcClient = {
+  listDocumentVersions: MdKitTrpcQuery<MdKitDocumentInput, {
+     versions: MdKitDocumentVersionSummary[];
+  }>;
+  readDocument: MdKitTrpcQuery<MdKitDocumentInput, MdKitDocumentSnapshot>;
+  readDocumentVersion: MdKitTrpcQuery<MdKitVersionInput, 
+     | MdKitDocumentVersionDetail
+    | null>;
+  resyncDocument: MdKitTrpcMutation<MdKitDocumentInput, MdKitDocumentSnapshot>;
+  writeDocument: MdKitTrpcMutation<MdKitDocumentWriteInput, MdKitDocumentWriteResult>;
+};
+```
+
+Defined in: [packages/mdkit/src/transport/trpcClient.ts:33](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/trpcClient.ts#L33)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="listdocumentversions"></a> `listDocumentVersions` | `MdKitTrpcQuery`\<`MdKitDocumentInput`, \{ `versions`: [`MdKitDocumentVersionSummary`](../../index/type-aliases/MdKitDocumentVersionSummary.md)[]; \}\> | [packages/mdkit/src/transport/trpcClient.ts:34](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/trpcClient.ts#L34) |
+| <a id="readdocument"></a> `readDocument` | `MdKitTrpcQuery`\<`MdKitDocumentInput`, [`MdKitDocumentSnapshot`](../../index/type-aliases/MdKitDocumentSnapshot.md)\> | [packages/mdkit/src/transport/trpcClient.ts:38](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/trpcClient.ts#L38) |
+| <a id="readdocumentversion"></a> `readDocumentVersion` | `MdKitTrpcQuery`\<`MdKitVersionInput`, \| [`MdKitDocumentVersionDetail`](../../index/type-aliases/MdKitDocumentVersionDetail.md) \| `null`\> | [packages/mdkit/src/transport/trpcClient.ts:39](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/trpcClient.ts#L39) |
+| <a id="resyncdocument"></a> `resyncDocument` | `MdKitTrpcMutation`\<`MdKitDocumentInput`, [`MdKitDocumentSnapshot`](../../index/type-aliases/MdKitDocumentSnapshot.md)\> | [packages/mdkit/src/transport/trpcClient.ts:43](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/trpcClient.ts#L43) |
+| <a id="writedocument"></a> `writeDocument` | `MdKitTrpcMutation`\<[`MdKitDocumentWriteInput`](../../index/type-aliases/MdKitDocumentWriteInput.md), [`MdKitDocumentWriteResult`](../../index/type-aliases/MdKitDocumentWriteResult.md)\> | [packages/mdkit/src/transport/trpcClient.ts:44](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/trpcClient.ts#L44) |
+
+
+---
+
+<!-- source: reference/trpc/type-aliases/MdKitTrpcRouter.md -->
+
+# Type Alias: MdKitTrpcRouter
+
+```ts
+type MdKitTrpcRouter = ReturnType<typeof createMdKitTrpcRouter>;
+```
+
+Defined in: [packages/mdkit/src/transport/trpcServer.ts:66](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/transport/trpcServer.ts#L66)
+
+
+---
+
+<!-- source: reference/yjs/functions/markdownToMdKitYjs.md -->
+
+# Function: markdownToMdKitYjs()
+
+```ts
+function markdownToMdKitYjs(markdown: string, options?: MdKitMarkdownYjsOptions): Uint8Array;
+```
+
+Defined in: [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:76](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L76)
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `markdown` | `string` |
+| `options?` | [`MdKitMarkdownYjsOptions`](../../index/type-aliases/MdKitMarkdownYjsOptions.md) |
+
+## Returns
+
+`Uint8Array`
+
+
+---
+
+<!-- source: reference/yjs/functions/mdKitYjsToMarkdown.md -->
+
+# Function: mdKitYjsToMarkdown()
+
+```ts
+function mdKitYjsToMarkdown(yjsState: Uint8Array, options?: MdKitMarkdownYjsOptions): string;
+```
+
+Defined in: [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:85](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L85)
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `yjsState` | `Uint8Array` |
+| `options?` | [`MdKitMarkdownYjsOptions`](../../index/type-aliases/MdKitMarkdownYjsOptions.md) |
+
+## Returns
+
+`string`
+
+
+---
+
+<!-- source: reference/yjs/functions/replaceMdKitYjsMarkdown.md -->
+
+# Function: replaceMdKitYjsMarkdown()
+
+```ts
+function replaceMdKitYjsMarkdown(
+   ydoc: Doc, 
+   markdown: string, 
+   options?: MdKitMarkdownYjsOptions): Uint8Array;
+```
+
+Defined in: [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:50](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L50)
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `ydoc` | `Doc` |
+| `markdown` | `string` |
+| `options?` | [`MdKitMarkdownYjsOptions`](../../index/type-aliases/MdKitMarkdownYjsOptions.md) |
+
+## Returns
+
+`Uint8Array`
+
+
+---
+
+<!-- source: reference/yjs/README.md -->
+
+# yjs
+
+## Functions
+
+| Function | Description |
+| ------ | ------ |
+| [replaceMdKitYjsMarkdown](functions/replaceMdKitYjsMarkdown.md) | - |
+| [markdownToMdKitYjs](functions/markdownToMdKitYjs.md) | - |
+| [mdKitYjsToMarkdown](functions/mdKitYjsToMarkdown.md) | - |
+
+## References
+
+### yjs
+
+Re-exports [yjs](../index/variables/yjs.md)
+
+***
+
+### MdKitMarkdownYjsOptions
+
+Re-exports [MdKitMarkdownYjsOptions](../index/type-aliases/MdKitMarkdownYjsOptions.md)
+

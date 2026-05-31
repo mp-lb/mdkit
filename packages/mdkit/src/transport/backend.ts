@@ -23,6 +23,12 @@ export type MdKitCreateCheckpointInput = {
   sourceRevision: MdKitDocumentVersionToken;
 };
 
+/**
+ * Application-owned persistence contract consumed by {@link createMdKitBackend}.
+ * Implement it with your database; mdkit calls `createCheckpoint` when the
+ * configured {@link CheckpointPolicy} triggers — the store never interprets the
+ * policy itself.
+ */
 export type MdKitBackendStore = {
   createCheckpoint?(
     input: MdKitCreateCheckpointInput,
@@ -185,6 +191,12 @@ const restoreWithStorePrimitives = async (
   });
 };
 
+/**
+ * Wraps an application {@link MdKitBackendStore} with checkpoint-policy
+ * orchestration, producing the transport-ready surface the Fastify and tRPC
+ * helpers mount. The store owns persistence, auth, and metadata; this owns
+ * checkpoint timing and restore ordering.
+ */
 export const createMdKitBackend = ({
   checkpointPolicy = CheckpointPolicy.never(),
   store,

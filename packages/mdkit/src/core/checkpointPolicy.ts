@@ -64,6 +64,15 @@ export const measureMdKitEditDistance = (left: string, right: string) => {
   return previous[right.length] ?? 0;
 };
 
+/**
+ * Factories for the policy that decides when a saved document becomes a
+ * checkpoint. Pass the result to `createMdKitBackend`, not to your store.
+ *
+ * @remarks
+ * `smart()` applies the default autosave-friendly heuristic; `function()`
+ * receives mdkit's computed edit distance alongside the raw content so you can
+ * build a custom rule.
+ */
 export const CheckpointPolicy = {
   always: (): MdKitCheckpointPolicy => ({
     shouldCheckpoint: () => true,

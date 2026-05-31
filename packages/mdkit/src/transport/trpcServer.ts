@@ -22,6 +22,11 @@ const writeInput = z.object({
   force: z.boolean().optional(),
 });
 
+/**
+ * Builds a tRPC router exposing document read/write/resync, checkpoint
+ * list/read, and restore over a transport store (typically from
+ * `createMdKitBackend`). Mount it standalone or nested in an app router.
+ */
 export const createMdKitTrpcRouter = (store: MdKitTransportStore) =>
   t.router({
     listDocumentVersions: t.procedure

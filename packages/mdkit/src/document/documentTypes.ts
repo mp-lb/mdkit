@@ -40,6 +40,11 @@ export type MdKitDocumentVersionDetail = MdKitDocumentVersionSummary & {
   content: string;
 };
 
+/**
+ * Storage contract the document hooks talk to. Implement it over tRPC, REST, or
+ * anything else; only `readDocument`/`writeDocument` are required, the
+ * checkpoint methods are optional and enable version-history UI.
+ */
 export interface MdKitDocumentAdapter {
   readDocument(documentId: string): Promise<MdKitDocumentSnapshot>;
   writeDocument(

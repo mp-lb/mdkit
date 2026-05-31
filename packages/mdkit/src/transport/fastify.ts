@@ -21,6 +21,10 @@ const toRequest = (request: FastifyRequest) => ({
   query: request.query as Record<string, unknown>,
 });
 
+/**
+ * Registers the mdkit REST endpoints on a Fastify app under `prefix`, backed by
+ * a transport store (typically from `createMdKitBackend`).
+ */
 export const registerMdKitFastify = async (
   app: FastifyInstance,
   { prefix = "", store }: RegisterMdKitFastifyOptions,

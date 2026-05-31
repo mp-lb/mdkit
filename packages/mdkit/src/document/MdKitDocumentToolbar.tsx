@@ -22,6 +22,11 @@ const formatUpdatedAt = (updatedAt: string | null) => {
   return `Saved ${new Date(updatedAt).toLocaleTimeString()}`;
 };
 
+/**
+ * Unstyled workflow controls for a connected document: save/collaboration
+ * status plus entry points for version history and conflict resolution. Starter
+ * UI — drop it for your own controls when it doesn't fit.
+ */
 export const MdKitDocumentToolbar = ({
   className,
   collaboration,

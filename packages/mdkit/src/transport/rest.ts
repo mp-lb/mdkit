@@ -23,6 +23,11 @@ const readJson = async <T>(response: Response): Promise<T> => {
   return body;
 };
 
+/**
+ * Builds an {@link MdKitDocumentAdapter} that talks to the mdkit REST endpoint
+ * shape. Restore is not part of the adapter contract, so REST restore needs a
+ * separate call from application code.
+ */
 export const createMdKitRestAdapter = ({
   baseUrl,
   fetch: fetchImpl = fetch,

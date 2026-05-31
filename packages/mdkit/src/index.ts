@@ -46,8 +46,11 @@ export type {
   WriteMdKitDocumentRecordInput,
   WriteMdKitDocumentRecordResult,
 } from "./core/documentEngine";
+export type { UseMdKitCollaborationOptions } from "./collaboration/useMdKitCollaboration";
+export type { UseMdKitDocumentOptions } from "./document/useMdKitDocument";
 export type {
   MdKitCollaborationParticipant,
+  MdKitCollaborationPresence,
   MdKitCollaborationSession,
   MdKitCollaborationStatus,
   MdKitDocumentAdapter,
