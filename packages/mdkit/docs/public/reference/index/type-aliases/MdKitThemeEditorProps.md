@@ -1,3 +1,7 @@
+---
+title: "MdKitThemeEditorProps"
+---
+
 # Type Alias: MdKitThemeEditorProps
 
 ```ts

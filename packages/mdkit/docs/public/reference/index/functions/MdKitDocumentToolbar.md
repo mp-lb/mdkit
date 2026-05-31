@@ -1,3 +1,7 @@
+---
+title: "MdKitDocumentToolbar"
+---
+
 # Function: MdKitDocumentToolbar()
 
 ```ts

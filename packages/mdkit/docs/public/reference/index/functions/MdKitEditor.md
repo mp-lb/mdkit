@@ -1,3 +1,7 @@
+---
+title: "MdKitEditor"
+---
+
 # Function: MdKitEditor()
 
 ```ts

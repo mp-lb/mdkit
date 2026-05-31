@@ -1,3 +1,7 @@
+---
+title: "MdKitDocumentAdapter"
+---
+
 # Interface: MdKitDocumentAdapter
 
 Defined in: [packages/mdkit/src/document/documentTypes.ts:48](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/document/documentTypes.ts#L48)

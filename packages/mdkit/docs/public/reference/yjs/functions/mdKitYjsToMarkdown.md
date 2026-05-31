@@ -1,3 +1,7 @@
+---
+title: "mdKitYjsToMarkdown"
+---
+
 # Function: mdKitYjsToMarkdown()
 
 ```ts

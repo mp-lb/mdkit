@@ -1,3 +1,7 @@
+---
+title: "MdKitYamlFrontMatter"
+---
+
 # Type Alias: MdKitYamlFrontMatter
 
 ```ts

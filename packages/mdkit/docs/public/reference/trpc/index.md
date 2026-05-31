@@ -1,3 +1,7 @@
+---
+title: "trpc"
+---
+
 # trpc
 
 ## Type Aliases

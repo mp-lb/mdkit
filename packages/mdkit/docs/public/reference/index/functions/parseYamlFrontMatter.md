@@ -1,3 +1,7 @@
+---
+title: "parseYamlFrontMatter"
+---
+
 # Function: parseYamlFrontMatter()
 
 ```ts

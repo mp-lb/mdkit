@@ -1,3 +1,7 @@
+---
+title: "UseMdKitCollaborationOptions"
+---
+
 # Type Alias: UseMdKitCollaborationOptions
 
 ```ts

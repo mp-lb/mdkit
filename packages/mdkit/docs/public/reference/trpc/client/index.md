@@ -1,3 +1,7 @@
+---
+title: "trpc/client"
+---
+
 # trpc/client
 
 ## References

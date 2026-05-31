@@ -1,3 +1,7 @@
+---
+title: "MdKitEditorProps"
+---
+
 # Type Alias: MdKitEditorProps
 
 ```ts

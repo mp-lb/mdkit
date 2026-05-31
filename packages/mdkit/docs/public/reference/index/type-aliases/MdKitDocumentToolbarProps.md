@@ -1,3 +1,7 @@
+---
+title: "MdKitDocumentToolbarProps"
+---
+
 # Type Alias: MdKitDocumentToolbarProps
 
 ```ts

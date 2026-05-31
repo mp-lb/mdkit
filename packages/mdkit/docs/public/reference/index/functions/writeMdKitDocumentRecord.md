@@ -1,3 +1,7 @@
+---
+title: "writeMdKitDocumentRecord"
+---
+
 # Function: writeMdKitDocumentRecord()
 
 ```ts

@@ -1,3 +1,7 @@
+---
+title: "MdKitDocumentWriteInput"
+---
+
 # Type Alias: MdKitDocumentWriteInput
 
 ```ts

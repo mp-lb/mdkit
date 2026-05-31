@@ -1,3 +1,7 @@
+---
+title: "MdKitEditorDebugEvent"
+---
+
 # Type Alias: MdKitEditorDebugEvent
 
 ```ts

@@ -1,3 +1,7 @@
+---
+title: "replaceMdKitYjsMarkdown"
+---
+
 # Function: replaceMdKitYjsMarkdown()
 
 ```ts

@@ -1,3 +1,7 @@
+---
+title: "measureMdKitEditDistance"
+---
+
 # Function: measureMdKitEditDistance()
 
 ```ts

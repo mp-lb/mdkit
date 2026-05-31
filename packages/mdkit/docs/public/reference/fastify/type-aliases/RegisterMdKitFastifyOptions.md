@@ -1,3 +1,7 @@
+---
+title: "RegisterMdKitFastifyOptions"
+---
+
 # Type Alias: RegisterMdKitFastifyOptions
 
 ```ts

@@ -1,3 +1,7 @@
+---
+title: "MdKitView"
+---
+
 # Function: MdKitView()
 
 ```ts

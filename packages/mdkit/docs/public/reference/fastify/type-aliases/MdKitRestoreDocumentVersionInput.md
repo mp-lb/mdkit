@@ -1,3 +1,7 @@
+---
+title: "MdKitRestoreDocumentVersionInput"
+---
+
 # Type Alias: MdKitRestoreDocumentVersionInput
 
 ```ts

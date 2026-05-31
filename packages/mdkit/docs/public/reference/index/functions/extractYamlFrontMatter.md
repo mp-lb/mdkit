@@ -1,3 +1,7 @@
+---
+title: "extractYamlFrontMatter"
+---
+
 # Function: extractYamlFrontMatter()
 
 ```ts

@@ -1,3 +1,7 @@
+---
+title: "MdKitDocumentVersionsController"
+---
+
 # Type Alias: MdKitDocumentVersionsController
 
 ```ts

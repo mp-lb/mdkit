@@ -1,3 +1,7 @@
+---
+title: "MdKitConflictPanel"
+---
+
 # Function: MdKitConflictPanel()
 
 ```ts

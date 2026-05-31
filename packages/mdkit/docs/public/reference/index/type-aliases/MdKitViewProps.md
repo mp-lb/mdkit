@@ -1,3 +1,7 @@
+---
+title: "MdKitViewProps"
+---
+
 # Type Alias: MdKitViewProps
 
 ```ts

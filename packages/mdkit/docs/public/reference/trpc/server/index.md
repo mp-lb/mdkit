@@ -1,3 +1,7 @@
+---
+title: "trpc/server"
+---
+
 # trpc/server
 
 ## Functions

@@ -1,3 +1,7 @@
+---
+title: "CheckpointPolicy"
+---
+
 # Variable: CheckpointPolicy
 
 ```ts

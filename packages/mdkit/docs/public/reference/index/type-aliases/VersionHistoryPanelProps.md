@@ -1,3 +1,7 @@
+---
+title: "VersionHistoryPanelProps"
+---
+
 # Type Alias: VersionHistoryPanelProps
 
 ```ts

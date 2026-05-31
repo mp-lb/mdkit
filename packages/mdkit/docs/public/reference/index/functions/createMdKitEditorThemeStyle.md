@@ -1,3 +1,7 @@
+---
+title: "createMdKitEditorThemeStyle"
+---
+
 # Function: createMdKitEditorThemeStyle()
 
 ```ts

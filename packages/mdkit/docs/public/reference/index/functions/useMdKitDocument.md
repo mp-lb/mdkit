@@ -1,3 +1,7 @@
+---
+title: "useMdKitDocument"
+---
+
 # Function: useMdKitDocument()
 
 ```ts

@@ -1,3 +1,7 @@
+---
+title: "yjs"
+---
+
 # Variable: yjs
 
 ```ts

@@ -1,3 +1,7 @@
+---
+title: "MdKitDocumentSnapshot"
+---
+
 # Type Alias: MdKitDocumentSnapshot
 
 ```ts

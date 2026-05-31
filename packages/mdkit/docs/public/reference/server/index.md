@@ -1,3 +1,7 @@
+---
+title: "server"
+---
+
 # server
 
 ## Type Aliases

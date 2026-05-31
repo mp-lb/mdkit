@@ -1,3 +1,7 @@
+---
+title: "MdKitBackendStore"
+---
+
 # Type Alias: MdKitBackendStore
 
 ```ts

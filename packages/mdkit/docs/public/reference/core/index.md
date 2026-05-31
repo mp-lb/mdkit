@@ -1,3 +1,7 @@
+---
+title: "core"
+---
+
 # core
 
 ## References

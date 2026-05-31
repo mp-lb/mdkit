@@ -1,3 +1,7 @@
+---
+title: "defaultMdKitEditorTheme"
+---
+
 # Variable: defaultMdKitEditorTheme
 
 ```ts

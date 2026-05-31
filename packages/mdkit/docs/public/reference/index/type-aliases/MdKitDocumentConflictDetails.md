@@ -1,3 +1,7 @@
+---
+title: "MdKitDocumentConflictDetails"
+---
+
 # Type Alias: MdKitDocumentConflictDetails
 
 ```ts

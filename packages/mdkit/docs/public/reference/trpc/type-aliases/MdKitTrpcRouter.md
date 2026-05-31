@@ -1,3 +1,7 @@
+---
+title: "MdKitTrpcRouter"
+---
+
 # Type Alias: MdKitTrpcRouter
 
 ```ts

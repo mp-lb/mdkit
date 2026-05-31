@@ -1,3 +1,7 @@
+---
+title: "MdKitTransportStore"
+---
+
 # Type Alias: MdKitTransportStore
 
 ```ts

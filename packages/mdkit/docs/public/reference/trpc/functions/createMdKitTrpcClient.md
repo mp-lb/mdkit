@@ -1,3 +1,7 @@
+---
+title: "createMdKitTrpcClient"
+---
+
 # Function: createMdKitTrpcClient()
 
 ```ts

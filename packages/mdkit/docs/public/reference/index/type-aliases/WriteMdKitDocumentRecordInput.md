@@ -1,3 +1,7 @@
+---
+title: "WriteMdKitDocumentRecordInput"
+---
+
 # Type Alias: WriteMdKitDocumentRecordInput
 
 ```ts

@@ -183,7 +183,7 @@ and build your own workflow components.
 
 The backend starts with a store object. Replace `createYourDocumentStore()` with
 Postgres, MongoDB, Redis, files, or any other durable storage. Your store
-implements the [`MdKitBackendStore`](./api.md#mdkitbackendstore) interface:
+implements the [`MdKitBackendStore`](./reference/server/type-aliases/MdKitBackendStore.md) interface:
 read/write the current document, create/read checkpoints, restore a checkpoint,
 and optionally persist collaboration state.
 The mdkit backend helper applies checkpoint policy and turns those primitives
@@ -261,7 +261,7 @@ See [Collaboration Persistence](./collaboration-persistence.md).
 
 If the frontend runs on a different origin, put this server behind your app's
 dev proxy or add CORS handling around the tRPC handler. See
-[API Reference](./api.md#transport-helpers) for the full backend helper API.
+[API Reference](./reference/index.md) for the full backend helper API.
 
 ### REST
 
@@ -277,7 +277,7 @@ frontend transport changes.
 
 Checkpoint policies decide when saved content becomes history. The backend
 example uses `CheckpointPolicy.smart()`, which applies mdkit's default
-autosave-friendly policy. See [Checkpoint Policy](./api.md#checkpoint-policy)
+autosave-friendly policy. See [Checkpoint Policy](./reference/index/variables/CheckpointPolicy.md)
 for `never`, `always`, `smart`, and custom policy functions.
 
 ## Questions

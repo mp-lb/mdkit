@@ -1,3 +1,7 @@
+---
+title: "VersionHistoryPanel"
+---
+
 # Function: VersionHistoryPanel()
 
 ```ts

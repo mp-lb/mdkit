@@ -1,3 +1,7 @@
+---
+title: "MdKitSmartCheckpointPolicyOptions"
+---
+
 # Type Alias: MdKitSmartCheckpointPolicyOptions
 
 ```ts

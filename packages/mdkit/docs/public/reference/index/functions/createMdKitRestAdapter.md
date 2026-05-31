@@ -1,3 +1,7 @@
+---
+title: "createMdKitRestAdapter"
+---
+
 # Function: createMdKitRestAdapter()
 
 ```ts

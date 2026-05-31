@@ -1,3 +1,7 @@
+---
+title: "MdKitDocumentVersionDetail"
+---
+
 # Type Alias: MdKitDocumentVersionDetail
 
 ```ts

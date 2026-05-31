@@ -1,3 +1,7 @@
+---
+title: "MdKitConflictPanelProps"
+---
+
 # Type Alias: MdKitConflictPanelProps
 
 ```ts

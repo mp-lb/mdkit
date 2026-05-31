@@ -1,3 +1,7 @@
+---
+title: "CreateMdKitRestAdapterOptions"
+---
+
 # Type Alias: CreateMdKitRestAdapterOptions
 
 ```ts

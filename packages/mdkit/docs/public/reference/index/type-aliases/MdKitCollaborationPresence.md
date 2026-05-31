@@ -1,3 +1,7 @@
+---
+title: "MdKitCollaborationPresence"
+---
+
 # Type Alias: MdKitCollaborationPresence
 
 ```ts

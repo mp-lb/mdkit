@@ -1,3 +1,7 @@
+---
+title: "MdKitCheckpointPolicy"
+---
+
 # Type Alias: MdKitCheckpointPolicy
 
 ```ts

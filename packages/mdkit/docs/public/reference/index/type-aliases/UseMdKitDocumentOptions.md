@@ -1,3 +1,7 @@
+---
+title: "UseMdKitDocumentOptions"
+---
+
 # Type Alias: UseMdKitDocumentOptions
 
 ```ts

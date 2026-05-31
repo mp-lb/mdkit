@@ -1,3 +1,7 @@
+---
+title: "MdKitCollaborationSession"
+---
+
 # Type Alias: MdKitCollaborationSession
 
 ```ts

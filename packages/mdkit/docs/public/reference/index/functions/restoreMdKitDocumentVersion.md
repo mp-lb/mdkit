@@ -1,3 +1,7 @@
+---
+title: "restoreMdKitDocumentVersion"
+---
+
 # Function: restoreMdKitDocumentVersion()
 
 ```ts

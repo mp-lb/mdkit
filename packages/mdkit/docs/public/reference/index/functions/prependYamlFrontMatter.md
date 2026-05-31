@@ -1,3 +1,7 @@
+---
+title: "prependYamlFrontMatter"
+---
+
 # Function: prependYamlFrontMatter()
 
 ```ts

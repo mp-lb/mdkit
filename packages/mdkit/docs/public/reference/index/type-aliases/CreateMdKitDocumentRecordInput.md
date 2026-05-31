@@ -1,3 +1,7 @@
+---
+title: "CreateMdKitDocumentRecordInput"
+---
+
 # Type Alias: CreateMdKitDocumentRecordInput
 
 ```ts

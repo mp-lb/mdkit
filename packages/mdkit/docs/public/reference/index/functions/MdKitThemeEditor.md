@@ -1,3 +1,7 @@
+---
+title: "MdKitThemeEditor"
+---
+
 # Function: MdKitThemeEditor()
 
 ```ts

@@ -1,3 +1,7 @@
+---
+title: "MdKitDocumentController"
+---
+
 # Type Alias: MdKitDocumentController
 
 ```ts

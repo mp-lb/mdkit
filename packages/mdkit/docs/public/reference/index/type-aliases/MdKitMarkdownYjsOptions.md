@@ -1,3 +1,7 @@
+---
+title: "MdKitMarkdownYjsOptions"
+---
+
 # Type Alias: MdKitMarkdownYjsOptions
 
 ```ts

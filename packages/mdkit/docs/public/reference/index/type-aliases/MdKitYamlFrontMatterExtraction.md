@@ -1,3 +1,7 @@
+---
+title: "MdKitYamlFrontMatterExtraction"
+---
+
 # Type Alias: MdKitYamlFrontMatterExtraction
 
 ```ts

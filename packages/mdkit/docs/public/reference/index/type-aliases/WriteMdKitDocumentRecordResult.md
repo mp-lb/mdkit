@@ -1,3 +1,7 @@
+---
+title: "WriteMdKitDocumentRecordResult"
+---
+
 # Type Alias: WriteMdKitDocumentRecordResult
 
 ```ts

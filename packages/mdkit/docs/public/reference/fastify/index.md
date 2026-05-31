@@ -1,3 +1,7 @@
+---
+title: "fastify"
+---
+
 # fastify
 
 ## Type Aliases

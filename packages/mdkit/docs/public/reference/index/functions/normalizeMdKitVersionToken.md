@@ -1,3 +1,7 @@
+---
+title: "normalizeMdKitVersionToken"
+---
+
 # Function: normalizeMdKitVersionToken()
 
 ```ts

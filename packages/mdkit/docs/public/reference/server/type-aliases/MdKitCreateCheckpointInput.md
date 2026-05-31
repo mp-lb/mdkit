@@ -1,3 +1,7 @@
+---
+title: "MdKitCreateCheckpointInput"
+---
+
 # Type Alias: MdKitCreateCheckpointInput
 
 ```ts

@@ -1,3 +1,7 @@
+---
+title: "useMdKitCollaboration"
+---
+
 # Function: useMdKitCollaboration()
 
 ```ts

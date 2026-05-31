@@ -1,3 +1,7 @@
+---
+title: "RestoreMdKitDocumentVersionResult"
+---
+
 # Type Alias: RestoreMdKitDocumentVersionResult
 
 ```ts

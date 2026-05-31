@@ -1,3 +1,7 @@
+---
+title: "createMdKitTrpcRouter"
+---
+
 # Function: createMdKitTrpcRouter()
 
 ```ts

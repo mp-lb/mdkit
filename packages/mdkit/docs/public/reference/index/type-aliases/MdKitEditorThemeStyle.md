@@ -1,3 +1,7 @@
+---
+title: "MdKitEditorThemeStyle"
+---
+
 # Type Alias: MdKitEditorThemeStyle
 
 ```ts

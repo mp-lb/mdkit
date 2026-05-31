@@ -1,3 +1,7 @@
+---
+title: "createMdKitTrpcClientAdapter"
+---
+
 # Function: createMdKitTrpcClientAdapter()
 
 ```ts

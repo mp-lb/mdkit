@@ -1,3 +1,7 @@
+---
+title: "MdKitCollaborationStatus"
+---
+
 # Type Alias: MdKitCollaborationStatus
 
 ```ts

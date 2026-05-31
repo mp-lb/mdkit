@@ -1,3 +1,7 @@
+---
+title: "yjs"
+---
+
 # yjs
 
 ## Functions

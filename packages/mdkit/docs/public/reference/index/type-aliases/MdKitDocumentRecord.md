@@ -1,3 +1,7 @@
+---
+title: "MdKitDocumentRecord"
+---
+
 # Type Alias: MdKitDocumentRecord
 
 ```ts

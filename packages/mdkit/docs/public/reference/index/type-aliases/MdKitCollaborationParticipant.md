@@ -1,3 +1,7 @@
+---
+title: "MdKitCollaborationParticipant"
+---
+
 # Type Alias: MdKitCollaborationParticipant
 
 ```ts

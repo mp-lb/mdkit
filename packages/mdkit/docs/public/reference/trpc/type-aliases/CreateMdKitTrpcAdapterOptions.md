@@ -1,3 +1,7 @@
+---
+title: "CreateMdKitTrpcAdapterOptions"
+---
+
 # Type Alias: CreateMdKitTrpcAdapterOptions
 
 ```ts

@@ -1,3 +1,7 @@
+---
+title: "darkMdKitEditorTheme"
+---
+
 # Variable: darkMdKitEditorTheme
 
 ```ts

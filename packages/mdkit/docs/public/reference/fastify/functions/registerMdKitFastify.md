@@ -1,3 +1,7 @@
+---
+title: "registerMdKitFastify"
+---
+
 # Function: registerMdKitFastify()
 
 ```ts

@@ -1,3 +1,7 @@
+---
+title: "MdKitDocumentVersionSummary"
+---
+
 # Type Alias: MdKitDocumentVersionSummary
 
 ```ts
