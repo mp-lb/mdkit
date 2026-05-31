@@ -6,10 +6,11 @@
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
-    "src/styles.css",
-    "!dist/**/*.test.d.ts",
-    "!dist/**/*.test.js",
-    "!dist/test"
+    "src",
+    "!dist/**/*.test.*",
+    "!dist/test",
+    "!src/**/*.test.*",
+    "!src/test"
   ],
   "exports": {
     ".": {

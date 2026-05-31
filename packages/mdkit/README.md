@@ -8,6 +8,9 @@ Frontend primitives for document editing flows:
 - `useMdKitDocumentVersions` and `VersionHistoryPanel` for version browsing and restore flows
 - `useMdKitCollaboration` for wiring the same editor into a Hocuspocus/Yjs session
 
+📖 **Full documentation: [mdkit.mp-lb.dev](https://mdkit.mp-lb.dev/)** — guide,
+recipes, and the generated [API reference](https://mdkit.mp-lb.dev/docs/reference).
+
 ## Install
 
 ```bash
@@ -129,5 +132,8 @@ package in unconnected and connected modes.
 
 ## Package Docs
 
-Published library docs live in [`docs/index.md`](./docs/index.md). Internal
-project notes live in the repository under [`../../docs/mdkit`](../../docs/mdkit).
+Published library docs live under [`docs/public/`](./docs/public) — the
+hand-written guide plus the TypeDoc-generated [`reference/`](./docs/public/reference)
+(never hand-edited; run `pnpm docs:gen` to regenerate). They are rendered as a
+site at [mdkit.mp-lb.dev](https://mdkit.mp-lb.dev/). Internal project notes live
+in the repository under [`../../docs/mdkit`](../../docs/mdkit).
