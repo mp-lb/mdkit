@@ -1,5 +1,5 @@
 project: mdkit
-env_files:
+env-files:
   - .env.local
   - .env
 homepage: http://localhost:${TESTBENCH_PORT}
@@ -21,7 +21,7 @@ native:
     aliases: [mdkit, tb]
     cmd: pnpm --filter=@mp-lb/mdkit-testbench dev
     env: "*"
-    depends_on:
+    depends-on:
       - testbench-api
   testbench-api:
     aliases: [mdkit-api, tb-api]
@@ -43,7 +43,7 @@ tasks:
   vitest:
     cmds:
       - pnpm test
-  worktree_setup:
+  worktree-setup:
     cmds:
       - pnpm install
       - grep -qxF '@AGENTS_WORKTREE.md' AGENTS.md || printf '\n@AGENTS_WORKTREE.md\n' >> AGENTS.md
