@@ -12,12 +12,12 @@ Read [PRODUCT.md](PRODUCT.md) if you need to understand the product.
 
 @documentation.md
 
-@tech-stack.md
+@fssstack/tech-stack.md
 
-@ui.md
+@fssstack/ui.md
 
 @agent-responsibility.md
 
 @validation.md
 
-@~/Code/mgr/agents-md/global.md
+@fssstack/global.md
