@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "data": [
+    {
+      "label": "pasting into editor",
+      "status": "todo",
+      "priority": 1,
+      "tags": []
+    }
+  ],
+  "statuses": [
+    "backlog",
+    "todo",
+    "in_progress",
+    "done"
+  ],
+  "view": {
+    "mode": "list",
+    "sortDesc": false
+  }
+}

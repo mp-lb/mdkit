@@ -8,17 +8,10 @@ The UI may show a live, smoothly regenerating balance, but that value is only a 
 
 Store one row or document per actor and bucket:
 
-| Field | Purpose |
-| --- | --- |
-| `balance` | Authoritative balance as of `updatedAt`. May be fractional. |
-| `updatedAt` | Server timestamp for when `balance` was last settled. |
-| `maxBalance` or `tier` | Capacity, either stored directly or derived from plan/tier. |
-| `regenRate` or `tier` | Tokens regenerated per time unit, either stored directly or derived from plan/tier. |
+Example shape for tokens:
 
-Lexi Quest used this shape for coins:
-
-- `coins`: balance as of `lastCoinUpdate`
-- `lastCoinUpdate`: authoritative timestamp
+- `tokens`: balance as of `lastTokenUpdate`
+- `lastTokenUpdate`: authoritative timestamp
 - `tier`: derives free/pro capacity and refill rate
 
 Keep the server and client formulas shared when possible. If they cannot literally share code, keep constants named the same and test both paths against the same examples.
@@ -31,7 +24,6 @@ To settle a bucket:
 const getSettledBalance = (bucket: Bucket, now: Date): number => {
   const elapsedMs = now.getTime() - bucket.updatedAt.getTime();
   const regenerated = (elapsedMs / bucket.regenIntervalMs) * bucket.regenAmount;
-
   return Math.min(bucket.maxBalance, bucket.balance + Math.max(0, regenerated));
 };
 ```
@@ -110,7 +102,7 @@ This projection is for display only. It can drift if:
 - tier/rate/capacity changes server-side
 - local constants differ from server constants
 
-Refetch periodically or after relevant mutations so the projection gets a fresh authoritative base. Lexi Quest used a short interval for mobile and a longer interval for web, then updated the visible count every second between refetches.
+Refetch periodically or after relevant mutations so the projection gets a fresh authoritative base.
 
 Display integer balances with `Math.floor(projectedBalance)` when fractional regeneration exists. Keep the fractional value in state so the visible number advances at the right time.
 
