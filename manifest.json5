@@ -1,0 +1,15 @@
+{
+  type: 'fssstack',
+  name: 'mdkit',
+  emoji: '📝',
+  description: 'Shared markdown/MDX toolkit (@mp-lb/mdkit)',
+  projectSlug: 'mdkit',
+  packagePrefix: '@mp-lb',
+  homepageUrl: 'https://mdkit.mp-lb.dev/',
+  frontends: [],
+  backends: [],
+  clis: [],
+  libs: ['mdkit'],
+  extensions: [],
+  internalDeps: [],
+}
