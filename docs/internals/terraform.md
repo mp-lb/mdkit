@@ -39,7 +39,7 @@ For npm publishing, also set:
 
 ## Deployment
 
-Docs deploy automatically from `.github/workflows/deploy-docs.yml` on pushes to `main` that affect the mdkit package, docs deployment config, or workspace dependency files.
+Docs deploy automatically from `.github/workflows/deploy.yaml` on pushes to `main` that affect the mdkit package, docs deployment config, or workspace dependency files.
 
 The workflow:
 
@@ -53,7 +53,7 @@ Manual deployment is available through the workflow dispatch button in GitHub Ac
 
 ## Publishing
 
-`.github/workflows/release.yml` publishes `@mp-lb/mdkit` to npm through Changesets.
+`.github/workflows/publish.yaml` publishes `@mp-lb/mdkit` to npm through Changesets.
 
 The workflow verifies the package, then `changesets/action` either opens a release PR or publishes the versioned package:
 
