@@ -31,6 +31,10 @@ native:
     cmd: pnpm --filter=@mp-lb/mdkit docs:dev
     env: "*"
 tasks:
+  compile-agents:
+    cmds:
+      - npx -y @mp-lb/mdcompile agents-md/index.md -o AGENTS.md --optional --silent
+      - npx -y @mp-lb/mdcompile agents-md/index.md -o CLAUDE.md --optional --silent
   lint:
     cmds:
       - pnpm lint
