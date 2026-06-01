@@ -2,9 +2,9 @@ import { describe, it, expect } from "vitest";
 import Fastify from "fastify";
 import cors from "@fastify/cors";
 import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify";
-import { t } from "@fssstack/mdkit-server";
+import { t } from "@mp-lb/mdkit-server";
 import { z } from "zod";
-import { createTrpcRouter } from "@fssstack/mdkit-trpc";
+import { createTrpcRouter } from "@mp-lb/mdkit-trpc";
 
 const appRouter = createTrpcRouter(t);
 

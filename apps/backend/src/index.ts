@@ -10,8 +10,8 @@ import {
   createLogger,
   type AppContext,
   handleTrpcError,
-} from "@fssstack/mdkit-server";
-import { createTrpcRouter, type AppRouter } from "@fssstack/mdkit-trpc";
+} from "@mp-lb/mdkit-server";
+import { createTrpcRouter, type AppRouter } from "@mp-lb/mdkit-trpc";
 
 const port = env.BACKEND_PORT;
 const appRouter = createTrpcRouter(t);

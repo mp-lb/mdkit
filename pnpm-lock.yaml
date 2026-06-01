@@ -87,10 +87,10 @@ importers:
       '@fastify/cors':
         specifier: 10.0.1
         version: 10.0.1
-      '@fssstack/mdkit-server':
+      '@mp-lb/mdkit-server':
         specifier: workspace:*
         version: link:../../packages/server
-      '@fssstack/mdkit-trpc':
+      '@mp-lb/mdkit-trpc':
         specifier: workspace:*
         version: link:../../packages/trpc
       '@trpc/server':
@@ -184,15 +184,15 @@ importers:
       '@fontsource-variable/figtree':
         specifier: 5.2.10
         version: 5.2.10
-      '@fssstack/mdkit-trpc':
-        specifier: workspace:*
-        version: link:../../packages/trpc
       '@hugeicons/core-free-icons':
         specifier: 4.0.0
         version: 4.0.0
       '@hugeicons/react':
         specifier: 1.1.6
         version: 1.1.6(react@19.2.0)
+      '@mp-lb/mdkit-trpc':
+        specifier: workspace:*
+        version: link:../../packages/trpc
       '@radix-ui/react-slot':
         specifier: 1.2.4
         version: 1.2.4(@types/react@19.2.5)(react@19.2.0)
@@ -472,7 +472,7 @@ importers:
 
   packages/server:
     dependencies:
-      '@fssstack/mdkit-core':
+      '@mp-lb/mdkit-core':
         specifier: workspace:*
         version: link:../core
       '@trpc/server':
@@ -487,10 +487,10 @@ importers:
 
   packages/trpc:
     dependencies:
-      '@fssstack/mdkit-core':
+      '@mp-lb/mdkit-core':
         specifier: workspace:*
         version: link:../core
-      '@fssstack/mdkit-server':
+      '@mp-lb/mdkit-server':
         specifier: workspace:*
         version: link:../server
       zod:

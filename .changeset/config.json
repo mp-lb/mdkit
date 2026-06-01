@@ -8,11 +8,11 @@
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
   "ignore": [
-    "@fssstack/mdkit-backend",
-    "@fssstack/mdkit-core",
-    "@fssstack/mdkit-frontend",
-    "@fssstack/mdkit-server",
-    "@fssstack/mdkit-trpc",
+    "@mp-lb/mdkit-backend",
+    "@mp-lb/mdkit-core",
+    "@mp-lb/mdkit-frontend",
+    "@mp-lb/mdkit-server",
+    "@mp-lb/mdkit-trpc",
     "@mp-lb/mdkit-testbench",
     "@mp-lb/mdkit-testbench-backend"
   ]

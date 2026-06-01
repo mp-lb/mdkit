@@ -1,5 +1,5 @@
 {
-  "name": "@fssstack/mdkit-trpc",
+  "name": "@mp-lb/mdkit-trpc",
   "private": true,
   "version": "0.0.1",
   "type": "module",
@@ -19,8 +19,8 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@fssstack/mdkit-core": "workspace:*",
-    "@fssstack/mdkit-server": "workspace:*",
+    "@mp-lb/mdkit-core": "workspace:*",
+    "@mp-lb/mdkit-server": "workspace:*",
     "zod": "4.4.1"
   }
 }

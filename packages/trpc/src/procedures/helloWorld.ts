@@ -1,5 +1,5 @@
-import { message } from "@fssstack/mdkit-core";
-import type { TRPCInstance } from "@fssstack/mdkit-server";
+import { message } from "@mp-lb/mdkit-core";
+import type { TRPCInstance } from "@mp-lb/mdkit-server";
 import { z } from "zod";
 
 export const helloWorld = (t: TRPCInstance) =>

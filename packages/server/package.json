@@ -1,5 +1,5 @@
 {
-  "name": "@fssstack/mdkit-server",
+  "name": "@mp-lb/mdkit-server",
   "private": true,
   "version": "0.0.1",
   "type": "module",
@@ -20,7 +20,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@fssstack/mdkit-core": "workspace:*",
+    "@mp-lb/mdkit-core": "workspace:*",
     "@trpc/server": "11.7.1",
     "pino": "10.3.0",
     "superjson": "2.2.6"

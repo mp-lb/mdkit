@@ -1,5 +1,5 @@
 {
-  "name": "@fssstack/mdkit",
+  "name": "@mp-lb/mdkit-monorepo",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@10.10.0",

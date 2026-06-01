@@ -1,6 +1,6 @@
 import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
 import superjson from "superjson";
-import type { AppRouter } from "@fssstack/mdkit-trpc";
+import type { AppRouter } from "@mp-lb/mdkit-trpc";
 import { env } from "./config";
 
 export const trpc = createTRPCProxyClient<AppRouter>({

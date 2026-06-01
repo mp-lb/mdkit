@@ -1,4 +1,4 @@
-import type { TRPCInstance } from "@fssstack/mdkit-server";
+import type { TRPCInstance } from "@mp-lb/mdkit-server";
 import { helloWorld } from "./procedures/helloWorld";
 
 export const createTrpcRouter = (t: TRPCInstance) =>

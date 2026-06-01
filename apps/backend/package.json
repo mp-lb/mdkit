@@ -1,5 +1,5 @@
 {
-  "name": "@fssstack/mdkit-backend",
+  "name": "@mp-lb/mdkit-backend",
   "private": true,
   "type": "module",
   "scripts": {
@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "@fastify/cors": "10.0.1",
-    "@fssstack/mdkit-server": "workspace:*",
-    "@fssstack/mdkit-trpc": "workspace:*",
+    "@mp-lb/mdkit-server": "workspace:*",
+    "@mp-lb/mdkit-trpc": "workspace:*",
     "@trpc/server": "11.7.1",
     "fastify": "5.1.0",
     "pino-pretty": "13.1.3",
