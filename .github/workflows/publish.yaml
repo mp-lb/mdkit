@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - ".changeset/**"
-      - ".github/workflows/release.yml"
+      - ".github/workflows/publish.yaml"
   workflow_dispatch:
 
 permissions:
