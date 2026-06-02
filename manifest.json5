@@ -8,8 +8,6 @@
   homepageUrl: 'https://mdkit.mp-lb.dev/',
   frontends: [],
   backends: [],
-  clis: [],
   libs: ['mdkit'],
   extensions: [],
-  internalDeps: [],
 }
