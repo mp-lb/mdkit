@@ -43,10 +43,35 @@ jobs:
       - name: Check generated docs are up to date
         run: pnpm --filter=@mp-lb/mdkit docs:check
 
+      - name: Load secrets
+        env:
+          SECRETS_KEY: ${{ secrets.SECRETS_KEY }}
+        run: |
+          set -euo pipefail
+          npx -y @mp-lb/doctrine-secrets decrypt docs/secrets.json.enc --secret "$SECRETS_KEY" > secrets.json
+          emit() {
+            local key="$1" mask="$2" val
+            val=$(jq -r --arg k "$key" '.[$k] // empty' secrets.json)
+            [ -z "$val" ] && return 0
+            [ "$mask" = "mask" ] && echo "::add-mask::$val"
+            {
+              echo "$key<<__SECRET_EOF__"
+              echo "$val"
+              echo "__SECRET_EOF__"
+            } >> "$GITHUB_ENV"
+          }
+          emit GCP_SA_KEY mask
+          emit VERCEL_API_TOKEN mask
+          emit CLOUDFLARE_API_TOKEN mask
+          emit VERCEL_ORG_ID nomask
+          emit GCP_PROJECT_ID nomask
+          emit CLOUDFLARE_ZONE_ID nomask
+          rm -f secrets.json
+
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}
+          credentials_json: ${{ env.GCP_SA_KEY }}
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
@@ -57,7 +82,7 @@ jobs:
         working-directory: infra
         run: |
           terraform init \
-            -backend-config="bucket=${{ secrets.GCP_PROJECT_ID }}-terraform-state" \
+            -backend-config="bucket=${{ env.GCP_PROJECT_ID }}-terraform-state" \
             -backend-config="prefix=terraform/state/${{ env.PROJECT_NAME }}"
 
       - name: Terraform Apply
@@ -65,9 +90,9 @@ jobs:
         run: |
           terraform apply -auto-approve \
             -var="project_name=${{ env.PROJECT_NAME }}" \
-            -var="vercel_api_token=${{ secrets.VERCEL_API_TOKEN }}" \
-            -var="cloudflare_api_token=${{ secrets.CLOUDFLARE_API_TOKEN }}" \
-            -var="cloudflare_zone_id=${{ secrets.CLOUDFLARE_ZONE_ID }}"
+            -var="vercel_api_token=${{ env.VERCEL_API_TOKEN }}" \
+            -var="cloudflare_api_token=${{ env.CLOUDFLARE_API_TOKEN }}" \
+            -var="cloudflare_zone_id=${{ env.CLOUDFLARE_ZONE_ID }}"
 
       - name: Build docs
         run: pnpm --filter=@mp-lb/mdkit-docs build
@@ -76,8 +101,8 @@ jobs:
         id: vercel
         working-directory: infra
         env:
-          VERCEL_API_TOKEN: ${{ secrets.VERCEL_API_TOKEN }}
-          VERCEL_ORG_ID_SECRET: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_API_TOKEN: ${{ env.VERCEL_API_TOKEN }}
+          VERCEL_ORG_ID_SECRET: ${{ env.VERCEL_ORG_ID }}
         run: |
           echo "project_id=$(terraform output -raw vercel_project_id)" >> "$GITHUB_OUTPUT"
 
@@ -89,7 +114,7 @@ jobs:
           fi
 
       - name: Deploy docs to Vercel
-        run: npx vercel deploy apps/docs/build/client --prod --yes --token=${{ secrets.VERCEL_API_TOKEN }}
+        run: npx vercel deploy apps/docs/build/client --prod --yes --token=${{ env.VERCEL_API_TOKEN }}
         env:
           VERCEL_PROJECT_ID: ${{ steps.vercel.outputs.project_id }}
           VERCEL_ORG_ID: ${{ steps.vercel.outputs.org_id }}
