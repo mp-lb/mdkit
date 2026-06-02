@@ -20,4 +20,4 @@ Read [PRODUCT.md](PRODUCT.md) if you need to understand the product.
 
 @validation.md
 
-@fssstack/global.md
+@~/Code/mgr/agents-md/global.md
