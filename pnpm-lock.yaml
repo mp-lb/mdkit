@@ -28,8 +28,11 @@ importers:
         specifier: 9.39.4
         version: 9.39.4
       '@mp-lb/fssstack-config':
-        specifier: 0.2.0
-        version: 0.2.0(@typescript-eslint/parser@8.59.1(eslint@9.39.4(jiti@2.6.1))(typescript@6.0.3))(eslint@9.39.4(jiti@2.6.1))(prettier@3.8.3)(typescript@6.0.3)
+        specifier: 0.3.1
+        version: 0.3.1(@typescript-eslint/parser@8.59.1(eslint@9.39.4(jiti@2.6.1))(typescript@6.0.3))(eslint@9.39.4(jiti@2.6.1))(prettier@3.8.3)(typescript@6.0.3)
+      '@mp-lb/fssstack-testing':
+        specifier: 0.1.0
+        version: 0.1.0(@testing-library/jest-dom@6.9.1)(vitest@4.1.5(@types/node@25.6.0)(jsdom@29.1.1(@noble/hashes@1.8.0))(msw@2.14.2(@types/node@25.6.0)(typescript@6.0.3))(vite@8.0.14(@types/node@25.6.0)(esbuild@0.28.0)(jiti@2.6.1)(tsx@4.20.6)(yaml@2.9.0)))
       '@testing-library/jest-dom':
         specifier: 6.9.1
         version: 6.9.1
@@ -1412,12 +1415,36 @@ packages:
       '@cfworker/json-schema':
         optional: true
 
-  '@mp-lb/fssstack-config@0.2.0':
-    resolution: {integrity: sha512-B4saE9V/4Q6kT22pVMbZliU7Qai2MYNKbGhoz+/dSDMHJ+mqVE20FHEQ37r5ZDKC9fm0XMH2aZH9XEVo5fOVDQ==}
+  '@mp-lb/fssstack-config@0.3.1':
+    resolution: {integrity: sha512-JyBK9fVzSfdu8XyIIb33+o6jT9dnByJBP1juTrtirkkXJQU+DtZYfrXUHnU17NspK61NGw0V80VhIl0hVHBjPw==}
     peerDependencies:
       eslint: '>=9'
+      eslint-config-next: '>=15'
       prettier: '>=3'
       typescript: '>=5'
+    peerDependenciesMeta:
+      eslint-config-next:
+        optional: true
+
+  '@mp-lb/fssstack-testing@0.1.0':
+    resolution: {integrity: sha512-SvmMOjv+xvoYCYoXL3bXyZ2YB3H8s3z7Do1iyQpYq45pisZ9ZNEYRT9X4S2Brsnwsz2wIMYWsgeyD2GmGFMQoQ==}
+    peerDependencies:
+      '@playwright/test': '>=1.48'
+      '@testing-library/jest-dom': '>=6'
+      mongodb: '>=6'
+      mongodb-memory-server: '>=10'
+      vitest: '>=3'
+    peerDependenciesMeta:
+      '@playwright/test':
+        optional: true
+      '@testing-library/jest-dom':
+        optional: true
+      mongodb:
+        optional: true
+      mongodb-memory-server:
+        optional: true
+      vitest:
+        optional: true
 
   '@mp-lb/tools-fumadocs-preset@0.3.0':
     resolution: {integrity: sha512-5y8TjgtccPG+/SmDYWPXdpSfA79Jo7g5xMLjnbfeVyblXx3bohx2hkK2iRxIGKseWKchPX0v8e1Ij8UaW/BITw==}
@@ -8329,7 +8356,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@mp-lb/fssstack-config@0.2.0(@typescript-eslint/parser@8.59.1(eslint@9.39.4(jiti@2.6.1))(typescript@6.0.3))(eslint@9.39.4(jiti@2.6.1))(prettier@3.8.3)(typescript@6.0.3)':
+  '@mp-lb/fssstack-config@0.3.1(@typescript-eslint/parser@8.59.1(eslint@9.39.4(jiti@2.6.1))(typescript@6.0.3))(eslint@9.39.4(jiti@2.6.1))(prettier@3.8.3)(typescript@6.0.3)':
     dependencies:
       '@eslint/js': 9.39.4
       eslint: 9.39.4(jiti@2.6.1)
@@ -8348,6 +8375,11 @@ snapshots:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
       - supports-color
+
+  '@mp-lb/fssstack-testing@0.1.0(@testing-library/jest-dom@6.9.1)(vitest@4.1.5(@types/node@25.6.0)(jsdom@29.1.1(@noble/hashes@1.8.0))(msw@2.14.2(@types/node@25.6.0)(typescript@6.0.3))(vite@8.0.14(@types/node@25.6.0)(esbuild@0.28.0)(jiti@2.6.1)(tsx@4.20.6)(yaml@2.9.0)))':
+    optionalDependencies:
+      '@testing-library/jest-dom': 6.9.1
+      vitest: 4.1.5(@types/node@25.6.0)(jsdom@29.1.1(@noble/hashes@1.8.0))(msw@2.14.2(@types/node@25.6.0)(typescript@6.0.3))(vite@8.0.14(@types/node@25.6.0)(esbuild@0.28.0)(jiti@2.6.1)(tsx@4.20.6)(yaml@2.9.0))
 
   '@mp-lb/tools-fumadocs-preset@0.3.0(fumadocs-core@16.8.12(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.15)(algoliasearch@5.52.0)(lucide-react@1.17.0(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-router@7.16.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react@19.2.6)(zod@4.4.3))(fumadocs-ui@16.8.12(@tailwindcss/oxide@4.3.0)(@types/mdx@2.0.13)(@types/react-dom@19.2.3(@types/react@19.2.15))(@types/react@19.2.15)(fumadocs-core@16.8.12(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.15)(algoliasearch@5.52.0)(lucide-react@1.17.0(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-router@7.16.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react@19.2.6)(zod@4.4.3))(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(tailwindcss@4.3.0))(react@19.2.6)(tailwind-merge@3.6.0)':
     dependencies:

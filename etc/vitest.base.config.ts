@@ -1,7 +1,1 @@
-import { defineConfig } from "vitest/config";
-
-export default defineConfig({
-  test: {
-    globals: true,
-  },
-});
+export { default } from "@mp-lb/fssstack-testing/vitest/base";

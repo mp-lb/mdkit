@@ -1,8 +1,1 @@
-import { defineConfig } from "vitest/config";
-
-export default defineConfig({
-  test: {
-    globals: true,
-    environment: "jsdom",
-  },
-});
+export { default } from "@mp-lb/fssstack-testing/vitest/react";
