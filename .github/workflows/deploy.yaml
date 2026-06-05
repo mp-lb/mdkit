@@ -14,6 +14,10 @@ on:
       - "turbo.json"
   workflow_dispatch:
 
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+
 env:
   PROJECT_NAME: mdkit
 
@@ -88,7 +92,7 @@ jobs:
       - name: Terraform Apply
         working-directory: infra
         run: |
-          terraform apply -auto-approve \
+          terraform apply -auto-approve -lock-timeout=10m \
             -var="project_name=${{ env.PROJECT_NAME }}" \
             -var="vercel_api_token=${{ env.VERCEL_API_TOKEN }}" \
             -var="cloudflare_api_token=${{ env.CLOUDFLARE_API_TOKEN }}" \
