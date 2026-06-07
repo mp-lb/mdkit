@@ -1,5 +1,11 @@
 # @mp-lb/mdkit
 
+## 0.3.10
+
+### Patch Changes
+
+- 695e416: Trim first and last markdown block margins inside document margins so container spacing defines the document edges.
+
 ## 0.3.9
 
 ### Patch Changes
