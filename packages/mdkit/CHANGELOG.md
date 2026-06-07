@@ -1,5 +1,11 @@
 # @mp-lb/mdkit
 
+## 0.3.4
+
+### Patch Changes
+
+- c04bb5e: Add bottom document spacing for fill-height markdown editors with document margins.
+
 ## 0.3.3
 
 ### Patch Changes
