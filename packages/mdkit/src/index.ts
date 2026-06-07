@@ -16,6 +16,11 @@ export { MdKitDocumentToolbar } from "./document/MdKitDocumentToolbar";
 export { MdKitEditor } from "./markdown/MdKitEditor";
 export { MdKitView } from "./markdown/MdKitView";
 export {
+  filterMdKitReferenceTargets,
+  formatMarkdownReferenceLink,
+  getActiveReferenceTriggerFromEditor,
+} from "./markdown/markdownReferences";
+export {
   extractYamlFrontMatter,
   hasYamlFrontMatter,
   parseYamlFrontMatter,
@@ -70,6 +75,13 @@ export type { MdKitConflictPanelProps } from "./document/MdKitConflictPanel";
 export type { MdKitDocumentToolbarProps } from "./document/MdKitDocumentToolbar";
 export type { MdKitEditorProps } from "./markdown/MdKitEditor";
 export type { MdKitEditorDebugEvent } from "./markdown/editorDebug";
+export type {
+  MdKitReferenceSuggestionsRenderProps,
+  MdKitReferenceTarget,
+  MdKitReferencesOptions,
+  MdKitReferenceTrigger,
+  MdKitReferenceTriggerState,
+} from "./markdown/markdownReferences";
 export type { MdKitViewProps } from "./markdown/MdKitView";
 export type {
   MdKitYamlFrontMatter,

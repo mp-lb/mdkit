@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import type { MdKitCollaborationSession } from "../document/documentTypes";
 import { joinClassNames } from "../ui/joinClassNames";
 import type { MdKitEditorDebugEvent } from "./editorDebug";
+import type { MdKitReferencesOptions } from "./markdownReferences";
 import { TiptapMarkdownSurface } from "./TiptapMarkdownSurface";
 
 type MdKitEditorBaseProps = {
@@ -14,6 +15,7 @@ type MdKitEditorBaseProps = {
   onDebugEvent?: (event: MdKitEditorDebugEvent) => void;
   onFocusChange?: (focused: boolean) => void;
   readOnly?: boolean;
+  references?: MdKitReferencesOptions;
   search?: boolean;
   style?: CSSProperties;
 };

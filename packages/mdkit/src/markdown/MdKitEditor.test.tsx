@@ -654,4 +654,42 @@ describe("MdKitEditor", () => {
       expect(screen.getByText("2 of 2")).toBeTruthy();
     });
   });
+
+  it("inserts reference suggestions as markdown links", async () => {
+    const changes: string[] = [];
+    const { container } = render(
+      <MdKitEditor
+        references={{
+          targets: [
+            {
+              description: "/docs/plan.md",
+              id: "file_plan",
+              label: "plan.md",
+              type: "file",
+              url: "https://dx.ink/file_plan",
+            },
+          ],
+        }}
+        value=""
+        onChange={(next) => changes.push(next)}
+      />,
+    );
+
+    const editor = await getEditorElement(container);
+
+    await act(async () => {
+      editor.focus();
+    });
+
+    pasteIntoEditor(editor, { "text/plain": "@pl" });
+
+    await screen.findByRole("listbox", { name: "Reference suggestions" });
+    expect(await screen.findByText("plan.md")).toBeTruthy();
+
+    fireEvent.keyDown(editor, { key: "Enter" });
+
+    await waitFor(() => {
+      expect(changes.at(-1)).toBe("[plan.md](https://dx.ink/file_plan) ");
+    });
+  });
 });

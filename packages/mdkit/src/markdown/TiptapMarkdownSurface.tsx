@@ -4,6 +4,7 @@ import {
   useMemo,
   useRef,
   useState,
+  type CSSProperties,
   type PointerEvent,
 } from "react";
 import Collaboration from "@tiptap/extension-collaboration";
@@ -25,6 +26,16 @@ import {
 } from "./MarkdownSearchExtension";
 import { normalizeMarkdownSerialization } from "./normalizeMarkdownSerialization";
 import { prepareMarkdownForEditorHydration } from "./prepareMarkdownForEditorHydration";
+import {
+  defaultMdKitReferenceTriggers,
+  defaultRenderMdKitReferenceSuggestions,
+  filterMdKitReferenceTargets,
+  formatMarkdownReferenceLink,
+  getActiveReferenceTriggerFromEditor,
+  type MdKitReferenceTarget,
+  type MdKitReferenceTriggerState,
+  type MdKitReferencesOptions,
+} from "./markdownReferences";
 
 type LocalTiptapMarkdownSurfaceProps = {
   collaboration?: null;
@@ -34,6 +45,7 @@ type LocalTiptapMarkdownSurfaceProps = {
   ignoreYamlFrontMatter?: boolean;
   placeholder?: string;
   readOnly?: boolean;
+  references?: MdKitReferencesOptions;
   search?: boolean;
   value: string;
 };
@@ -46,6 +58,7 @@ type CollaborativeTiptapMarkdownSurfaceProps = {
   ignoreYamlFrontMatter?: boolean;
   placeholder?: string;
   readOnly?: boolean;
+  references?: MdKitReferencesOptions;
   search?: boolean;
   value?: string;
 };
@@ -133,6 +146,7 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
     onFocusChange,
     placeholder = "Start writing...",
     readOnly = false,
+    references,
     search = false,
   } = props;
 
@@ -152,6 +166,15 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
   );
   const isApplyingExternalValueRef = useRef(false);
   const pendingControlledEchoesRef = useRef<Set<string>>(new Set());
+  const referenceSearchRequestRef = useRef(0);
+  const activeReferenceTriggerRef = useRef<MdKitReferenceTriggerState | null>(
+    null,
+  );
+  const referenceSuggestionsRef = useRef<MdKitReferenceTarget[]>([]);
+  const selectedReferenceIndexRef = useRef(0);
+  const insertReferenceTargetRef = useRef<
+    ((target: MdKitReferenceTarget) => void) | null
+  >(null);
 
   const pendingContentFocusRef = useRef<{
     pointerId: number;
@@ -162,6 +185,17 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeSearchMatchIndex, setActiveSearchMatchIndex] = useState(0);
+  const [activeReferenceTrigger, setActiveReferenceTrigger] =
+    useState<MdKitReferenceTriggerState | null>(null);
+  const [referenceSuggestions, setReferenceSuggestions] = useState<
+    MdKitReferenceTarget[]
+  >([]);
+  const [selectedReferenceIndex, setSelectedReferenceIndex] = useState(0);
+  const [referenceSuggestionsStyle, setReferenceSuggestionsStyle] =
+    useState<CSSProperties | null>(null);
+  const [referenceSuggestionsPlacement, setReferenceSuggestionsPlacement] =
+    useState<"top" | "bottom">("bottom");
+  const [isSearchingReferences, setIsSearchingReferences] = useState(false);
   const collaborationDocument = collaboration?.document ?? null;
   const collaborationProvider = collaboration?.provider ?? null;
   const collaborationUserColor = collaboration?.collaborator.color ?? "";
@@ -169,6 +203,12 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
   const collaborationUserImageUrl = collaboration?.collaborator.imageUrl ?? "";
   const collaborationUserName = collaboration?.collaborator.name ?? "";
   const hasCollaboration = !!collaborationDocument;
+  const referencesEnabled =
+    !readOnly && references?.enabled !== false && Boolean(references);
+  const referenceTriggers = references?.triggers ?? defaultMdKitReferenceTriggers;
+  const referenceTargets = references?.targets ?? [];
+  const renderReferenceSuggestions =
+    references?.renderSuggestions ?? defaultRenderMdKitReferenceSuggestions;
 
   useEffect(() => {
     onDebugEventRef.current = onDebugEvent;
@@ -181,6 +221,18 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
   useEffect(() => {
     onChangeRef.current = props.onChange;
   }, [props.onChange]);
+
+  useEffect(() => {
+    activeReferenceTriggerRef.current = activeReferenceTrigger;
+  }, [activeReferenceTrigger]);
+
+  useEffect(() => {
+    referenceSuggestionsRef.current = referenceSuggestions;
+  }, [referenceSuggestions]);
+
+  useEffect(() => {
+    selectedReferenceIndexRef.current = selectedReferenceIndex;
+  }, [selectedReferenceIndex]);
 
   const collaborationCaretExtensions = useMemo(
     () =>
@@ -222,6 +274,59 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
     ],
   );
 
+  const updateActiveReferenceTrigger = useCallback(
+    (editor: TiptapEditor) => {
+      if (!referencesEnabled) {
+        setActiveReferenceTrigger(null);
+        return;
+      }
+
+      const trigger = getActiveReferenceTriggerFromEditor(
+        editor,
+        referenceTriggers,
+      );
+
+      setActiveReferenceTrigger(trigger);
+
+      if (!trigger) {
+        setReferenceSuggestionsStyle(null);
+        return;
+      }
+
+      const coords = editor.view.coordsAtPos(trigger.to);
+      const width = 320;
+      const estimatedHeight = 280;
+      const gap = 8;
+      const viewportPadding = 8;
+      const spaceBelow = window.innerHeight - coords.bottom;
+      const placement =
+        spaceBelow >= estimatedHeight || coords.top < estimatedHeight
+          ? "bottom"
+          : "top";
+      const left = Math.min(
+        Math.max(viewportPadding, coords.left),
+        Math.max(viewportPadding, window.innerWidth - width - viewportPadding),
+      );
+      const top =
+        placement === "bottom"
+          ? Math.min(coords.bottom + gap, window.innerHeight - viewportPadding)
+          : Math.max(viewportPadding, coords.top - gap);
+
+      setReferenceSuggestionsPlacement(placement);
+      setReferenceSuggestionsStyle({
+        left,
+        maxHeight:
+          placement === "bottom"
+            ? Math.max(96, window.innerHeight - top - viewportPadding)
+            : Math.max(96, top - viewportPadding),
+        top,
+        transform: placement === "top" ? "translateY(-100%)" : undefined,
+        width,
+      });
+    },
+    [referenceTriggers, referencesEnabled],
+  );
+
   const editor = useEditor(
     {
       content: hasCollaboration
@@ -237,6 +342,50 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
         attributes: {
           class: "mp-lb-mdkit-tiptap",
           spellcheck: "false",
+        },
+        handleKeyDown: (_view, event) => {
+          const currentTrigger = activeReferenceTriggerRef.current;
+          const currentSuggestions = referenceSuggestionsRef.current;
+
+          if (currentTrigger && currentSuggestions.length > 0) {
+            if (event.key === "ArrowDown") {
+              event.preventDefault();
+              setSelectedReferenceIndex(
+                (current) => (current + 1) % currentSuggestions.length,
+              );
+              return true;
+            }
+
+            if (event.key === "ArrowUp") {
+              event.preventDefault();
+              setSelectedReferenceIndex(
+                (current) =>
+                  (current - 1 + currentSuggestions.length) %
+                  currentSuggestions.length,
+              );
+              return true;
+            }
+
+            if (event.key === "Enter" || event.key === "Tab") {
+              event.preventDefault();
+              const target =
+                currentSuggestions[selectedReferenceIndexRef.current];
+
+              if (target) {
+                insertReferenceTargetRef.current?.(target);
+              }
+
+              return true;
+            }
+
+            if (event.key === "Escape") {
+              event.preventDefault();
+              setActiveReferenceTrigger(null);
+              return true;
+            }
+          }
+
+          return false;
         },
       },
       extensions: [
@@ -292,6 +441,11 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
           pendingControlledEchoesRef.current.add(nextMarkdown);
           onChangeRef.current?.(nextMarkdown);
         }
+
+        updateActiveReferenceTrigger(updatedEditor);
+      },
+      onSelectionUpdate: ({ editor: selectedEditor }) => {
+        updateActiveReferenceTrigger(selectedEditor);
       },
     },
     [
@@ -300,8 +454,100 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
       hasCollaboration,
       ignoreYamlFrontMatter,
       placeholder,
+      referencesEnabled,
+      referenceTriggers,
     ],
   );
+
+  const insertReferenceTarget = useCallback(
+    (target: MdKitReferenceTarget) => {
+      const trigger = activeReferenceTriggerRef.current;
+
+      if (!editor || !trigger) {
+        return;
+      }
+
+      editor
+        .chain()
+        .focus()
+        .deleteRange({ from: trigger.from, to: trigger.to })
+        .insertContent(`${formatMarkdownReferenceLink(target)} `, {
+          contentType: "markdown",
+        })
+        .run();
+
+      setActiveReferenceTrigger(null);
+      setReferenceSuggestions([]);
+      setReferenceSuggestionsStyle(null);
+    },
+    [editor],
+  );
+
+  useEffect(() => {
+    insertReferenceTargetRef.current = insertReferenceTarget;
+  }, [insertReferenceTarget]);
+
+  useEffect(() => {
+    if (!activeReferenceTrigger) {
+      queueMicrotask(() => {
+        setReferenceSuggestions((current) =>
+          current.length === 0 ? current : [],
+        );
+        setIsSearchingReferences(false);
+      });
+
+      return;
+    }
+
+    const trigger = activeReferenceTrigger;
+    let isCurrent = true;
+    const requestId = referenceSearchRequestRef.current + 1;
+    referenceSearchRequestRef.current = requestId;
+
+    queueMicrotask(() => {
+      setSelectedReferenceIndex(0);
+      setIsSearchingReferences(true);
+    });
+
+    async function searchReferences() {
+      try {
+        const results = references?.onSearchTargets
+          ? await references.onSearchTargets(trigger.query, trigger.trigger)
+          : filterMdKitReferenceTargets(referenceTargets, trigger.query);
+
+        if (isCurrent && referenceSearchRequestRef.current === requestId) {
+          setReferenceSuggestions(results.slice(0, 8));
+        }
+      } finally {
+        if (isCurrent && referenceSearchRequestRef.current === requestId) {
+          setIsSearchingReferences(false);
+        }
+      }
+    }
+
+    const timeoutId = window.setTimeout(searchReferences, 120);
+
+    return () => {
+      isCurrent = false;
+      window.clearTimeout(timeoutId);
+    };
+  }, [activeReferenceTrigger, referenceTargets, references]);
+
+  useEffect(() => {
+    if (!editor || !activeReferenceTrigger) {
+      return;
+    }
+
+    const updatePosition = () => updateActiveReferenceTrigger(editor);
+
+    window.addEventListener("resize", updatePosition);
+    window.addEventListener("scroll", updatePosition, true);
+
+    return () => {
+      window.removeEventListener("resize", updatePosition);
+      window.removeEventListener("scroll", updatePosition, true);
+    };
+  }, [activeReferenceTrigger, editor, updateActiveReferenceTrigger]);
 
   const searchMatches = useMemo<MarkdownSearchMatch[]>(() => {
     const query = searchQuery.trim().toLocaleLowerCase();
@@ -915,6 +1161,20 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
             query={searchQuery}
           />
         ) : null}
+        {activeReferenceTrigger && referenceSuggestionsStyle
+          ? renderReferenceSuggestions({
+              activeIndex: selectedReferenceIndex,
+              isLoading: isSearchingReferences,
+              onSelect: insertReferenceTarget,
+              placement: referenceSuggestionsPlacement,
+              query: activeReferenceTrigger.query,
+              selectedTarget:
+                referenceSuggestions[selectedReferenceIndex] ?? null,
+              style: referenceSuggestionsStyle,
+              targets: referenceSuggestions,
+              trigger: activeReferenceTrigger.trigger,
+            })
+          : null}
         <MarkdownBubbleMenu editor={editor} />
         <EditorContent
           className="mp-lb-mdkit-editor-content"
