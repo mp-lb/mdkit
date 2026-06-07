@@ -1,5 +1,11 @@
 # @mp-lb/mdkit
 
+## 0.4.0
+
+### Minor Changes
+
+- 70a8813: Add configurable code block syntax highlighting with dark-mode-aware themes and compact code block padding.
+
 ## 0.3.13
 
 ### Patch Changes
