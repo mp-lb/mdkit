@@ -692,4 +692,36 @@ describe("MdKitEditor", () => {
       expect(changes.at(-1)).toBe("[plan.md](https://dx.ink/file_plan) ");
     });
   });
+
+  it("does not show reference suggestions for a bare trigger", async () => {
+    const { container } = render(
+      <MdKitEditor
+        references={{
+          targets: [
+            {
+              id: "file_plan",
+              label: "plan.md",
+              url: "https://dx.ink/file_plan",
+            },
+          ],
+        }}
+        value=""
+        onChange={() => {}}
+      />,
+    );
+
+    const editor = await getEditorElement(container);
+
+    await act(async () => {
+      editor.focus();
+    });
+
+    pasteIntoEditor(editor, { "text/plain": "@" });
+
+    await waitFor(() => {
+      expect(
+        screen.queryByRole("listbox", { name: "Reference suggestions" }),
+      ).toBeNull();
+    });
+  });
 });

@@ -90,6 +90,11 @@ export const getActiveReferenceTriggerFromEditor = (
   const prefix = tokenMatch[1] ?? "";
   const trigger = tokenMatch[2] as MdKitReferenceTrigger;
   const query = tokenMatch[3] ?? "";
+
+  if (query.length === 0) {
+    return null;
+  }
+
   const tokenLength = trigger.length + query.length;
 
   if (
