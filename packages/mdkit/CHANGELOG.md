@@ -1,5 +1,11 @@
 # @mp-lb/mdkit
 
+## 0.3.5
+
+### Patch Changes
+
+- c86ae57: Apply fill-height document margins to the editable markdown content element.
+
 ## 0.3.4
 
 ### Patch Changes
