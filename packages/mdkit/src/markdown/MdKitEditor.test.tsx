@@ -172,6 +172,12 @@ describe("MdKitEditor", () => {
       /\.mp-lb-mdkit-markdown-editor-fill-height\.mp-lb-mdkit-markdown-editor-document-margins\s+\.mp-lb-mdkit-tiptap\s*{[^}]*padding-block-start:\s*var\(--mp-lb-mdkit-document-margin-block\);/s,
     );
     expect(css).toMatch(
+      /\.mp-lb-mdkit-markdown-editor-document-margins\s+\.mp-lb-mdkit-tiptap\s+>\s+:first-child\s*{[^}]*margin-block-start:\s*0;/s,
+    );
+    expect(css).toMatch(
+      /\.mp-lb-mdkit-markdown-editor-document-margins\s+\.mp-lb-mdkit-tiptap\s+>\s+:last-child\s*{[^}]*margin-block-end:\s*0;/s,
+    );
+    expect(css).toMatch(
       /\.mp-lb-mdkit-document-end-spacer\s*{[^}]*display:\s*none;/s,
     );
     expect(css).toMatch(

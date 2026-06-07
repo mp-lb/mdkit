@@ -394,6 +394,18 @@
   padding-block-start: var(--mp-lb-mdkit-document-margin-block);
 }
 
+.mp-lb-mdkit-markdown-editor-document-margins
+  .mp-lb-mdkit-tiptap
+  > :first-child {
+  margin-block-start: 0;
+}
+
+.mp-lb-mdkit-markdown-editor-document-margins
+  .mp-lb-mdkit-tiptap
+  > :last-child {
+  margin-block-end: 0;
+}
+
 .mp-lb-mdkit-markdown-editor-fill-height.mp-lb-mdkit-markdown-editor-document-margins
   .mp-lb-mdkit-tiptap
   > :last-child {
