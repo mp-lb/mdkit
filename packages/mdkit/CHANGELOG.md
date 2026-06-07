@@ -1,5 +1,11 @@
 # @mp-lb/mdkit
 
+## 0.3.7
+
+### Patch Changes
+
+- 82382c5: Render bottom document spacing as a trailing content spacer.
+
 ## 0.3.6
 
 ### Patch Changes
