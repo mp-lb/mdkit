@@ -1,5 +1,11 @@
 # @mp-lb/mdkit
 
+## 0.3.9
+
+### Patch Changes
+
+- 31ab5ff: Apply fill-height document bottom spacing to the final markdown block so it follows document flow.
+
 ## 0.3.8
 
 ### Patch Changes
