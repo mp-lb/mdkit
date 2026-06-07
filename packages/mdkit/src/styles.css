@@ -380,9 +380,8 @@
 }
 
 .mp-lb-mdkit-markdown-editor-fill-height .mp-lb-mdkit-tiptap {
-  height: 100%;
   min-height: 100%;
-  flex: 1 1 auto;
+  flex: 0 0 auto;
 }
 
 .mp-lb-mdkit-markdown-editor-fill-height.mp-lb-mdkit-markdown-editor-document-margins

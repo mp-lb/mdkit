@@ -162,6 +162,12 @@ describe("MdKitEditor", () => {
     expect(css).toMatch(
       /\.mp-lb-mdkit-markdown-editor-fill-height\.mp-lb-mdkit-markdown-editor-document-margins\s+\.mp-lb-mdkit-editor-surface\s*{[^}]*padding-block:\s*0;/s,
     );
+    const fillHeightTiptapRule = css.match(
+      /\.mp-lb-mdkit-markdown-editor-fill-height\s+\.mp-lb-mdkit-tiptap\s*{[^}]*}/s,
+    )?.[0];
+    expect(fillHeightTiptapRule).toContain("min-height: 100%;");
+    expect(fillHeightTiptapRule).toContain("flex: 0 0 auto;");
+    expect(fillHeightTiptapRule).not.toMatch(/(^|[\s{;])height:\s*100%;/);
     expect(css).toMatch(
       /\.mp-lb-mdkit-markdown-editor-fill-height\.mp-lb-mdkit-markdown-editor-document-margins\s+\.mp-lb-mdkit-tiptap\s*{[^}]*padding-block:\s*var\(--mp-lb-mdkit-document-margin-block\);/s,
     );
