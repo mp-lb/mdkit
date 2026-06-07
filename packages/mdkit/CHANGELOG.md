@@ -1,5 +1,11 @@
 # @mp-lb/mdkit
 
+## 0.3.8
+
+### Patch Changes
+
+- d9d1333: Render document bottom spacing with a concrete spacer element instead of a ProseMirror pseudo-element.
+
 ## 0.3.7
 
 ### Patch Changes
