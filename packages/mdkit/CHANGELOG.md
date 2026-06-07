@@ -1,5 +1,11 @@
 # @mp-lb/mdkit
 
+## 0.4.1
+
+### Patch Changes
+
+- abe4fa8: Remove the `darkula` code theme alias so theme names match the upstream highlight.js catalog.
+
 ## 0.4.0
 
 ### Minor Changes
