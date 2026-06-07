@@ -395,11 +395,9 @@
 }
 
 .mp-lb-mdkit-markdown-editor-fill-height.mp-lb-mdkit-markdown-editor-document-margins
-  .mp-lb-mdkit-document-end-spacer {
-  display: block;
-  min-height: var(--mp-lb-mdkit-document-margin-block);
-  flex: 0 0 var(--mp-lb-mdkit-document-margin-block);
-  pointer-events: none;
+  .mp-lb-mdkit-tiptap
+  > :last-child {
+  margin-block-end: var(--mp-lb-mdkit-document-margin-block);
 }
 
 .mp-lb-mdkit-markdown-view.mp-lb-mdkit-markdown-editor-fill-height

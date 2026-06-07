@@ -175,7 +175,7 @@ describe("MdKitEditor", () => {
       /\.mp-lb-mdkit-document-end-spacer\s*{[^}]*display:\s*none;/s,
     );
     expect(css).toMatch(
-      /\.mp-lb-mdkit-markdown-editor-fill-height\.mp-lb-mdkit-markdown-editor-document-margins\s+\.mp-lb-mdkit-document-end-spacer\s*{[^}]*display:\s*block;[^}]*min-height:\s*var\(--mp-lb-mdkit-document-margin-block\);[^}]*flex:\s*0 0 var\(--mp-lb-mdkit-document-margin-block\);/s,
+      /\.mp-lb-mdkit-markdown-editor-fill-height\.mp-lb-mdkit-markdown-editor-document-margins\s+\.mp-lb-mdkit-tiptap\s+>\s+:last-child\s*{[^}]*margin-block-end:\s*var\(--mp-lb-mdkit-document-margin-block\);/s,
     );
   });
 
