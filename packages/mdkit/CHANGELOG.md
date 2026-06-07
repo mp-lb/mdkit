@@ -1,5 +1,11 @@
 # @mp-lb/mdkit
 
+## 0.3.13
+
+### Patch Changes
+
+- 32bb070: Avoid flashing stale reference suggestion states while queries are debounced.
+
 ## 0.3.12
 
 ### Patch Changes
