@@ -1,5 +1,11 @@
 # @mp-lb/mdkit
 
+## 0.3.11
+
+### Patch Changes
+
+- 51ec48b: Add opt-in Markdown reference suggestions that insert selected targets as ordinary Markdown links.
+
 ## 0.3.10
 
 ### Patch Changes
