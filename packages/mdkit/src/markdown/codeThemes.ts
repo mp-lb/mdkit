@@ -16,7 +16,6 @@ export const mdKitCodeThemeNames = [
   "stackoverflow-light",
   "stackoverflow-dark",
   "darcula",
-  "darkula",
   "dracula",
 ] as const;
 
@@ -45,8 +44,7 @@ export const defaultMdKitLowlight = createLowlight(common);
 
 export const normalizeMdKitCodeThemeName = (
   theme: MdKitCodeThemeName,
-): Exclude<MdKitCodeThemeName, "darkula"> =>
-  theme === "darkula" ? "darcula" : theme;
+): MdKitCodeThemeName => theme;
 
 export const getMdKitCodeThemeAttributes = (
   theme: MdKitCodeTheme | undefined,

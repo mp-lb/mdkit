@@ -514,7 +514,7 @@ describe("MdKitEditor", () => {
 
   it("sets code theme attributes on the editor root", async () => {
     const { container, rerender } = render(
-      <MdKitEditor codeTheme="darkula" value="" onChange={() => {}} />,
+      <MdKitEditor codeTheme="darcula" value="" onChange={() => {}} />,
     );
 
     await waitFor(() => {
