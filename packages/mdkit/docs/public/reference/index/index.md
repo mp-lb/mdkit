@@ -41,7 +41,15 @@ title: "index"
 | [MdKitDocumentController](type-aliases/MdKitDocumentController.md) | - |
 | [MdKitEditorProps](type-aliases/MdKitEditorProps.md) | - |
 | [MdKitViewProps](type-aliases/MdKitViewProps.md) | - |
+| [MdKitCodeThemeName](type-aliases/MdKitCodeThemeName.md) | - |
+| [MdKitCodeTheme](type-aliases/MdKitCodeTheme.md) | - |
+| [MdKitSyntaxHighlightingOptions](type-aliases/MdKitSyntaxHighlightingOptions.md) | - |
 | [MdKitEditorDebugEvent](type-aliases/MdKitEditorDebugEvent.md) | - |
+| [MdKitReferenceTarget](type-aliases/MdKitReferenceTarget.md) | - |
+| [MdKitReferenceTrigger](type-aliases/MdKitReferenceTrigger.md) | - |
+| [MdKitReferenceTriggerState](type-aliases/MdKitReferenceTriggerState.md) | - |
+| [MdKitReferenceSuggestionsRenderProps](type-aliases/MdKitReferenceSuggestionsRenderProps.md) | - |
+| [MdKitReferencesOptions](type-aliases/MdKitReferencesOptions.md) | - |
 | [MdKitYamlFrontMatter](type-aliases/MdKitYamlFrontMatter.md) | - |
 | [MdKitYamlFrontMatterExtraction](type-aliases/MdKitYamlFrontMatterExtraction.md) | - |
 | [MdKitThemeEditorProps](type-aliases/MdKitThemeEditorProps.md) | - |
@@ -58,6 +66,7 @@ title: "index"
 | Variable | Description |
 | ------ | ------ |
 | [CheckpointPolicy](variables/CheckpointPolicy.md) | Factories for the policy that decides when a saved document becomes a checkpoint. Pass the result to `createMdKitBackend`, not to your store. |
+| [mdKitCodeThemeNames](variables/mdKitCodeThemeNames.md) | - |
 | [defaultMdKitEditorTheme](variables/defaultMdKitEditorTheme.md) | - |
 | [darkMdKitEditorTheme](variables/darkMdKitEditorTheme.md) | - |
 | [yjs](variables/yjs.md) | - |
@@ -78,6 +87,9 @@ title: "index"
 | [useMdKitDocument](functions/useMdKitDocument.md) | Connects an editor to a storage adapter: loads the document, debounces autosave, tracks dirty/save status, and surfaces conflicts for resolution. |
 | [MdKitEditor](functions/MdKitEditor.md) | Markdown-first rich text editor. Behaves like a controlled textarea in local mode and switches to a Yjs-backed engine when given a collaboration session. |
 | [MdKitView](functions/MdKitView.md) | Read-only markdown surface that mirrors [MdKitEditor](functions/MdKitEditor.md)'s styling and sizing contract without mounting the editor runtime. Use it for previews and restored checkpoints. |
+| [formatMarkdownReferenceLink](functions/formatMarkdownReferenceLink.md) | - |
+| [getActiveReferenceTriggerFromEditor](functions/getActiveReferenceTriggerFromEditor.md) | - |
+| [filterMdKitReferenceTargets](functions/filterMdKitReferenceTargets.md) | - |
 | [parseYamlFrontMatter](functions/parseYamlFrontMatter.md) | - |
 | [extractYamlFrontMatter](functions/extractYamlFrontMatter.md) | - |
 | [hasYamlFrontMatter](functions/hasYamlFrontMatter.md) | - |

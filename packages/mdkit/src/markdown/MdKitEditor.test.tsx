@@ -185,6 +185,34 @@ describe("MdKitEditor", () => {
     );
   });
 
+  it("keeps code block spacing compact and configurable", () => {
+    const css = readFileSync(resolve(__dirname, "../styles.css"), "utf8");
+
+    const codeBlockRule = css.match(
+      /\.mp-lb-mdkit-tiptap pre\s*{[^}]*}/s,
+    )?.[0];
+
+    expect(css).toMatch(
+      /--mp-lb-mdkit-code-block-padding:\s*0\.75rem 1rem;/,
+    );
+    expect(codeBlockRule).toContain(
+      "padding: var(--mp-lb-mdkit-code-block-padding);",
+    );
+    expect(codeBlockRule).not.toContain("padding: 2rem;");
+  });
+
+  it("ships scoped code themes sourced from highlight.js", () => {
+    const css = readFileSync(resolve(__dirname, "../code-themes.css"), "utf8");
+
+    expect(css).toContain(
+      "Syntax themes generated from highlight.js 11.11.1 CSS themes.",
+    );
+    expect(css).toContain('data-code-theme="darcula"');
+    expect(css).toContain('data-code-theme-dark="github-dark"');
+    expect(css).toContain(".hljs-keyword");
+    expect(css).not.toMatch(/(^|[,{}\s])\.hljs(\s|\{|::|$)/);
+  });
+
   it("renders a concrete document end spacer for fill-height documents", async () => {
     const { container } = render(
       <MdKitEditor
@@ -452,6 +480,64 @@ describe("MdKitEditor", () => {
     });
 
     expect(container.querySelector(".ProseMirror pre")).toBeNull();
+  });
+
+  it("enables lowlight syntax highlighting by default", async () => {
+    const { container } = render(
+      <MdKitEditor
+        value={'```js\nconst answer = "yes";\n```'}
+        onChange={() => {}}
+      />,
+    );
+
+    await waitFor(() => {
+      expect(container.querySelector(".ProseMirror pre")).toBeTruthy();
+      expect(container.querySelector(".ProseMirror .hljs-keyword")).toBeTruthy();
+    });
+  });
+
+  it("can disable syntax highlighting", async () => {
+    const { container } = render(
+      <MdKitEditor
+        syntaxHighlighting={false}
+        value={'```js\nconst answer = "yes";\n```'}
+        onChange={() => {}}
+      />,
+    );
+
+    await waitFor(() => {
+      expect(container.querySelector(".ProseMirror pre")).toBeTruthy();
+    });
+
+    expect(container.querySelector(".ProseMirror .hljs-keyword")).toBeNull();
+  });
+
+  it("sets code theme attributes on the editor root", async () => {
+    const { container, rerender } = render(
+      <MdKitEditor codeTheme="darkula" value="" onChange={() => {}} />,
+    );
+
+    await waitFor(() => {
+      expect(container.querySelector(".ProseMirror")).toBeTruthy();
+    });
+
+    const root = container.querySelector(".mp-lb-mdkit-markdown-editor");
+
+    expect(root).toHaveAttribute("data-code-theme", "darcula");
+    expect(root).not.toHaveAttribute("data-code-theme-light");
+    expect(root).not.toHaveAttribute("data-code-theme-dark");
+
+    rerender(
+      <MdKitEditor
+        codeTheme={{ light: "atom-one-light", dark: "night-owl" }}
+        value=""
+        onChange={() => {}}
+      />,
+    );
+
+    expect(root).toHaveAttribute("data-code-theme", "auto");
+    expect(root).toHaveAttribute("data-code-theme-light", "atom-one-light");
+    expect(root).toHaveAttribute("data-code-theme-dark", "night-owl");
   });
 
   it("focuses the editor when the fill-height background is clicked", async () => {

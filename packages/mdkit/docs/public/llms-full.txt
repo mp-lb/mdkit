@@ -1550,6 +1550,92 @@ Defined in: [packages/mdkit/src/markdown/yamlFrontMatter.ts:68](https://github.c
 
 ---
 
+<!-- source: reference/index/functions/filterMdKitReferenceTargets.md -->
+
+---
+title: "filterMdKitReferenceTargets"
+---
+
+# Function: filterMdKitReferenceTargets()
+
+```ts
+function filterMdKitReferenceTargets(targets: readonly MdKitReferenceTarget[], query: string): MdKitReferenceTarget[];
+```
+
+Defined in: [packages/mdkit/src/markdown/markdownReferences.tsx:116](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L116)
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `targets` | readonly [`MdKitReferenceTarget`](../type-aliases/MdKitReferenceTarget.md)[] |
+| `query` | `string` |
+
+## Returns
+
+[`MdKitReferenceTarget`](../type-aliases/MdKitReferenceTarget.md)[]
+
+
+---
+
+<!-- source: reference/index/functions/formatMarkdownReferenceLink.md -->
+
+---
+title: "formatMarkdownReferenceLink"
+---
+
+# Function: formatMarkdownReferenceLink()
+
+```ts
+function formatMarkdownReferenceLink(__namedParameters: Pick<MdKitReferenceTarget, "label" | "url">): string;
+```
+
+Defined in: [packages/mdkit/src/markdown/markdownReferences.tsx:56](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L56)
+
+## Parameters
+
+| Parameter | Type |
+| ------ | ------ |
+| `__namedParameters` | `Pick`\<[`MdKitReferenceTarget`](../type-aliases/MdKitReferenceTarget.md), `"label"` \| `"url"`\> |
+
+## Returns
+
+`string`
+
+
+---
+
+<!-- source: reference/index/functions/getActiveReferenceTriggerFromEditor.md -->
+
+---
+title: "getActiveReferenceTriggerFromEditor"
+---
+
+# Function: getActiveReferenceTriggerFromEditor()
+
+```ts
+function getActiveReferenceTriggerFromEditor(editor: Editor, triggers?: readonly MdKitReferenceTrigger[]): 
+  | MdKitReferenceTriggerState
+  | null;
+```
+
+Defined in: [packages/mdkit/src/markdown/markdownReferences.tsx:65](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L65)
+
+## Parameters
+
+| Parameter | Type | Default value |
+| ------ | ------ | ------ |
+| `editor` | `Editor` | `undefined` |
+| `triggers` | readonly [`MdKitReferenceTrigger`](../type-aliases/MdKitReferenceTrigger.md)[] | `defaultMdKitReferenceTriggers` |
+
+## Returns
+
+  \| [`MdKitReferenceTriggerState`](../type-aliases/MdKitReferenceTriggerState.md)
+  \| `null`
+
+
+---
+
 <!-- source: reference/index/functions/hasYamlFrontMatter.md -->
 
 ---
@@ -1650,7 +1736,7 @@ title: "MdKitEditor"
 function MdKitEditor(props: MdKitEditorProps): Element;
 ```
 
-Defined in: [packages/mdkit/src/markdown/MdKitEditor.tsx:45](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitEditor.tsx#L45)
+Defined in: [packages/mdkit/src/markdown/MdKitEditor.tsx:54](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitEditor.tsx#L54)
 
 Markdown-first rich text editor. Behaves like a controlled textarea in local
 mode and switches to a Yjs-backed engine when given a collaboration session.
@@ -2100,7 +2186,15 @@ title: "index"
 | [MdKitDocumentController](type-aliases/MdKitDocumentController.md) | - |
 | [MdKitEditorProps](type-aliases/MdKitEditorProps.md) | - |
 | [MdKitViewProps](type-aliases/MdKitViewProps.md) | - |
+| [MdKitCodeThemeName](type-aliases/MdKitCodeThemeName.md) | - |
+| [MdKitCodeTheme](type-aliases/MdKitCodeTheme.md) | - |
+| [MdKitSyntaxHighlightingOptions](type-aliases/MdKitSyntaxHighlightingOptions.md) | - |
 | [MdKitEditorDebugEvent](type-aliases/MdKitEditorDebugEvent.md) | - |
+| [MdKitReferenceTarget](type-aliases/MdKitReferenceTarget.md) | - |
+| [MdKitReferenceTrigger](type-aliases/MdKitReferenceTrigger.md) | - |
+| [MdKitReferenceTriggerState](type-aliases/MdKitReferenceTriggerState.md) | - |
+| [MdKitReferenceSuggestionsRenderProps](type-aliases/MdKitReferenceSuggestionsRenderProps.md) | - |
+| [MdKitReferencesOptions](type-aliases/MdKitReferencesOptions.md) | - |
 | [MdKitYamlFrontMatter](type-aliases/MdKitYamlFrontMatter.md) | - |
 | [MdKitYamlFrontMatterExtraction](type-aliases/MdKitYamlFrontMatterExtraction.md) | - |
 | [MdKitThemeEditorProps](type-aliases/MdKitThemeEditorProps.md) | - |
@@ -2117,6 +2211,7 @@ title: "index"
 | Variable | Description |
 | ------ | ------ |
 | [CheckpointPolicy](variables/CheckpointPolicy.md) | Factories for the policy that decides when a saved document becomes a checkpoint. Pass the result to `createMdKitBackend`, not to your store. |
+| [mdKitCodeThemeNames](variables/mdKitCodeThemeNames.md) | - |
 | [defaultMdKitEditorTheme](variables/defaultMdKitEditorTheme.md) | - |
 | [darkMdKitEditorTheme](variables/darkMdKitEditorTheme.md) | - |
 | [yjs](variables/yjs.md) | - |
@@ -2137,6 +2232,9 @@ title: "index"
 | [useMdKitDocument](functions/useMdKitDocument.md) | Connects an editor to a storage adapter: loads the document, debounces autosave, tracks dirty/save status, and surfaces conflicts for resolution. |
 | [MdKitEditor](functions/MdKitEditor.md) | Markdown-first rich text editor. Behaves like a controlled textarea in local mode and switches to a Yjs-backed engine when given a collaboration session. |
 | [MdKitView](functions/MdKitView.md) | Read-only markdown surface that mirrors [MdKitEditor](functions/MdKitEditor.md)'s styling and sizing contract without mounting the editor runtime. Use it for previews and restored checkpoints. |
+| [formatMarkdownReferenceLink](functions/formatMarkdownReferenceLink.md) | - |
+| [getActiveReferenceTriggerFromEditor](functions/getActiveReferenceTriggerFromEditor.md) | - |
+| [filterMdKitReferenceTargets](functions/filterMdKitReferenceTargets.md) | - |
 | [parseYamlFrontMatter](functions/parseYamlFrontMatter.md) | - |
 | [extractYamlFrontMatter](functions/extractYamlFrontMatter.md) | - |
 | [hasYamlFrontMatter](functions/hasYamlFrontMatter.md) | - |
@@ -2405,6 +2503,46 @@ Defined in: [packages/mdkit/src/core/checkpointPolicy.ts:7](https://github.com/m
 | <a id="timesincelastcheckpointms"></a> `timeSinceLastCheckpointMs` | `number` \| `null` | [packages/mdkit/src/core/checkpointPolicy.ts:13](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/checkpointPolicy.ts#L13) |
 | <a id="writeinput"></a> `writeInput` | [`MdKitDocumentWriteInput`](MdKitDocumentWriteInput.md) | [packages/mdkit/src/core/checkpointPolicy.ts:14](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/checkpointPolicy.ts#L14) |
 | <a id="writeresult"></a> `writeResult` | [`MdKitDocumentWriteResult`](MdKitDocumentWriteResult.md) | [packages/mdkit/src/core/checkpointPolicy.ts:15](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/checkpointPolicy.ts#L15) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitCodeTheme.md -->
+
+---
+title: "MdKitCodeTheme"
+---
+
+# Type Alias: MdKitCodeTheme
+
+```ts
+type MdKitCodeTheme = 
+  | "auto"
+  | MdKitCodeThemeName
+  | {
+  dark: MdKitCodeThemeName;
+  light: MdKitCodeThemeName;
+};
+```
+
+Defined in: packages/mdkit/src/markdown/codeThemes.ts:25
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitCodeThemeName.md -->
+
+---
+title: "MdKitCodeThemeName"
+---
+
+# Type Alias: MdKitCodeThemeName
+
+```ts
+type MdKitCodeThemeName = typeof mdKitCodeThemeNames[number];
+```
+
+Defined in: packages/mdkit/src/markdown/codeThemes.ts:23
 
 
 ---
@@ -2949,7 +3087,7 @@ title: "MdKitEditorProps"
 type MdKitEditorProps = CollaborativeMdKitEditorProps | LocalMdKitEditorProps;
 ```
 
-Defined in: [packages/mdkit/src/markdown/MdKitEditor.tsx:33](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitEditor.tsx#L33)
+Defined in: [packages/mdkit/src/markdown/MdKitEditor.tsx:42](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitEditor.tsx#L42)
 
 
 ---
@@ -3047,6 +3185,163 @@ Defined in: [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:16](https://github.com/m
 
 ---
 
+<!-- source: reference/index/type-aliases/MdKitReferencesOptions.md -->
+
+---
+title: "MdKitReferencesOptions"
+---
+
+# Type Alias: MdKitReferencesOptions
+
+```ts
+type MdKitReferencesOptions = {
+  enabled?: boolean;
+  onSearchTargets?: (query: string, trigger: MdKitReferenceTrigger) => 
+     | MdKitReferenceTarget[]
+    | Promise<MdKitReferenceTarget[]>;
+  renderSuggestions?: (props: MdKitReferenceSuggestionsRenderProps) => ReactNode;
+  targets?: MdKitReferenceTarget[];
+  triggers?: MdKitReferenceTrigger[];
+};
+```
+
+Defined in: [packages/mdkit/src/markdown/markdownReferences.tsx:35](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L35)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="enabled"></a> `enabled?` | `boolean` | [packages/mdkit/src/markdown/markdownReferences.tsx:36](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L36) |
+| <a id="onsearchtargets"></a> `onSearchTargets?` | (`query`: `string`, `trigger`: [`MdKitReferenceTrigger`](MdKitReferenceTrigger.md)) => \| [`MdKitReferenceTarget`](MdKitReferenceTarget.md)[] \| `Promise`\<[`MdKitReferenceTarget`](MdKitReferenceTarget.md)[]\> | [packages/mdkit/src/markdown/markdownReferences.tsx:37](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L37) |
+| <a id="rendersuggestions"></a> `renderSuggestions?` | (`props`: [`MdKitReferenceSuggestionsRenderProps`](MdKitReferenceSuggestionsRenderProps.md)) => `ReactNode` | [packages/mdkit/src/markdown/markdownReferences.tsx:41](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L41) |
+| <a id="targets"></a> `targets?` | [`MdKitReferenceTarget`](MdKitReferenceTarget.md)[] | [packages/mdkit/src/markdown/markdownReferences.tsx:44](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L44) |
+| <a id="triggers"></a> `triggers?` | [`MdKitReferenceTrigger`](MdKitReferenceTrigger.md)[] | [packages/mdkit/src/markdown/markdownReferences.tsx:45](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L45) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitReferenceSuggestionsRenderProps.md -->
+
+---
+title: "MdKitReferenceSuggestionsRenderProps"
+---
+
+# Type Alias: MdKitReferenceSuggestionsRenderProps
+
+```ts
+type MdKitReferenceSuggestionsRenderProps = {
+  activeIndex: number;
+  isLoading: boolean;
+  placement: MdKitReferenceSuggestionPlacement;
+  query: string;
+  selectedTarget: MdKitReferenceTarget | null;
+  style: CSSProperties;
+  targets: MdKitReferenceTarget[];
+  trigger: MdKitReferenceTrigger;
+  onSelect: (target: MdKitReferenceTarget) => void;
+};
+```
+
+Defined in: [packages/mdkit/src/markdown/markdownReferences.tsx:23](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L23)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="activeindex"></a> `activeIndex` | `number` | [packages/mdkit/src/markdown/markdownReferences.tsx:24](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L24) |
+| <a id="isloading"></a> `isLoading` | `boolean` | [packages/mdkit/src/markdown/markdownReferences.tsx:25](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L25) |
+| <a id="placement"></a> `placement` | `MdKitReferenceSuggestionPlacement` | [packages/mdkit/src/markdown/markdownReferences.tsx:26](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L26) |
+| <a id="query"></a> `query` | `string` | [packages/mdkit/src/markdown/markdownReferences.tsx:27](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L27) |
+| <a id="selectedtarget"></a> `selectedTarget` | [`MdKitReferenceTarget`](MdKitReferenceTarget.md) \| `null` | [packages/mdkit/src/markdown/markdownReferences.tsx:28](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L28) |
+| <a id="style"></a> `style` | `CSSProperties` | [packages/mdkit/src/markdown/markdownReferences.tsx:29](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L29) |
+| <a id="targets"></a> `targets` | [`MdKitReferenceTarget`](MdKitReferenceTarget.md)[] | [packages/mdkit/src/markdown/markdownReferences.tsx:30](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L30) |
+| <a id="trigger"></a> `trigger` | [`MdKitReferenceTrigger`](MdKitReferenceTrigger.md) | [packages/mdkit/src/markdown/markdownReferences.tsx:31](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L31) |
+| <a id="onselect"></a> `onSelect` | (`target`: [`MdKitReferenceTarget`](MdKitReferenceTarget.md)) => `void` | [packages/mdkit/src/markdown/markdownReferences.tsx:32](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L32) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitReferenceTarget.md -->
+
+---
+title: "MdKitReferenceTarget"
+---
+
+# Type Alias: MdKitReferenceTarget
+
+```ts
+type MdKitReferenceTarget = {
+  description?: string;
+  id: string;
+  label: string;
+  type?: string;
+  url: string;
+};
+```
+
+Defined in: [packages/mdkit/src/markdown/markdownReferences.tsx:4](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L4)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="description"></a> `description?` | `string` | [packages/mdkit/src/markdown/markdownReferences.tsx:5](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L5) |
+| <a id="id"></a> `id` | `string` | [packages/mdkit/src/markdown/markdownReferences.tsx:6](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L6) |
+| <a id="label"></a> `label` | `string` | [packages/mdkit/src/markdown/markdownReferences.tsx:7](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L7) |
+| <a id="type"></a> `type?` | `string` | [packages/mdkit/src/markdown/markdownReferences.tsx:8](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L8) |
+| <a id="url"></a> `url` | `string` | [packages/mdkit/src/markdown/markdownReferences.tsx:9](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L9) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitReferenceTrigger.md -->
+
+---
+title: "MdKitReferenceTrigger"
+---
+
+# Type Alias: MdKitReferenceTrigger
+
+```ts
+type MdKitReferenceTrigger = "@" | "/";
+```
+
+Defined in: [packages/mdkit/src/markdown/markdownReferences.tsx:12](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L12)
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitReferenceTriggerState.md -->
+
+---
+title: "MdKitReferenceTriggerState"
+---
+
+# Type Alias: MdKitReferenceTriggerState
+
+```ts
+type MdKitReferenceTriggerState = {
+  from: number;
+  query: string;
+  to: number;
+  trigger: MdKitReferenceTrigger;
+};
+```
+
+Defined in: [packages/mdkit/src/markdown/markdownReferences.tsx:14](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L14)
+
+## Properties
+
+| Property | Type | Defined in |
+| ------ | ------ | ------ |
+| <a id="from"></a> `from` | `number` | [packages/mdkit/src/markdown/markdownReferences.tsx:15](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L15) |
+| <a id="query"></a> `query` | `string` | [packages/mdkit/src/markdown/markdownReferences.tsx:16](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L16) |
+| <a id="to"></a> `to` | `number` | [packages/mdkit/src/markdown/markdownReferences.tsx:17](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L17) |
+| <a id="trigger"></a> `trigger` | [`MdKitReferenceTrigger`](MdKitReferenceTrigger.md) | [packages/mdkit/src/markdown/markdownReferences.tsx:18](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/markdownReferences.tsx#L18) |
+
+
+---
+
 <!-- source: reference/index/type-aliases/MdKitSmartCheckpointPolicyOptions.md -->
 
 ---
@@ -3070,6 +3365,37 @@ Defined in: [packages/mdkit/src/core/checkpointPolicy.ts:24](https://github.com/
 | ------ | ------ | ------ |
 | <a id="mineditdistance"></a> `minEditDistance?` | `number` | [packages/mdkit/src/core/checkpointPolicy.ts:25](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/checkpointPolicy.ts#L25) |
 | <a id="minintervalms"></a> `minIntervalMs?` | `number` | [packages/mdkit/src/core/checkpointPolicy.ts:26](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/core/checkpointPolicy.ts#L26) |
+
+
+---
+
+<!-- source: reference/index/type-aliases/MdKitSyntaxHighlightingOptions.md -->
+
+---
+title: "MdKitSyntaxHighlightingOptions"
+---
+
+# Type Alias: MdKitSyntaxHighlightingOptions
+
+```ts
+type MdKitSyntaxHighlightingOptions = {
+  lowlight?: unknown;
+  defaultLanguage?: string | null;
+  enableTabIndentation?: boolean;
+  tabSize?: number;
+};
+```
+
+Defined in: packages/mdkit/src/markdown/codeThemes.ts:33
+
+## Properties
+
+| Property | Type | Description | Defined in |
+| ------ | ------ | ------ | ------ |
+| <a id="lowlight"></a> `lowlight?` | `unknown` | Override the default lowlight instance. MDKit's default uses lowlight's common language set. | packages/mdkit/src/markdown/codeThemes.ts:38 |
+| <a id="defaultlanguage"></a> `defaultLanguage?` | `string` \| `null` | - | packages/mdkit/src/markdown/codeThemes.ts:39 |
+| <a id="enabletabindentation"></a> `enableTabIndentation?` | `boolean` | - | packages/mdkit/src/markdown/codeThemes.ts:40 |
+| <a id="tabsize"></a> `tabSize?` | `number` | - | packages/mdkit/src/markdown/codeThemes.ts:41 |
 
 
 ---
@@ -3518,6 +3844,23 @@ const defaultMdKitEditorTheme: MdKitEditorTheme;
 ```
 
 Defined in: [packages/mdkit/src/theme/editorTheme.ts:22](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/theme/editorTheme.ts#L22)
+
+
+---
+
+<!-- source: reference/index/variables/mdKitCodeThemeNames.md -->
+
+---
+title: "mdKitCodeThemeNames"
+---
+
+# Variable: mdKitCodeThemeNames
+
+```ts
+const mdKitCodeThemeNames: readonly ["github", "github-dark", "github-dark-dimmed", "atom-one-light", "atom-one-dark", "vs", "vs2015", "xcode", "monokai", "nord", "night-owl", "tokyo-night-dark", "stackoverflow-light", "stackoverflow-dark", "darcula", "darkula", "dracula"];
+```
+
+Defined in: packages/mdkit/src/markdown/codeThemes.ts:3
 
 
 ---
@@ -5246,10 +5589,53 @@ Set these on `.mp-lb-mdkit-markdown-editor`, a custom `className` passed to
 - `--mp-lb-mdkit-heading-1-size`
 - `--mp-lb-mdkit-heading-2-size`
 - `--mp-lb-mdkit-code-background`
+- `--mp-lb-mdkit-code-block-padding`
 - `--mp-lb-mdkit-code-radius`
 - `--mp-lb-mdkit-code-block-radius`
 - `--mp-lb-mdkit-code-font-family`
 - `--mp-lb-mdkit-quote-border-color`
+
+### Code Themes
+
+`MdKitEditor` highlights fenced code blocks with TipTap's lowlight extension.
+The default `codeTheme` is `auto`, using `github` in light mode and
+`github-dark` in dark mode via `prefers-color-scheme`.
+
+```tsx
+<MdKitEditor codeTheme="darkula" value={markdown} onChange={setMarkdown} />
+```
+
+Use an explicit pair when your app controls light and dark themes:
+
+```tsx
+<MdKitEditor
+  codeTheme={{ light: "atom-one-light", dark: "night-owl" }}
+  value={markdown}
+  onChange={setMarkdown}
+/>
+```
+
+Bundled theme names come from highlight.js CSS themes:
+
+- `github`
+- `github-dark`
+- `github-dark-dimmed`
+- `atom-one-light`
+- `atom-one-dark`
+- `vs`
+- `vs2015`
+- `xcode`
+- `monokai`
+- `nord`
+- `night-owl`
+- `tokyo-night-dark`
+- `stackoverflow-light`
+- `stackoverflow-dark`
+- `darcula` / `darkula`
+- `dracula`
+
+Set `syntaxHighlighting={false}` to keep plain code blocks. For custom language
+sets, pass `syntaxHighlighting={{ lowlight }}` with your own lowlight instance.
 
 ### Panel Variables
 

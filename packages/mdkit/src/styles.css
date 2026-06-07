@@ -1,3 +1,5 @@
+@import "./code-themes.css";
+
 .mp-lb-mdkit-markdown-editor,
 .mp-lb-mdkit-markdown-editor *,
 .mp-lb-mdkit-reference-suggestions,
@@ -87,6 +89,7 @@
   --mp-lb-mdkit-heading-minor-weight: 600;
   --mp-lb-mdkit-block-padding: 3px 2px;
   --mp-lb-mdkit-code-background: var(--mp-lb-mdkit-muted);
+  --mp-lb-mdkit-code-block-padding: 0.75rem 1rem;
   --mp-lb-mdkit-code-radius: 0.35rem;
   --mp-lb-mdkit-code-block-radius: 0.375rem;
   --mp-lb-mdkit-code-font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
@@ -620,7 +623,7 @@
 
 .mp-lb-mdkit-tiptap pre {
   margin: 0.5rem 0;
-  padding: 2rem;
+  padding: var(--mp-lb-mdkit-code-block-padding);
   overflow-x: auto;
   border: 1px solid var(--mp-lb-mdkit-border);
   border-radius: var(--mp-lb-mdkit-code-block-radius);

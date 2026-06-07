@@ -273,10 +273,53 @@ Set these on `.mp-lb-mdkit-markdown-editor`, a custom `className` passed to
 - `--mp-lb-mdkit-heading-1-size`
 - `--mp-lb-mdkit-heading-2-size`
 - `--mp-lb-mdkit-code-background`
+- `--mp-lb-mdkit-code-block-padding`
 - `--mp-lb-mdkit-code-radius`
 - `--mp-lb-mdkit-code-block-radius`
 - `--mp-lb-mdkit-code-font-family`
 - `--mp-lb-mdkit-quote-border-color`
+
+### Code Themes
+
+`MdKitEditor` highlights fenced code blocks with TipTap's lowlight extension.
+The default `codeTheme` is `auto`, using `github` in light mode and
+`github-dark` in dark mode via `prefers-color-scheme`.
+
+```tsx
+<MdKitEditor codeTheme="darkula" value={markdown} onChange={setMarkdown} />
+```
+
+Use an explicit pair when your app controls light and dark themes:
+
+```tsx
+<MdKitEditor
+  codeTheme={{ light: "atom-one-light", dark: "night-owl" }}
+  value={markdown}
+  onChange={setMarkdown}
+/>
+```
+
+Bundled theme names come from highlight.js CSS themes:
+
+- `github`
+- `github-dark`
+- `github-dark-dimmed`
+- `atom-one-light`
+- `atom-one-dark`
+- `vs`
+- `vs2015`
+- `xcode`
+- `monokai`
+- `nord`
+- `night-owl`
+- `tokyo-night-dark`
+- `stackoverflow-light`
+- `stackoverflow-dark`
+- `darcula` / `darkula`
+- `dracula`
+
+Set `syntaxHighlighting={false}` to keep plain code blocks. For custom language
+sets, pass `syntaxHighlighting={{ lowlight }}` with your own lowlight instance.
 
 ### Panel Variables
 

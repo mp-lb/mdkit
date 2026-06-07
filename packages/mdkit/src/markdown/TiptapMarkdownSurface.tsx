@@ -11,6 +11,7 @@ import Collaboration from "@tiptap/extension-collaboration";
 import CollaborationCaret from "@tiptap/extension-collaboration-caret";
 import { EditorContent, useEditor } from "@tiptap/react";
 import type { MdKitCollaborationSession } from "../document/documentTypes";
+import type { MdKitSyntaxHighlightingOptions } from "./codeThemes";
 import { createMdKitTiptapExtensions } from "./createMdKitTiptapExtensions";
 import type { MdKitEditorDebugEvent } from "./editorDebug";
 import {
@@ -47,6 +48,7 @@ type LocalTiptapMarkdownSurfaceProps = {
   readOnly?: boolean;
   references?: MdKitReferencesOptions;
   search?: boolean;
+  syntaxHighlighting?: boolean | MdKitSyntaxHighlightingOptions;
   value: string;
 };
 
@@ -60,6 +62,7 @@ type CollaborativeTiptapMarkdownSurfaceProps = {
   readOnly?: boolean;
   references?: MdKitReferencesOptions;
   search?: boolean;
+  syntaxHighlighting?: boolean | MdKitSyntaxHighlightingOptions;
   value?: string;
 };
 
@@ -148,6 +151,7 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
     readOnly = false,
     references,
     search = false,
+    syntaxHighlighting = true,
   } = props;
 
   const markdownValue =
@@ -397,6 +401,7 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
       extensions: [
         ...createMdKitTiptapExtensions({
           placeholder,
+          syntaxHighlighting,
           undoRedo: !hasCollaboration,
         }),
         ...(collaborationDocument

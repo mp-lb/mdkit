@@ -1,12 +1,18 @@
 import type { CSSProperties } from "react";
 import type { MdKitCollaborationSession } from "../document/documentTypes";
 import { joinClassNames } from "../ui/joinClassNames";
+import {
+  getMdKitCodeThemeAttributes,
+  type MdKitCodeTheme,
+  type MdKitSyntaxHighlightingOptions,
+} from "./codeThemes";
 import type { MdKitEditorDebugEvent } from "./editorDebug";
 import type { MdKitReferencesOptions } from "./markdownReferences";
 import { TiptapMarkdownSurface } from "./TiptapMarkdownSurface";
 
 type MdKitEditorBaseProps = {
   className?: string;
+  codeTheme?: MdKitCodeTheme;
   documentMargins?: boolean;
   fillHeight?: boolean;
   fixedWidth?: boolean;
@@ -18,6 +24,7 @@ type MdKitEditorBaseProps = {
   references?: MdKitReferencesOptions;
   search?: boolean;
   style?: CSSProperties;
+  syntaxHighlighting?: boolean | MdKitSyntaxHighlightingOptions;
 };
 
 type LocalMdKitEditorProps = MdKitEditorBaseProps & {
@@ -47,6 +54,7 @@ export type MdKitEditorProps =
 export const MdKitEditor = (props: MdKitEditorProps) => {
   const {
     className,
+    codeTheme,
     documentMargins = false,
     fillHeight = false,
     fixedWidth = false,
@@ -54,6 +62,7 @@ export const MdKitEditor = (props: MdKitEditorProps) => {
     style,
     ...surfaceProps
   } = props;
+  const codeThemeAttributes = getMdKitCodeThemeAttributes(codeTheme);
 
   return (
     <div
@@ -64,6 +73,7 @@ export const MdKitEditor = (props: MdKitEditorProps) => {
         fixedWidth && "mp-lb-mdkit-markdown-editor-fixed-width",
         className,
       )}
+      {...codeThemeAttributes}
       data-read-only={readOnly ? "true" : undefined}
       style={style}
     >
