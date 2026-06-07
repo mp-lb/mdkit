@@ -1,5 +1,11 @@
 # @mp-lb/mdkit
 
+## 0.3.12
+
+### Patch Changes
+
+- 1e87255: Delay markdown reference suggestions until the user types a query character.
+
 ## 0.3.11
 
 ### Patch Changes
