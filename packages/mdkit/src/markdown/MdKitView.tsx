@@ -6,7 +6,9 @@ import { removeYamlFrontMatter } from "./yamlFrontMatter";
 
 export type MdKitViewProps = {
   className?: string;
+  documentMargins?: boolean;
   fillHeight?: boolean;
+  fixedWidth?: boolean;
   ignoreYamlFrontMatter?: boolean;
   placeholder?: string;
   style?: CSSProperties;
@@ -20,7 +22,9 @@ export type MdKitViewProps = {
  */
 export const MdKitView = ({
   className,
+  documentMargins = false,
   fillHeight = false,
+  fixedWidth = false,
   ignoreYamlFrontMatter = false,
   placeholder,
   style,
@@ -37,7 +41,9 @@ export const MdKitView = ({
       className={joinClassNames(
         "mp-lb-mdkit-markdown-editor",
         "mp-lb-mdkit-markdown-view",
+        documentMargins && "mp-lb-mdkit-markdown-editor-document-margins",
         fillHeight && "mp-lb-mdkit-markdown-editor-fill-height",
+        fixedWidth && "mp-lb-mdkit-markdown-editor-fixed-width",
         className,
       )}
       data-read-only="true"

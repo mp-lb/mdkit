@@ -27,7 +27,9 @@ describe("MdKitView", () => {
     const { container } = render(
       <MdKitView
         className="custom-view"
+        documentMargins
         fillHeight
+        fixedWidth
         style={{ minHeight: "12rem" }}
         value="Readonly"
       />,
@@ -37,7 +39,9 @@ describe("MdKitView", () => {
 
     expect(root).toBeTruthy();
     expect(root).toHaveClass("mp-lb-mdkit-markdown-view");
+    expect(root).toHaveClass("mp-lb-mdkit-markdown-editor-document-margins");
     expect(root).toHaveClass("mp-lb-mdkit-markdown-editor-fill-height");
+    expect(root).toHaveClass("mp-lb-mdkit-markdown-editor-fixed-width");
     expect(root).toHaveClass("custom-view");
     expect(root).toHaveAttribute("data-read-only", "true");
     expect(container.querySelector(".mp-lb-mdkit-editor-shell")).toBeTruthy();

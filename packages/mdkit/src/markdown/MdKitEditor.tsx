@@ -6,7 +6,9 @@ import { TiptapMarkdownSurface } from "./TiptapMarkdownSurface";
 
 type MdKitEditorBaseProps = {
   className?: string;
+  documentMargins?: boolean;
   fillHeight?: boolean;
+  fixedWidth?: boolean;
   ignoreYamlFrontMatter?: boolean;
   instanceKey?: string | number;
   onDebugEvent?: (event: MdKitEditorDebugEvent) => void;
@@ -43,7 +45,9 @@ export type MdKitEditorProps =
 export const MdKitEditor = (props: MdKitEditorProps) => {
   const {
     className,
+    documentMargins = false,
     fillHeight = false,
+    fixedWidth = false,
     readOnly = false,
     style,
     ...surfaceProps
@@ -53,7 +57,9 @@ export const MdKitEditor = (props: MdKitEditorProps) => {
     <div
       className={joinClassNames(
         "mp-lb-mdkit-markdown-editor",
+        documentMargins && "mp-lb-mdkit-markdown-editor-document-margins",
         fillHeight && "mp-lb-mdkit-markdown-editor-fill-height",
+        fixedWidth && "mp-lb-mdkit-markdown-editor-fixed-width",
         className,
       )}
       data-read-only={readOnly ? "true" : undefined}

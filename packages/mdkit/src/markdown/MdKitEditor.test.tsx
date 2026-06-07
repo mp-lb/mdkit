@@ -109,10 +109,56 @@ describe("MdKitEditor", () => {
     });
   });
 
+  it("marks the editor as fixed-width when requested", async () => {
+    const { container } = render(
+      <MdKitEditor fixedWidth value={firstMarkdown} onChange={() => {}} />,
+    );
+
+    await waitFor(() => {
+      expect(
+        container.querySelector(".mp-lb-mdkit-markdown-editor-fixed-width"),
+      ).toBeTruthy();
+
+      expect(editorText(container)).toContain("Stored document");
+    });
+  });
+
+  it("marks the editor as document-margined when requested", async () => {
+    const { container } = render(
+      <MdKitEditor
+        documentMargins
+        value={firstMarkdown}
+        onChange={() => {}}
+      />,
+    );
+
+    await waitFor(() => {
+      expect(
+        container.querySelector(
+          ".mp-lb-mdkit-markdown-editor-document-margins",
+        ),
+      ).toBeTruthy();
+
+      expect(editorText(container)).toContain("Stored document");
+    });
+  });
+
   it("keeps the editor root full-width without fill-height", async () => {
     const css = readFileSync(resolve(__dirname, "../styles.css"), "utf8");
 
     expect(css).toMatch(/\.mp-lb-mdkit-markdown-editor\s*{[^}]*width:\s*100%;/);
+  });
+
+  it("keeps document margins optional and responsive in the default stylesheet", () => {
+    const css = readFileSync(resolve(__dirname, "../styles.css"), "utf8");
+
+    expect(css).toMatch(/--mp-lb-mdkit-surface-padding:\s*0px;/);
+    expect(css).toMatch(
+      /--mp-lb-mdkit-document-margin-block:\s*clamp\(1\.5rem,\s*6vh,\s*4rem\);/,
+    );
+    expect(css).toMatch(
+      /\.mp-lb-mdkit-markdown-editor-document-margins\s+\.mp-lb-mdkit-editor-surface\s*{[^}]*padding-block:\s*var\(--mp-lb-mdkit-document-margin-block\);[^}]*padding-inline:\s*var\(--mp-lb-mdkit-document-margin-inline\);/s,
+    );
   });
 
   it("can render the editor as read-only", async () => {
@@ -243,16 +289,23 @@ describe("MdKitEditor", () => {
     });
   });
 
-  it("keeps h3 styled smaller than h2 in the bundled editor CSS", () => {
+  it("matches ProseKit heading sizes and weights in the bundled editor CSS", () => {
     const css = readFileSync(resolve(__dirname, "../styles.css"), "utf8");
 
-    expect(css).toMatch(/--mp-lb-mdkit-heading-2-size:\s*1\.25rem;/);
-    expect(css).toMatch(/--mp-lb-mdkit-heading-3-size:\s*1\.125rem;/);
+    expect(css).toMatch(/--mp-lb-mdkit-heading-1-size:\s*40px;/);
+    expect(css).toMatch(/--mp-lb-mdkit-heading-1-weight:\s*700;/);
+    expect(css).toMatch(/--mp-lb-mdkit-heading-2-size:\s*30px;/);
+    expect(css).toMatch(/--mp-lb-mdkit-heading-2-weight:\s*600;/);
+    expect(css).toMatch(/--mp-lb-mdkit-heading-3-size:\s*24px;/);
+    expect(css).toMatch(/--mp-lb-mdkit-heading-3-weight:\s*600;/);
     expect(css).toMatch(
-      /\.mp-lb-mdkit-tiptap h2\s*{[^}]*font-size:\s*var\(--mp-lb-mdkit-heading-2-size\);/,
+      /\.mp-lb-mdkit-tiptap h1\s*{[^}]*font-size:\s*var\(--mp-lb-mdkit-heading-1-size\);[^}]*font-weight:\s*var\(--mp-lb-mdkit-heading-1-weight\);/,
     );
     expect(css).toMatch(
-      /\.mp-lb-mdkit-tiptap h3,\s*\.mp-lb-mdkit-tiptap h4,\s*\.mp-lb-mdkit-tiptap h5,\s*\.mp-lb-mdkit-tiptap h6\s*{[^}]*font-size:\s*var\(--mp-lb-mdkit-heading-3-size\);/,
+      /\.mp-lb-mdkit-tiptap h2\s*{[^}]*font-size:\s*var\(--mp-lb-mdkit-heading-2-size\);[^}]*font-weight:\s*var\(--mp-lb-mdkit-heading-2-weight\);/,
+    );
+    expect(css).toMatch(
+      /\.mp-lb-mdkit-tiptap h3\s*{[^}]*font-size:\s*var\(--mp-lb-mdkit-heading-3-size\);[^}]*font-weight:\s*var\(--mp-lb-mdkit-heading-3-weight\);/,
     );
   });
 
