@@ -196,6 +196,12 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
   const [referenceSuggestionsPlacement, setReferenceSuggestionsPlacement] =
     useState<"top" | "bottom">("bottom");
   const [isSearchingReferences, setIsSearchingReferences] = useState(false);
+  const [referenceLoadingQuery, setReferenceLoadingQuery] = useState<
+    string | null
+  >(null);
+  const [referenceSuggestionsQuery, setReferenceSuggestionsQuery] = useState<
+    string | null
+  >(null);
   const collaborationDocument = collaboration?.document ?? null;
   const collaborationProvider = collaboration?.provider ?? null;
   const collaborationUserColor = collaboration?.collaborator.color ?? "";
@@ -494,6 +500,8 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
           current.length === 0 ? current : [],
         );
         setIsSearchingReferences(false);
+        setReferenceLoadingQuery(null);
+        setReferenceSuggestionsQuery(null);
       });
 
       return;
@@ -504,23 +512,27 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
     const requestId = referenceSearchRequestRef.current + 1;
     referenceSearchRequestRef.current = requestId;
 
-    queueMicrotask(() => {
-      setSelectedReferenceIndex(0);
-      setIsSearchingReferences(true);
-    });
+    queueMicrotask(() => setSelectedReferenceIndex(0));
 
     async function searchReferences() {
       try {
+        if (isCurrent && referenceSearchRequestRef.current === requestId) {
+          setReferenceLoadingQuery(trigger.query);
+          setIsSearchingReferences(true);
+        }
+
         const results = references?.onSearchTargets
           ? await references.onSearchTargets(trigger.query, trigger.trigger)
           : filterMdKitReferenceTargets(referenceTargets, trigger.query);
 
         if (isCurrent && referenceSearchRequestRef.current === requestId) {
           setReferenceSuggestions(results.slice(0, 8));
+          setReferenceSuggestionsQuery(trigger.query);
         }
       } finally {
         if (isCurrent && referenceSearchRequestRef.current === requestId) {
           setIsSearchingReferences(false);
+          setReferenceLoadingQuery(null);
         }
       }
     }
@@ -581,6 +593,18 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
 
   const activeSearchMatchNumber =
     searchMatches.length === 0 ? 0 : activeSearchMatchIndex + 1;
+
+  const canRenderReferenceSuggestions = Boolean(
+    activeReferenceTrigger &&
+      referenceSuggestionsStyle &&
+      (referenceSuggestionsQuery === activeReferenceTrigger.query ||
+        referenceLoadingQuery === activeReferenceTrigger.query),
+  );
+  const isLoadingCurrentReferenceSuggestions = Boolean(
+    activeReferenceTrigger &&
+      isSearchingReferences &&
+      referenceLoadingQuery === activeReferenceTrigger.query,
+  );
 
   const scrollActiveSearchMatchIntoView = useCallback(() => {
     window.requestAnimationFrame(() => {
@@ -1161,17 +1185,24 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
             query={searchQuery}
           />
         ) : null}
-        {activeReferenceTrigger && referenceSuggestionsStyle
+        {activeReferenceTrigger &&
+        referenceSuggestionsStyle &&
+        canRenderReferenceSuggestions
           ? renderReferenceSuggestions({
               activeIndex: selectedReferenceIndex,
-              isLoading: isSearchingReferences,
+              isLoading: isLoadingCurrentReferenceSuggestions,
               onSelect: insertReferenceTarget,
               placement: referenceSuggestionsPlacement,
               query: activeReferenceTrigger.query,
               selectedTarget:
-                referenceSuggestions[selectedReferenceIndex] ?? null,
+                referenceSuggestionsQuery === activeReferenceTrigger.query
+                  ? (referenceSuggestions[selectedReferenceIndex] ?? null)
+                  : null,
               style: referenceSuggestionsStyle,
-              targets: referenceSuggestions,
+              targets:
+                referenceSuggestionsQuery === activeReferenceTrigger.query
+                  ? referenceSuggestions
+                  : [],
               trigger: activeReferenceTrigger.trigger,
             })
           : null}

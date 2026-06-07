@@ -724,4 +724,42 @@ describe("MdKitEditor", () => {
       ).toBeNull();
     });
   });
+
+  it("waits for the reference debounce before showing empty suggestions", async () => {
+    const { container } = render(
+      <MdKitEditor
+        references={{
+          targets: [
+            {
+              id: "file_plan",
+              label: "plan.md",
+              url: "https://dx.ink/file_plan",
+            },
+          ],
+        }}
+        value=""
+        onChange={() => {}}
+      />,
+    );
+
+    const editor = await getEditorElement(container);
+
+    await act(async () => {
+      editor.focus();
+    });
+
+    pasteIntoEditor(editor, { "text/plain": "@zz" });
+
+    await act(async () => {});
+
+    expect(
+      screen.queryByRole("listbox", { name: "Reference suggestions" }),
+    ).toBeNull();
+
+    await act(async () => {
+      await new Promise((resolve) => window.setTimeout(resolve, 160));
+    });
+
+    expect(await screen.findByText("No references")).toBeTruthy();
+  });
 });
