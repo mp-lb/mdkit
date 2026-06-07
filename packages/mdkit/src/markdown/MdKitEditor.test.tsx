@@ -172,8 +172,33 @@ describe("MdKitEditor", () => {
       /\.mp-lb-mdkit-markdown-editor-fill-height\.mp-lb-mdkit-markdown-editor-document-margins\s+\.mp-lb-mdkit-tiptap\s*{[^}]*padding-block-start:\s*var\(--mp-lb-mdkit-document-margin-block\);/s,
     );
     expect(css).toMatch(
-      /\.mp-lb-mdkit-markdown-editor-fill-height\.mp-lb-mdkit-markdown-editor-document-margins\s+\.mp-lb-mdkit-tiptap::after\s*{[^}]*min-height:\s*var\(--mp-lb-mdkit-document-margin-block\);[^}]*flex:\s*0 0 var\(--mp-lb-mdkit-document-margin-block\);/s,
+      /\.mp-lb-mdkit-document-end-spacer\s*{[^}]*display:\s*none;/s,
     );
+    expect(css).toMatch(
+      /\.mp-lb-mdkit-markdown-editor-fill-height\.mp-lb-mdkit-markdown-editor-document-margins\s+\.mp-lb-mdkit-document-end-spacer\s*{[^}]*display:\s*block;[^}]*min-height:\s*var\(--mp-lb-mdkit-document-margin-block\);[^}]*flex:\s*0 0 var\(--mp-lb-mdkit-document-margin-block\);/s,
+    );
+  });
+
+  it("renders a concrete document end spacer for fill-height documents", async () => {
+    const { container } = render(
+      <MdKitEditor
+        documentMargins
+        fillHeight
+        value={firstMarkdown}
+        onChange={() => {}}
+      />,
+    );
+
+    await waitFor(() => {
+      expect(container.querySelector(".ProseMirror")).toBeTruthy();
+    });
+
+    expect(
+      container.querySelector(".mp-lb-mdkit-editor-content"),
+    ).toBeTruthy();
+    expect(
+      container.querySelector(".mp-lb-mdkit-document-end-spacer"),
+    ).toBeTruthy();
   });
 
   it("can render the editor as read-only", async () => {

@@ -916,7 +916,11 @@ export const TiptapMarkdownSurface = (props: TiptapMarkdownSurfaceProps) => {
           />
         ) : null}
         <MarkdownBubbleMenu editor={editor} />
-        <EditorContent editor={editor} />
+        <EditorContent
+          className="mp-lb-mdkit-editor-content"
+          editor={editor}
+        />
+        <div aria-hidden="true" className="mp-lb-mdkit-document-end-spacer" />
       </div>
     </div>
   );

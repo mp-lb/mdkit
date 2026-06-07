@@ -47,6 +47,9 @@ describe("MdKitView", () => {
     expect(container.querySelector(".mp-lb-mdkit-editor-shell")).toBeTruthy();
     expect(container.querySelector(".mp-lb-mdkit-editor-surface")).toBeTruthy();
     expect(container.querySelector(".mp-lb-mdkit-tiptap")).toBeTruthy();
+    expect(
+      container.querySelector(".mp-lb-mdkit-document-end-spacer"),
+    ).toBeTruthy();
   });
 
   it("renders an empty surface when no value or placeholder is provided", () => {

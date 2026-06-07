@@ -73,6 +73,7 @@ export const MdKitView = ({
           ) : (
             <div className="mp-lb-mdkit-editor-empty" />
           )}
+          <div aria-hidden="true" className="mp-lb-mdkit-document-end-spacer" />
         </div>
       </div>
     </div>
