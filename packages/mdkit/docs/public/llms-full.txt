@@ -1650,7 +1650,7 @@ title: "MdKitEditor"
 function MdKitEditor(props: MdKitEditorProps): Element;
 ```
 
-Defined in: [packages/mdkit/src/markdown/MdKitEditor.tsx:43](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitEditor.tsx#L43)
+Defined in: [packages/mdkit/src/markdown/MdKitEditor.tsx:45](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitEditor.tsx#L45)
 
 Markdown-first rich text editor. Behaves like a controlled textarea in local
 mode and switches to a Yjs-backed engine when given a collaboration session.
@@ -1715,7 +1715,7 @@ title: "MdKitView"
 function MdKitView(__namedParameters: MdKitViewProps): Element;
 ```
 
-Defined in: [packages/mdkit/src/markdown/MdKitView.tsx:21](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitView.tsx#L21)
+Defined in: [packages/mdkit/src/markdown/MdKitView.tsx:23](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitView.tsx#L23)
 
 Read-only markdown surface that mirrors [MdKitEditor](MdKitEditor.md)'s styling and
 sizing contract without mounting the editor runtime. Use it for previews and
@@ -2949,7 +2949,7 @@ title: "MdKitEditorProps"
 type MdKitEditorProps = CollaborativeMdKitEditorProps | LocalMdKitEditorProps;
 ```
 
-Defined in: [packages/mdkit/src/markdown/MdKitEditor.tsx:31](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitEditor.tsx#L31)
+Defined in: [packages/mdkit/src/markdown/MdKitEditor.tsx:33](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitEditor.tsx#L33)
 
 
 ---
@@ -3116,7 +3116,9 @@ title: "MdKitViewProps"
 ```ts
 type MdKitViewProps = {
   className?: string;
+  documentMargins?: boolean;
   fillHeight?: boolean;
+  fixedWidth?: boolean;
   ignoreYamlFrontMatter?: boolean;
   placeholder?: string;
   style?: CSSProperties;
@@ -3131,11 +3133,13 @@ Defined in: [packages/mdkit/src/markdown/MdKitView.tsx:7](https://github.com/mp-
 | Property | Type | Defined in |
 | ------ | ------ | ------ |
 | <a id="classname"></a> `className?` | `string` | [packages/mdkit/src/markdown/MdKitView.tsx:8](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitView.tsx#L8) |
-| <a id="fillheight"></a> `fillHeight?` | `boolean` | [packages/mdkit/src/markdown/MdKitView.tsx:9](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitView.tsx#L9) |
-| <a id="ignoreyamlfrontmatter"></a> `ignoreYamlFrontMatter?` | `boolean` | [packages/mdkit/src/markdown/MdKitView.tsx:10](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitView.tsx#L10) |
-| <a id="placeholder"></a> `placeholder?` | `string` | [packages/mdkit/src/markdown/MdKitView.tsx:11](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitView.tsx#L11) |
-| <a id="style"></a> `style?` | `CSSProperties` | [packages/mdkit/src/markdown/MdKitView.tsx:12](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitView.tsx#L12) |
-| <a id="value"></a> `value` | `string` | [packages/mdkit/src/markdown/MdKitView.tsx:13](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitView.tsx#L13) |
+| <a id="documentmargins"></a> `documentMargins?` | `boolean` | [packages/mdkit/src/markdown/MdKitView.tsx:9](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitView.tsx#L9) |
+| <a id="fillheight"></a> `fillHeight?` | `boolean` | [packages/mdkit/src/markdown/MdKitView.tsx:10](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitView.tsx#L10) |
+| <a id="fixedwidth"></a> `fixedWidth?` | `boolean` | [packages/mdkit/src/markdown/MdKitView.tsx:11](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitView.tsx#L11) |
+| <a id="ignoreyamlfrontmatter"></a> `ignoreYamlFrontMatter?` | `boolean` | [packages/mdkit/src/markdown/MdKitView.tsx:12](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitView.tsx#L12) |
+| <a id="placeholder"></a> `placeholder?` | `string` | [packages/mdkit/src/markdown/MdKitView.tsx:13](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitView.tsx#L13) |
+| <a id="style"></a> `style?` | `CSSProperties` | [packages/mdkit/src/markdown/MdKitView.tsx:14](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitView.tsx#L14) |
+| <a id="value"></a> `value` | `string` | [packages/mdkit/src/markdown/MdKitView.tsx:15](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitView.tsx#L15) |
 
 
 ---

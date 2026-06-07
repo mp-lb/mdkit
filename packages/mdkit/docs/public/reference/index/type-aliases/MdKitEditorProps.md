@@ -8,4 +8,4 @@ title: "MdKitEditorProps"
 type MdKitEditorProps = CollaborativeMdKitEditorProps | LocalMdKitEditorProps;
 ```
 
-Defined in: [packages/mdkit/src/markdown/MdKitEditor.tsx:31](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitEditor.tsx#L31)
+Defined in: [packages/mdkit/src/markdown/MdKitEditor.tsx:33](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/markdown/MdKitEditor.tsx#L33)
