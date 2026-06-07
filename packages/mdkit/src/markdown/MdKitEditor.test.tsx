@@ -159,6 +159,9 @@ describe("MdKitEditor", () => {
     expect(css).toMatch(
       /\.mp-lb-mdkit-markdown-editor-document-margins\s+\.mp-lb-mdkit-editor-surface\s*{[^}]*padding-block:\s*var\(--mp-lb-mdkit-document-margin-block\);[^}]*padding-inline:\s*var\(--mp-lb-mdkit-document-margin-inline\);/s,
     );
+    expect(css).toMatch(
+      /\.mp-lb-mdkit-markdown-editor-fill-height\.mp-lb-mdkit-markdown-editor-document-margins\s+\.mp-lb-mdkit-tiptap::after\s*{[^}]*flex:\s*0 0 var\(--mp-lb-mdkit-document-margin-block\);/s,
+    );
   });
 
   it("can render the editor as read-only", async () => {
