@@ -19,5 +19,3 @@ Read [PRODUCT.md](PRODUCT.md) if you need to understand the product.
 @agent-responsibility.md
 
 @validation.md
-
-@~/Code/mgr/agents-md/global.md
