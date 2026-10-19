@@ -27,6 +27,9 @@ importers:
       '@eslint/js':
         specifier: 9.39.4
         version: 9.39.4
+      '@mp-lb/arcnet':
+        specifier: 0.7.2
+        version: 0.7.2
       '@mp-lb/fssstack-config':
         specifier: 0.3.1
         version: 0.3.1(@typescript-eslint/parser@8.59.1(eslint@9.39.4(jiti@2.6.1))(typescript@6.0.3))(eslint@9.39.4(jiti@2.6.1))(prettier@3.8.3)(typescript@6.0.3)
@@ -1430,6 +1433,16 @@ packages:
       '@cfworker/json-schema':
         optional: true
 
+  '@mp-lb/arcnet@0.7.2':
+    resolution: {integrity: sha512-P3t9VLv6FRR3OVbD20toY/1OW+nFr6iC+ZYAGV4O1aS2aaQX+cwozP9XfgnTMNTmyLqc4CIMEkp57yMkBa+ldg==}
+    engines: {node: '>=22'}
+    hasBin: true
+
+  '@mp-lb/forum-secrets@0.2.1':
+    resolution: {integrity: sha512-Z7uJh01uUJoE0OB7RZAIUhGjiHf3pKvkQMdgrAkr2rsa5Ojrxbt2aMGHX8JHHCqj3gYE6Mq224WTrhK6ZtyGJQ==}
+    engines: {node: '>=20'}
+    hasBin: true
+
   '@mp-lb/fssstack-config@0.3.1':
     resolution: {integrity: sha512-JyBK9fVzSfdu8XyIIb33+o6jT9dnByJBP1juTrtirkkXJQU+DtZYfrXUHnU17NspK61NGw0V80VhIl0hVHBjPw==}
     peerDependencies:
@@ -1473,6 +1486,15 @@ packages:
       fumadocs-ui: '>=16.8 <17'
       react: '>=19'
       tailwind-merge: '>=3'
+
+  '@mp-lb/zapper-sdk@0.20.1':
+    resolution: {integrity: sha512-kwgdR5hVigsib5dz7cjWhHXhkY+NWJbqGV/ik25PJWwHcVGNFsJ0VszQtM8Uwlbj7vt4VJaGvdnhXoON9XqmvQ==}
+    engines: {node: '>=18.0.0'}
+
+  '@mp-lb/zapper@0.21.5':
+    resolution: {integrity: sha512-GNSNKKUaAe8VGYZJeeVDCe1vfUto0fF66CnjJXNO7Df1e1EU7JQ0ULrKHM09BZKNlcA4kDA3owQonkakD3IbCA==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
 
   '@mswjs/interceptors@0.41.7':
     resolution: {integrity: sha512-D0nkS5+sx87mYpxFqASImCineYoEl9wGlUPrzkuS0ohzG8wfophLpE+I76qGJ0slLAVI19do5SI9pWJNCVf4fg==}
@@ -3984,8 +4006,16 @@ packages:
   dom-helpers@3.4.0:
     resolution: {integrity: sha512-LnuPJ+dwqKDIyotW1VzmOZ5TONUN7CwkCR5hrgawTUbkBGYdeoNLZo6nNfGkCrjtE1nXXaj7iMMpDa8/d9WoIA==}
 
+  dotenv-expand@12.0.3:
+    resolution: {integrity: sha512-uc47g4b+4k/M/SeaW1y4OApx+mtLWl92l5LMPP0GNXctZqELk+YGgOPIIC5elYmUH4OuoK3JLhuRUYegeySiFA==}
+    engines: {node: '>=12'}
+
   dotenv-expand@13.0.0:
     resolution: {integrity: sha512-aBfBS8eYIeXmpHI9ThIlA7/WLq+SLt18iXUZhb52rW89QLKQFoIpPG1bPeewoPZsTyjSSO3T7234FBVUM1V2rA==}
+    engines: {node: '>=12'}
+
+  dotenv@16.6.1:
+    resolution: {integrity: sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow==}
     engines: {node: '>=12'}
 
   dotenv@17.4.2:
@@ -4214,6 +4244,7 @@ packages:
   eslint@9.39.4:
     resolution: {integrity: sha512-XoMjdBOwe/esVgEvLmNsD3IRHkm7fbKIUGvrleloJXUZgDHig2IPWNniv+GwjyJXzuNqVjlr5+4yVUZjycJwfQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
@@ -5652,6 +5683,10 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
+
+  mustache@4.2.0:
+    resolution: {integrity: sha512-71ippSywq5Yb7/tVYyGbkBggbU8H3u5Rz56fH60jGFgr8uHwxs+aSKeqmluIVzM0m0kB7xQjKS6qPfd0b2ZoqQ==}
+    hasBin: true
 
   mute-stream@3.0.0:
     resolution: {integrity: sha512-dkEJPVvun4FryqBmZ5KhDo0K9iDXAwn08tMLDinNdRBNPcYEDiWYysLcc6k3mjTMlbP9KyylvRpd4wFtwrT9rw==}
@@ -7257,6 +7292,11 @@ packages:
   yallist@3.1.1:
     resolution: {integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==}
 
+  yaml@2.8.1:
+    resolution: {integrity: sha512-lcYcMxX2PO9XMGvAJkJ3OsNMw+/7FKes7/hgerGUYWIoWu5j/+YQqcZr5JnPZWzOsEBgMbSbiSTn/dv/69Mkpw==}
+    engines: {node: '>= 14.6'}
+    hasBin: true
+
   yaml@2.9.0:
     resolution: {integrity: sha512-2AvhNX3mb8zd6Zy7INTtSpl1F15HW6Wnqj0srWlkKLcpYl/gMIMJiyuGq2KeI2YFxUPjdlB+3Lc10seMLtL4cA==}
     engines: {node: '>= 14.6'}
@@ -8392,6 +8432,16 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@mp-lb/arcnet@0.7.2':
+    dependencies:
+      '@mp-lb/forum-secrets': 0.2.1
+      '@mp-lb/zapper': 0.21.5
+      commander: 14.0.3
+      yaml: 2.8.1
+      zod: 4.4.1
+
+  '@mp-lb/forum-secrets@0.2.1': {}
+
   '@mp-lb/fssstack-config@0.3.1(@typescript-eslint/parser@8.59.1(eslint@9.39.4(jiti@2.6.1))(typescript@6.0.3))(eslint@9.39.4(jiti@2.6.1))(prettier@3.8.3)(typescript@6.0.3)':
     dependencies:
       '@eslint/js': 9.39.4
@@ -8443,6 +8493,22 @@ snapshots:
       fumadocs-ui: 16.8.12(@tailwindcss/oxide@4.3.0)(@types/mdx@2.0.13)(@types/react-dom@19.2.3(@types/react@19.2.15))(@types/react@19.2.15)(fumadocs-core@16.8.12(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.15)(algoliasearch@5.52.0)(lucide-react@1.17.0(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react-router@7.16.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react@19.2.6)(zod@4.4.3))(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(tailwindcss@4.3.0)
       react: 19.2.6
       tailwind-merge: 3.6.0
+
+  '@mp-lb/zapper-sdk@0.20.1':
+    dependencies:
+      dotenv: 17.4.2
+      dotenv-expand: 12.0.3
+      enquirer: 2.4.1
+      mustache: 4.2.0
+      yaml: 2.9.0
+      zod: 4.4.1
+
+  '@mp-lb/zapper@0.21.5':
+    dependencies:
+      '@mp-lb/zapper-sdk': 0.20.1
+      commander: 14.0.3
+      yaml: 2.9.0
+      zod: 4.4.1
 
   '@mswjs/interceptors@0.41.7':
     dependencies:
@@ -11797,9 +11863,15 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.29.2
 
+  dotenv-expand@12.0.3:
+    dependencies:
+      dotenv: 16.6.1
+
   dotenv-expand@13.0.0:
     dependencies:
       dotenv: 17.4.2
+
+  dotenv@16.6.1: {}
 
   dotenv@17.4.2: {}
 
@@ -14004,6 +14076,8 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
+  mustache@4.2.0: {}
+
   mute-stream@3.0.0: {}
 
   nanoid@3.3.12: {}
@@ -16142,6 +16216,8 @@ snapshots:
   y18n@5.0.8: {}
 
   yallist@3.1.1: {}
+
+  yaml@2.8.1: {}
 
   yaml@2.9.0: {}
 
