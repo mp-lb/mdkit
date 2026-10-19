@@ -44,9 +44,23 @@ Read these before making changes:
 - **[logging.md](docs/tech/standards/logging.md)** - For logging on backend (via tRPC context) and frontend
 - **[event-schema.md](docs/tech/standards/event-schema.md)** - For sending/storing any kind of events: errors, logs, analytics, real time events follow this
 
+## Tech stack
 
+This tech is core and should be used **religiously**:
 
+- Zod
+- shadcn/ui and utility functions
+- shadcn/ui CLI
+- Tailwind CSS
+- tRPC
+- tRPC's tanstack style hooks
+- react-hook-form with zod resolver
 
+## UI
+
+The frontend uses [shadcn/ui](https://ui.shadcn.com/) for UI components. Add new components with `npx shadcn@latest add <component>` from the `apps/frontend` directory.
+
+Always use shadcn/ui where possible, including utilities like `cn` for conditional classnames.
 
 ## Agent Responsibility
 
