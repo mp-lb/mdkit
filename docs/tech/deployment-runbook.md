@@ -43,4 +43,4 @@ npm view @mp-lb/mdkit dist-tags
 npm view @mp-lb/mdkit versions --json
 ```
 
-Normal package releases go through Changesets. Push a changeset to `main`, merge the generated release PR, then verify npm.
+Package releases run on pushes to `main`. CI compares the packed `@mp-lb/mdkit` files with the latest npm version and publishes a patch only when they differ; then verify npm.
