@@ -2,14 +2,12 @@ version: 1
 project: mdkit
 environment: mp-lb
 repository: mp-lb/mdkit
-approved: true
 vercel:
   dnsZone: mp-lb.dev
   sites:
     docs:
       domain: mdkit.mp-lb.dev
       mode: new
-      creationApproved: true
       projectName: arcnet.mdkit.docs
       root: apps/docs
       build: [pnpm, --filter, "@mp-lb/mdkit-docs", build]
