@@ -1,10 +1,12 @@
-import { defineConfig } from "vitest/config";
+import { defineConfig, mergeConfig } from "vitest/config";
+import reactConfig from "../../etc/vitest.react.config";
 
-export default defineConfig({
-  test: {
-    environment: "jsdom",
-    globals: true,
-    include: ["src/**/*.test.{ts,tsx}"],
-    setupFiles: ["./src/test/setup.ts"],
-  },
-});
+export default mergeConfig(
+  reactConfig,
+  defineConfig({
+    test: {
+      include: ["src/**/*.test.{ts,tsx}"],
+      setupFiles: ["./src/test/setup.ts"],
+    },
+  }),
+);
