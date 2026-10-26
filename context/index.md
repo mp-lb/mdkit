@@ -28,8 +28,4 @@ Read [PRODUCT.md](PRODUCT.md) if you need to understand the product.
 
 [process-management.md](https://hyperdoc.forumlabs.net/347c14a9-bacc-4d1c-acaa-dc878db9ba58)
 
-[documentation-layout.md](https://hyperdoc.forumlabs.net/fffbea40-da1f-4efb-9eb6-527f778b9733)
-
-[doctrine.md](https://hyperdoc.forumlabs.net/141021d5-4861-4446-9b60-503a09c86fca)
-
-[docs-website.md](https://hyperdoc.forumlabs.net/5326d5e4-6f20-47d1-81bc-2be9e0a86d6d)
+@forum-standards.md
