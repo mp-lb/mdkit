@@ -3,12 +3,12 @@
 Read these before making changes:
 
 - **`env-vars.md` in `mp-lb/dev`** - Must read when adding or modifying environment variables
-- **[deployment-runbook.md](docs/deployment-runbook.md)** - Production URLs and secrets checklist
-- **[terraform.md](docs/terraform.md)** - Technical reference for Terraform configuration
+- **[deployment-runbook.md](docs/tech/deployment-runbook.md)** - Production URLs and secrets checklist
+- **[deployment-setup.md](docs/tech/deployment-setup.md)** - Project deployment setup and infrastructure notes
 - **`style-guide.md` in `mp-lb/dev`** - For significant code changes
 - **`crud.md` in `mp-lb/dev`** - For implementing simple CRUD patterns
 - **`errors.md` in `mp-lb/dev`** - For throwing and handling errors
-- **[trpc.md](docs/trpc.md)** - For doing frontend queries/mutations
+- **`trpc.md` in `mp-lb/dev`** - For doing frontend queries/mutations
 - **`logging.md` in `mp-lb/dev`** - For logging on backend (via tRPC context) and frontend
 - **`event-schema.md` in `mp-lb/dev`** - For sending/storing any kind of events: errors, logs, analytics, real time events follow this
 

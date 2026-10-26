@@ -4,4 +4,4 @@
 - **`server`** - Node.js-only infrastructure: tRPC instance (`t`), logger, context types. Only import from backend.
 - **`trpc`** - The tRPC router and procedures. Exports `createTrpcRouter` and `AppRouter` type.
 
-See [modular-monolith.md](docs/tech/standards/modular-monolith.md) for the architecture philosophy.
+Read the shared architecture philosophy with `fm read modular-monolith.md --store mp-lb/dev`.

@@ -3,7 +3,7 @@ import { defineConfig, defineDocs } from 'fumadocs-mdx/config';
 export const docs = defineDocs({
   // The published library docs live with the package, under docs/public — the
   // generated TypeDoc reference plus the hand-written guide. This site only
-  // renders that folder (see fssstack/standards/libs.md).
+  // renders that folder (see `fm read libs.md --store mp-lb/dev`).
   dir: '../../packages/mdkit/docs/public',
   docs: {
     postprocess: {
