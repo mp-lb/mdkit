@@ -29,3 +29,5 @@ Read [PRODUCT.md](PRODUCT.md) if you need to understand the product.
 [process-management.md](https://hyperdoc.forumlabs.net/347c14a9-bacc-4d1c-acaa-dc878db9ba58)
 
 @forum-standards.md
+
+@delivery.md
