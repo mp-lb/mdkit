@@ -1,39 +1,23 @@
+<!-- Standard -->
 @context.md
-
 @project.md
-
 @development.md
-
 @validation.md
-
 @scripts.md
-
 @documentation.md
-
 @delivery.md
 
-@maplab-workflow.md
-
-@maplab-standards.md
-
-@maplab-code-style.md
-
-@maplab-toolchain.md
-
+<!-- Project types -->
 @ui.md
-
 @backend.md
 
-@secrets.md
-
+<!-- Extensions -->
 @arcnet.md
-
-@project-mode.md
-
-@packages.md
-
-@running-the-project.md
-
-@agent-responsibility.md
-
+@secrets.md
 @domains.md
+
+<!-- MapLab augmentations -->
+@maplab-workflow.md
+@maplab-standards.md
+@maplab-code-style.md
+@maplab-toolchain.md

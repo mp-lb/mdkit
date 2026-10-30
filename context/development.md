@@ -5,3 +5,7 @@ Use Zapper for processes and tasks: `zap status`, `zap up`, `zap logs <service> 
 Keep service names, dynamic ports and task commands in `zap.yaml`; do not hardcode development ports. Non-secret defaults live in `.env.local`; secrets belong in ignored `.env` or the configured secret source. Never put secret values in context.
 
 The canonical tool versions are `.node-version` and `package.json#packageManager`; preserve them when changing local tooling or CI.
+
+Manage running services and non-secret environment configuration as part of development. Rely on hot reload for ordinary edits; restart services for non-hot-reloadable changes or when diagnosing a broken process. Leave secret `.env` updates to the developer.
+
+See [Zapper usage](docs/zapper.md) for starting/restarting services and viewing logs.
