@@ -19,3 +19,9 @@ The project is currently in development and does not yet have production users. 
 ### Related tooling
 
 Shared tooling is developed in sibling checkouts under `~/Work`: Zapper (`zapper`) runs tasks, Forum (`forum`) provides `fm`, Tools (`tools`) provides ArcNet, and Stackforge (`stackforge`) owns setup conventions. When a change belongs in an owned dependency, inspect and update that source repository as needed, follow its `AGENTS.md`, then rebuild/relink the CLI or update the consuming dependency. Verify the command resolves to the intended build.
+
+### Development
+
+Manage running services and non-secret environment configuration as part of development. Rely on hot reload for ordinary edits; restart services for non-hot-reloadable changes or when diagnosing a broken process. Leave secret `.env` updates to the developer.
+
+See [Zapper usage](docs/zapper.md) for starting/restarting services and viewing logs.

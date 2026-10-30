@@ -7,7 +7,9 @@
 
 [Standards](https://hyperdoc.forumlabs.net/21d43359-696f-476d-aa4a-66802a8e7a14)
 
-@development.md
+
+[Development](https://hyperdoc.forumlabs.net/c6d8ee59-8b41-4446-afc6-cdf8546301fb)
+
 @validation.md
 
 [Scripts](https://hyperdoc.forumlabs.net/8dd67d4b-f36a-45b5-8277-5d468f063665)
