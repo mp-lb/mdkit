@@ -61,9 +61,9 @@
   },
   "scripts": {
     "dev": "tsc --watch --project tsconfig.json",
-    "build": "tsc --project tsconfig.json && node scripts/add-js-extensions.mjs",
-    "docs:gen": "node scripts/docs-gen.mjs",
-    "docs:check": "node scripts/docs-check.mjs",
+    "build": "tsc --project tsconfig.json && tsx scripts/addJsExtensions.ts",
+    "docs:gen": "tsx scripts/docsGen.ts",
+    "docs:check": "tsx scripts/docsCheck.ts",
     "release:check": "pnpm typecheck && pnpm test && pnpm build",
     "test": "vitest run",
     "typecheck": "tsc --noEmit --project tsconfig.json && tsc --noEmit --project tsconfig.scripts.json",
