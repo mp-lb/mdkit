@@ -7,7 +7,6 @@ Agent instructions are compiled from reusable blocks in `context/`, with `contex
 Edit the blocks and index in `context/`, then run `zap task context-build` to regenerate `AGENTS.md` and `CLAUDE.md`.
 
 
-
 ## Code style
 
 - Use PascalCase for components
@@ -60,6 +59,36 @@ Manage running services and non-secret environment configuration as part of deve
 
 See [Zapper usage](docs/zapper.md) for starting/restarting services and viewing logs.
 
+## Documentation
+
+Read these before making changes:
+
+- **`env-vars.md` in `mp-lb/dev`** - Must read when adding or modifying environment variables
+- **[deployment-runbook.md](docs/tech/deployment-runbook.md)** - Production URLs and secrets checklist
+- **[deployment-setup.md](docs/tech/deployment-setup.md)** - Project deployment setup and infrastructure notes
+- **`style-guide.md` in `mp-lb/dev`** - For significant code changes
+- **`crud.md` in `mp-lb/dev`** - For implementing simple CRUD patterns
+- **`errors.md` in `mp-lb/dev`** - For throwing and handling errors
+- **`trpc.md` in `mp-lb/dev`** - For doing frontend queries/mutations
+- **`logging.md` in `mp-lb/dev`** - For logging on backend (via tRPC context) and frontend
+- **`event-schema.md` in `mp-lb/dev`** - For sending/storing any kind of events: errors, logs, analytics, real time events follow this
+
+This project has no dedicated Forum store or `.forum/` sync configuration. Read shared standards with `fm read <file>.md --store mp-lb/dev` (list them with `fm ls --store mp-lb/dev`). Read shared extensions with `fm read extensions/<extension>/README.md --store mp-lb/fssstack` (list them with `fm ls extensions --store mp-lb/fssstack`).
+
+## Project UI
+
+Frontend packages: `apps/mdkit-testbench`, `apps/frontend`. Run component installation in the relevant package.
+
+Installed shadcn component locations: `apps/mdkit-testbench/src/components/ui` (configuration: `apps/mdkit-testbench/components.json`, theme: `apps/mdkit-testbench/src/index.css`); `apps/frontend/src/components/ui` (configuration: `apps/frontend/components.json`, theme: `apps/frontend/src/index.css`).
+
+## Validation
+
+For small changes, run `zap t check` to run linting and typechecking. For bigger system level changes run that and also `zap t build` to check that all the builds still succeed.
+
+The developer will do most of the manual testing.
+
+You can test for debugging purposes but if there's auth its probably better to leave it to the developer.
+
 ## Standards
 
 Read the relevant MAP Lab standards before changing the corresponding code. List them with `fm ls --store mp-lb/dev` and read one with `fm read <file>.md --store mp-lb/dev`.
@@ -69,7 +98,6 @@ Read the relevant MAP Lab standards before changing the corresponding code. List
 - `event-schema.md` and `event-sourcing.md`: event schemas and event-sourced domains.
 - `libs.md`, `lib-release.md` and `clis.md`: libraries, publishing and command-line tools.
 - For agent context, read `standards/context-files.md` from `mp-lb/fssstack`.
-
 
 
 ## Development
@@ -87,24 +115,14 @@ Mise is the base layer: it selects Node and the package manager. Zapper runs tas
 Read Node from `.node-version` and pnpm from `package.json#packageManager`; `mise.toml` reads these pins rather than duplicating them. npm projects use npm bundled with Node. Preserve the project's versions and package manager. Keep locally built CLI entrypoints in a version-independent PATH directory so switching Node does not hide `zap` or `fm`.
 
 
-
 ## Validation
 
 Run the applicable configured checks, tests and builds; use `zap task check`, `zap task test` and `zap task build` where available. Run focused checks and follow project-specific validation instructions; report checks that could not run.
 
 
-## Validation
-
-For small changes, run `zap t check` to run linting and typechecking. For bigger system level changes run that and also `zap t build` to check that all the builds still succeed.
-
-The developer will do most of the manual testing.
-
-You can test for debugging purposes but if there's auth its probably better to leave it to the developer.
-
 ## Scripts
 
 Write project scripts in TypeScript in the package that owns the behaviour, or `packages/scripts` when there is no natural owner, and include them in normal lint and typecheck checks. Expose each script as a thin Zap task that invokes it with `tsx` (for example, `zap t somemigration` runs `packages/scripts/somemigration.ts`); keep CI callers aligned when moving scripts.
-
 
 
 ## Documentation
@@ -112,26 +130,9 @@ Write project scripts in TypeScript in the package that owns the behaviour, or `
 Keep project-specific documentation in `docs/` and update it with behavior changes. Follow the project's own instructions for any Forum sync mapping; read shared standards and extension setup from their Forum stores.
 
 
-## Documentation
-
-Read these before making changes:
-
-- **`env-vars.md` in `mp-lb/dev`** - Must read when adding or modifying environment variables
-- **[deployment-runbook.md](docs/tech/deployment-runbook.md)** - Production URLs and secrets checklist
-- **[deployment-setup.md](docs/tech/deployment-setup.md)** - Project deployment setup and infrastructure notes
-- **`style-guide.md` in `mp-lb/dev`** - For significant code changes
-- **`crud.md` in `mp-lb/dev`** - For implementing simple CRUD patterns
-- **`errors.md` in `mp-lb/dev`** - For throwing and handling errors
-- **`trpc.md` in `mp-lb/dev`** - For doing frontend queries/mutations
-- **`logging.md` in `mp-lb/dev`** - For logging on backend (via tRPC context) and frontend
-- **`event-schema.md` in `mp-lb/dev`** - For sending/storing any kind of events: errors, logs, analytics, real time events follow this
-
-This project has no dedicated Forum store or `.forum/` sync configuration. Read shared standards with `fm read <file>.md --store mp-lb/dev` (list them with `fm ls --store mp-lb/dev`). Read shared extensions with `fm read extensions/<extension>/README.md --store mp-lb/fssstack` (list them with `fm ls extensions --store mp-lb/fssstack`).
-
 ## Delivery
 
 Push `main` to run the configured delivery workflows for applications and packages. Check GitHub Actions and follow any project-specific release exceptions.
-
 
 
 <!-- Project types -->
@@ -160,12 +161,6 @@ pnpm dlx shadcn@latest add https://shad.mp-lb.dev/r/ui-states.json
 
 CLI reference: https://ui.shadcn.com/docs/cli.
 
-
-## Project UI
-
-Frontend packages: `apps/mdkit-testbench`, `apps/frontend`. Run component installation in the relevant package.
-
-Installed shadcn component locations: `apps/mdkit-testbench/src/components/ui` (configuration: `apps/mdkit-testbench/components.json`, theme: `apps/mdkit-testbench/src/index.css`); `apps/frontend/src/components/ui` (configuration: `apps/frontend/components.json`, theme: `apps/frontend/src/index.css`).
 
 <!-- Extensions -->
 
