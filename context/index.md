@@ -31,3 +31,5 @@ Read [PRODUCT.md](PRODUCT.md) if you need to understand the product.
 @forum-standards.md
 
 @delivery.md
+
+@scripts.md
