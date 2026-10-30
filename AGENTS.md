@@ -50,9 +50,18 @@ The project is currently in development and does not yet have production users. 
 ### Related tooling
 
 Shared tooling is developed in sibling checkouts under `~/Work`: Zapper (`zapper`) runs tasks, Forum (`forum`) provides `fm`, Tools (`tools`) provides ArcNet, and Stackforge (`stackforge`) owns setup conventions. When a change belongs in an owned dependency, inspect and update that source repository as needed, follow its `AGENTS.md`, then rebuild/relink the CLI or update the consuming dependency. Verify the command resolves to the intended build.
+
 ## Standards
 
-List shared standards with `fm ls --store mp-lb/dev`; read one with `fm read <file>.md --store mp-lb/dev`.
+Read the relevant MAP Lab standards before changing the corresponding code. List them with `fm ls --store mp-lb/dev` and read one with `fm read <file>.md --store mp-lb/dev`.
+
+- `style-guide.md` and `component-decomposition.md`: code and component structure.
+- `crud.md`, `errors.md`, `trpc.md` and `logging.md`: backend APIs, services and error handling; list the store for current available guidance.
+- `event-schema.md` and `event-sourcing.md`: event schemas and event-sourced domains.
+- `libs.md`, `lib-release.md` and `clis.md`: libraries, publishing and command-line tools.
+- `context-files.md`: maintaining agent context.
+
+
 ## Development
 
 Use Zapper for processes and tasks: `zap status`, `zap up`, `zap logs <service> --no-follow`, and `zap task <task>`. Inspect the existing stack before starting another copy. Services and tasks that need environment variables must receive Zapper's resolved environment.
@@ -77,9 +86,18 @@ For small changes, run `zap t check` to run linting and typechecking. For bigger
 The developer will do most of the manual testing.
 
 You can test for debugging purposes but if there's auth its probably better to leave it to the developer.
+
 ## Scripts
 
 Write project scripts in TypeScript in the package that owns the behaviour, or `packages/scripts` when there is no natural owner, and include them in normal lint and typecheck checks. Expose each script as a thin Zap task that invokes it with `tsx` (for example, `zap t somemigration` runs `packages/scripts/somemigration.ts`); keep CI callers aligned when moving scripts.
+
+
+
+## Documentation
+
+Keep project-specific documentation in `docs/` and update it with behavior changes. Follow the project's own instructions for any Forum sync mapping; read shared standards and extension setup from their Forum stores.
+
+
 ## Documentation
 
 Read these before making changes:
