@@ -40,6 +40,22 @@ tasks:
     cmds:
       - pnpm exec eslint packages/scripts
       - pnpm --dir packages/scripts run typecheck
+  scripts-test:
+    cmds:
+      - pnpm --dir packages/scripts test
+      - pnpm --dir packages/mdkit ci:scripts-test
+  docs-gen:
+    cmds:
+      - pnpm --dir packages/mdkit exec tsx scripts/docsGen.ts
+  docs-check:
+    cmds:
+      - pnpm --dir packages/mdkit exec tsx scripts/docsCheck.ts
+  fix-esm-imports:
+    cmds:
+      - pnpm --dir packages/mdkit exec tsx scripts/addJsExtensions.ts
+  publish-packages:
+    cmds:
+      - pnpm --dir packages/scripts exec tsx autoPublish.ts {{REST}}
   secrets-unlock:
     cmds:
       - dx decrypt --file docs/env.local.enc > .env
@@ -61,6 +77,7 @@ tasks:
       - pnpm lint
   check:
     cmds:
+      - pnpm lint
       - pnpm turbo run typecheck
   build:
     cmds:

@@ -478,6 +478,9 @@ importers:
       jsdom:
         specifier: 29.1.1
         version: 29.1.1(@noble/hashes@1.8.0)
+      tsx:
+        specifier: 4.20.6
+        version: 4.20.6
       typedoc:
         specifier: 0.28.19
         version: 0.28.19(typescript@6.0.3)
