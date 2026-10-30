@@ -9,3 +9,9 @@ The canonical tool versions are `.node-version` and `package.json#packageManager
 Manage running services and non-secret environment configuration as part of development. Rely on hot reload for ordinary edits; restart services for non-hot-reloadable changes or when diagnosing a broken process. Leave secret `.env` updates to the developer.
 
 See [Zapper usage](docs/zapper.md) for starting/restarting services and viewing logs.
+
+### Local tool versions
+
+Mise is the base layer: it selects Node and the package manager. Zapper runs tasks and services on top of those tools. Run `mise trust` and `mise install` for checkout setup, then use an activated mise shell or `mise exec -- zap task <task>`.
+
+Read Node from `.node-version` and pnpm from `package.json#packageManager`; `mise.toml` reads these pins rather than duplicating them. npm projects use npm bundled with Node. Preserve the project's versions and package manager. Keep locally built CLI entrypoints in a version-independent PATH directory so switching Node does not hide `zap` or `fm`.
