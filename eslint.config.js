@@ -3,7 +3,12 @@ import { createBaseEslintConfig } from "@mp-lb/fssstack-config/eslint";
 export default [
   ...createBaseEslintConfig({
     tsconfigRootDir: import.meta.dirname,
-    ignores: ["**/.fssstack/**"],
+    ignores: [
+      "**/.fssstack/**",
+      "apps/docs/build/**",
+      "apps/docs/.source/**",
+      "apps/docs/.react-router/**",
+    ],
   }),
   {
     files: ["packages/mdkit/scripts/**/*.ts"],
