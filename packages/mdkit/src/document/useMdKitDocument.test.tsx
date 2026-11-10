@@ -67,6 +67,61 @@ describe("useMdKitDocument", () => {
     });
   });
 
+  it("saves edits queued while an earlier autosave is in flight", async () => {
+    let finish!: (value: { version: number }) => void;
+
+    const adapter = {
+      readDocument: vi
+        .fn()
+        .mockResolvedValue({ content: "initial", version: 1 }),
+      writeDocument: vi
+        .fn()
+        .mockImplementationOnce(
+          () =>
+            new Promise((resolve) => {
+              finish = resolve;
+            }),
+        )
+        .mockResolvedValue({ version: 3 }),
+    };
+
+    const { result } = renderHook(() =>
+      useMdKitDocument({
+        adapter,
+        documentId: "file",
+        debounceMs: 250,
+        pollMs: 0,
+      }),
+    );
+
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    vi.useFakeTimers();
+    act(() => result.current.setContent("first"));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(250);
+    });
+
+    act(() => result.current.setContent("latest"));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(250);
+    });
+
+    expect(adapter.writeDocument).toHaveBeenCalledTimes(1);
+    await act(async () => finish({ version: 2 }));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(250);
+    });
+
+    expect(adapter.writeDocument).toHaveBeenLastCalledWith({
+      documentId: "file",
+      content: "latest",
+      baseVersion: 2,
+    });
+
+    expect(adapter.writeDocument).toHaveBeenCalledTimes(2);
+    expect(result.current.isDirty).toBe(false);
+  });
+
   it("exposes remote, local, and base content when a save conflicts", async () => {
     const adapter: Pick<
       MdKitDocumentAdapter,

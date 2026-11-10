@@ -377,7 +377,7 @@ export const useMdKitDocument = (
     [adapter, documentId],
   );
 
-  const scheduleSave = useCallback(() => {
+  const scheduleSave = useCallback((): void => {
     if (!documentId || conflictRef.current) {
       return;
     }
@@ -394,9 +394,10 @@ export const useMdKitDocument = (
     }
 
     debounceRef.current = setTimeout(() => {
+      debounceRef.current = null;
+
       if (isSavingRef.current || conflictRef.current) {
         queuedSaveRef.current = true;
-        debounceRef.current = null;
         return;
       }
 
@@ -412,7 +413,13 @@ export const useMdKitDocument = (
         })
         .finally(() => {
           isSavingRef.current = false;
-          debounceRef.current = null;
+
+          // React may flush the saved-state effect before this finally runs.
+          // Drain queued edits here, after releasing the save lock.
+          if (queuedSaveRef.current && !conflictRef.current) {
+            queuedSaveRef.current = false;
+            scheduleSave();
+          }
         });
     }, debounceMs);
   }, [commitSave, debounceMs, documentId]);
