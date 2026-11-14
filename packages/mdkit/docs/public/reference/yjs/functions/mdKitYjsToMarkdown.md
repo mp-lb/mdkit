@@ -8,7 +8,7 @@ title: "mdKitYjsToMarkdown"
 function mdKitYjsToMarkdown(yjsState: Uint8Array, options?: MdKitMarkdownYjsOptions): string;
 ```
 
-Defined in: [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:85](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L85)
+Defined in: [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:88](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L88)
 
 ## Parameters
 

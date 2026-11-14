@@ -11,7 +11,7 @@ function replaceMdKitYjsMarkdown(
    options?: MdKitMarkdownYjsOptions): Uint8Array;
 ```
 
-Defined in: [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:50](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L50)
+Defined in: [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:47](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L47)
 
 ## Parameters
 

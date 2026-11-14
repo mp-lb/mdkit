@@ -12,6 +12,8 @@ import {
 } from "../markdown/yamlFrontMatter";
 import { normalizeMarkdownSerialization } from "../markdown/normalizeMarkdownSerialization";
 import { prepareMarkdownForEditorHydration } from "../markdown/prepareMarkdownForEditorHydration";
+import { getMdKitFrontMatterField } from "./getMdKitFrontMatterField";
+import { getMdKitYjsFrontMatter } from "./getMdKitYjsFrontMatter";
 
 export type MdKitMarkdownYjsOptions = {
   fragmentName?: string;
@@ -19,14 +21,9 @@ export type MdKitMarkdownYjsOptions = {
 };
 
 const defaultMdKitYjsFragmentName = "default";
-const mdKitYjsMetadataMapName = "__mdkit";
-const frontMatterPrefixMetadataKey = "frontMatterPrefix";
 
 const getMdKitYjsFragmentName = (options?: MdKitMarkdownYjsOptions) =>
   options?.fragmentName ?? defaultMdKitYjsFragmentName;
-
-const getFrontMatterPrefixMetadataKey = (fragmentName: string) =>
-  `${fragmentName}:${frontMatterPrefixMetadataKey}`;
 
 const createMdKitMarkdownManager = () =>
   new MarkdownManager({
@@ -54,13 +51,19 @@ export const replaceMdKitYjsMarkdown = (
 ): Uint8Array => {
   const fragmentName = getMdKitYjsFragmentName(options);
   const fragment = ydoc.getXmlFragment(fragmentName);
-  const metadata = ydoc.getMap<string>(mdKitYjsMetadataMapName);
+
+  const { map: metadata, key: metadataKey } = getMdKitFrontMatterField(
+    ydoc,
+    fragmentName,
+  );
+
   const schema = createMdKitProseMirrorSchema();
+
   const frontMatter = options?.ignoreYamlFrontMatter
     ? extractYamlFrontMatter(markdown)
     : null;
+
   const json = markdownToProseMirrorJson(frontMatter?.body ?? markdown);
-  const metadataKey = getFrontMatterPrefixMetadataKey(fragmentName);
 
   prosemirrorJSONToYXmlFragment(schema, json, fragment);
 
@@ -91,12 +94,10 @@ export const mdKitYjsToMarkdown = (
   Y.applyUpdate(ydoc, yjsState);
 
   const fragmentName = getMdKitYjsFragmentName(options);
-  const json = yXmlFragmentToProsemirrorJSON(
-    ydoc.getXmlFragment(fragmentName),
-  );
-  const metadata = ydoc.getMap<string>(mdKitYjsMetadataMapName);
-  const frontMatterRaw =
-    metadata.get(getFrontMatterPrefixMetadataKey(fragmentName)) ?? "";
+
+  const json = yXmlFragmentToProsemirrorJSON(ydoc.getXmlFragment(fragmentName));
+
+  const frontMatterRaw = getMdKitYjsFrontMatter(ydoc, fragmentName);
 
   return prependYamlFrontMatter(
     frontMatterRaw,

@@ -902,6 +902,36 @@ title: "core"
 
 ## References
 
+### extractYamlFrontMatter
+
+Re-exports [extractYamlFrontMatter](../index/functions/extractYamlFrontMatter.md)
+
+***
+
+### parseYamlFrontMatter
+
+Re-exports [parseYamlFrontMatter](../index/functions/parseYamlFrontMatter.md)
+
+***
+
+### prependYamlFrontMatter
+
+Re-exports [prependYamlFrontMatter](../index/functions/prependYamlFrontMatter.md)
+
+***
+
+### MdKitYamlFrontMatter
+
+Re-exports [MdKitYamlFrontMatter](../index/type-aliases/MdKitYamlFrontMatter.md)
+
+***
+
+### MdKitYamlFrontMatterExtraction
+
+Re-exports [MdKitYamlFrontMatterExtraction](../index/type-aliases/MdKitYamlFrontMatterExtraction.md)
+
+***
+
 ### createMdKitDocumentRecord
 
 Re-exports [createMdKitDocumentRecord](../index/functions/createMdKitDocumentRecord.md)
@@ -3173,14 +3203,14 @@ type MdKitMarkdownYjsOptions = {
 };
 ```
 
-Defined in: [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:16](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L16)
+Defined in: [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:18](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L18)
 
 ## Properties
 
 | Property | Type | Defined in |
 | ------ | ------ | ------ |
-| <a id="fragmentname"></a> `fragmentName?` | `string` | [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:17](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L17) |
-| <a id="ignoreyamlfrontmatter"></a> `ignoreYamlFrontMatter?` | `boolean` | [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:18](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L18) |
+| <a id="fragmentname"></a> `fragmentName?` | `string` | [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:19](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L19) |
+| <a id="ignoreyamlfrontmatter"></a> `ignoreYamlFrontMatter?` | `boolean` | [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:20](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L20) |
 
 
 ---
@@ -3881,15 +3911,15 @@ const yjs: {
 };
 ```
 
-Defined in: [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:107](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L107)
+Defined in: [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:108](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L108)
 
 ## Type Declaration
 
 | Name | Type | Defined in |
 | ------ | ------ | ------ |
-| <a id="property-markdowntomdkityjs"></a> `markdownToMdKitYjs()` | (`markdown`: `string`, `options?`: [`MdKitMarkdownYjsOptions`](../type-aliases/MdKitMarkdownYjsOptions.md)) => `Uint8Array` | [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:108](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L108) |
-| <a id="property-mdkityjstomarkdown"></a> `mdKitYjsToMarkdown()` | (`yjsState`: `Uint8Array`, `options?`: [`MdKitMarkdownYjsOptions`](../type-aliases/MdKitMarkdownYjsOptions.md)) => `string` | [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:109](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L109) |
-| <a id="property-replacemdkityjsmarkdown"></a> `replaceMdKitYjsMarkdown()` | (`ydoc`: `Doc`, `markdown`: `string`, `options?`: [`MdKitMarkdownYjsOptions`](../type-aliases/MdKitMarkdownYjsOptions.md)) => `Uint8Array` | [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:110](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L110) |
+| <a id="property-markdowntomdkityjs"></a> `markdownToMdKitYjs()` | (`markdown`: `string`, `options?`: [`MdKitMarkdownYjsOptions`](../type-aliases/MdKitMarkdownYjsOptions.md)) => `Uint8Array` | [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:109](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L109) |
+| <a id="property-mdkityjstomarkdown"></a> `mdKitYjsToMarkdown()` | (`yjsState`: `Uint8Array`, `options?`: [`MdKitMarkdownYjsOptions`](../type-aliases/MdKitMarkdownYjsOptions.md)) => `string` | [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:110](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L110) |
+| <a id="property-replacemdkityjsmarkdown"></a> `replaceMdKitYjsMarkdown()` | (`ydoc`: `Doc`, `markdown`: `string`, `options?`: [`MdKitMarkdownYjsOptions`](../type-aliases/MdKitMarkdownYjsOptions.md)) => `Uint8Array` | [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:111](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L111) |
 
 
 ---
@@ -4954,6 +4984,36 @@ Defined in: [packages/mdkit/src/transport/trpcServer.ts:66](https://github.com/m
 
 ---
 
+<!-- source: reference/yjs/functions/getMdKitYjsFrontMatter.md -->
+
+---
+title: "getMdKitYjsFrontMatter"
+---
+
+# Function: getMdKitYjsFrontMatter()
+
+```ts
+function getMdKitYjsFrontMatter(ydoc: Doc, fragmentName?: string): string;
+```
+
+Defined in: packages/mdkit/src/yjs/getMdKitYjsFrontMatter.ts:5
+
+Read the exact YAML prefix, including comments and whitespace.
+
+## Parameters
+
+| Parameter | Type | Default value |
+| ------ | ------ | ------ |
+| `ydoc` | `Doc` | `undefined` |
+| `fragmentName` | `string` | `"default"` |
+
+## Returns
+
+`string`
+
+
+---
+
 <!-- source: reference/yjs/functions/markdownToMdKitYjs.md -->
 
 ---
@@ -4966,7 +5026,7 @@ title: "markdownToMdKitYjs"
 function markdownToMdKitYjs(markdown: string, options?: MdKitMarkdownYjsOptions): Uint8Array;
 ```
 
-Defined in: [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:76](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L76)
+Defined in: [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:79](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L79)
 
 ## Parameters
 
@@ -4994,7 +5054,7 @@ title: "mdKitYjsToMarkdown"
 function mdKitYjsToMarkdown(yjsState: Uint8Array, options?: MdKitMarkdownYjsOptions): string;
 ```
 
-Defined in: [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:85](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L85)
+Defined in: [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:88](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L88)
 
 ## Parameters
 
@@ -5006,6 +5066,40 @@ Defined in: [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:85](https://github.com/m
 ## Returns
 
 `string`
+
+
+---
+
+<!-- source: reference/yjs/functions/observeMdKitYjsFrontMatter.md -->
+
+---
+title: "observeMdKitYjsFrontMatter"
+---
+
+# Function: observeMdKitYjsFrontMatter()
+
+```ts
+function observeMdKitYjsFrontMatter(
+   ydoc: Doc, 
+   listener: () => void, 
+   fragmentName?: string): () => void;
+```
+
+Defined in: packages/mdkit/src/yjs/observeMdKitYjsFrontMatter.ts:5
+
+Subscribe to local and remote metadata changes. Returns an unsubscribe function.
+
+## Parameters
+
+| Parameter | Type | Default value |
+| ------ | ------ | ------ |
+| `ydoc` | `Doc` | `undefined` |
+| `listener` | () => `void` | `undefined` |
+| `fragmentName` | `string` | `"default"` |
+
+## Returns
+
+() => `void`
 
 
 ---
@@ -5025,7 +5119,7 @@ function replaceMdKitYjsMarkdown(
    options?: MdKitMarkdownYjsOptions): Uint8Array;
 ```
 
-Defined in: [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:50](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L50)
+Defined in: [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:47](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/MdKitMarkdownYjs.ts#L47)
 
 ## Parameters
 
@@ -5038,6 +5132,40 @@ Defined in: [packages/mdkit/src/yjs/MdKitMarkdownYjs.ts:50](https://github.com/m
 ## Returns
 
 `Uint8Array`
+
+
+---
+
+<!-- source: reference/yjs/functions/setMdKitYjsFrontMatter.md -->
+
+---
+title: "setMdKitYjsFrontMatter"
+---
+
+# Function: setMdKitYjsFrontMatter()
+
+```ts
+function setMdKitYjsFrontMatter(
+   ydoc: Doc, 
+   prefix: string, 
+   fragmentName?: string): void;
+```
+
+Defined in: packages/mdkit/src/yjs/setMdKitYjsFrontMatter.ts:6
+
+Update or remove metadata without replacing the collaborative document body.
+
+## Parameters
+
+| Parameter | Type | Default value |
+| ------ | ------ | ------ |
+| `ydoc` | `Doc` | `undefined` |
+| `prefix` | `string` | `undefined` |
+| `fragmentName` | `string` | `"default"` |
+
+## Returns
+
+`void`
 
 
 ---
@@ -5057,6 +5185,9 @@ title: "yjs"
 | [replaceMdKitYjsMarkdown](functions/replaceMdKitYjsMarkdown.md) | - |
 | [markdownToMdKitYjs](functions/markdownToMdKitYjs.md) | - |
 | [mdKitYjsToMarkdown](functions/mdKitYjsToMarkdown.md) | - |
+| [getMdKitYjsFrontMatter](functions/getMdKitYjsFrontMatter.md) | Read the exact YAML prefix, including comments and whitespace. |
+| [observeMdKitYjsFrontMatter](functions/observeMdKitYjsFrontMatter.md) | Subscribe to local and remote metadata changes. Returns an unsubscribe function. |
+| [setMdKitYjsFrontMatter](functions/setMdKitYjsFrontMatter.md) | Update or remove metadata without replacing the collaborative document body. |
 
 ## References
 

@@ -1,14 +1,21 @@
 export {
+  extractYamlFrontMatter,
+  parseYamlFrontMatter,
+  prependYamlFrontMatter,
+} from "../markdown/yamlFrontMatter";
+export type {
+  MdKitYamlFrontMatter,
+  MdKitYamlFrontMatterExtraction,
+} from "../markdown/yamlFrontMatter";
+
+export {
   createMdKitDocumentRecord,
   detectMdKitDocumentConflict,
   normalizeMdKitVersionToken,
   restoreMdKitDocumentVersion,
   writeMdKitDocumentRecord,
-} from "./documentEngine.js";
-export {
-  CheckpointPolicy,
-  measureMdKitEditDistance,
-} from "./checkpointPolicy.js";
+} from "./documentEngine";
+export { CheckpointPolicy, measureMdKitEditDistance } from "./checkpointPolicy";
 
 export type {
   CreateMdKitDocumentRecordInput,
@@ -17,12 +24,12 @@ export type {
   RestoreMdKitDocumentVersionResult,
   WriteMdKitDocumentRecordInput,
   WriteMdKitDocumentRecordResult,
-} from "./documentEngine.js";
+} from "./documentEngine";
 export type {
   MdKitCheckpointPolicy,
   MdKitCheckpointPolicyInput,
   MdKitSmartCheckpointPolicyOptions,
-} from "./checkpointPolicy.js";
+} from "./checkpointPolicy";
 export type {
   MdKitDocumentSnapshot,
   MdKitDocumentVersionDetail,
@@ -30,4 +37,4 @@ export type {
   MdKitDocumentVersionToken,
   MdKitDocumentWriteInput,
   MdKitDocumentWriteResult,
-} from "../document/documentTypes.js";
+} from "../document/documentTypes";

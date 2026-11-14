@@ -6,6 +6,36 @@ title: "core"
 
 ## References
 
+### extractYamlFrontMatter
+
+Re-exports [extractYamlFrontMatter](../index/functions/extractYamlFrontMatter.md)
+
+***
+
+### parseYamlFrontMatter
+
+Re-exports [parseYamlFrontMatter](../index/functions/parseYamlFrontMatter.md)
+
+***
+
+### prependYamlFrontMatter
+
+Re-exports [prependYamlFrontMatter](../index/functions/prependYamlFrontMatter.md)
+
+***
+
+### MdKitYamlFrontMatter
+
+Re-exports [MdKitYamlFrontMatter](../index/type-aliases/MdKitYamlFrontMatter.md)
+
+***
+
+### MdKitYamlFrontMatterExtraction
+
+Re-exports [MdKitYamlFrontMatterExtraction](../index/type-aliases/MdKitYamlFrontMatterExtraction.md)
+
+***
+
 ### createMdKitDocumentRecord
 
 Re-exports [createMdKitDocumentRecord](../index/functions/createMdKitDocumentRecord.md)
