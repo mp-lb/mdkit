@@ -11,7 +11,7 @@ function setMdKitYjsFrontMatter(
    fragmentName?: string): void;
 ```
 
-Defined in: packages/mdkit/src/yjs/setMdKitYjsFrontMatter.ts:6
+Defined in: [packages/mdkit/src/yjs/setMdKitYjsFrontMatter.ts:6](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/setMdKitYjsFrontMatter.ts#L6)
 
 Update or remove metadata without replacing the collaborative document body.
 

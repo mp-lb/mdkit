@@ -4,6 +4,7 @@ import { markdownToMdKitYjs, mdKitYjsToMarkdown } from "./MdKitMarkdownYjs";
 import { getMdKitYjsFrontMatter } from "./getMdKitYjsFrontMatter";
 import { setMdKitYjsFrontMatter } from "./setMdKitYjsFrontMatter";
 import { observeMdKitYjsFrontMatter } from "./observeMdKitYjsFrontMatter";
+import { readMdKitYjsMarkdown } from "./readMdKitYjsMarkdown";
 
 describe("collaborative frontmatter editing", () => {
   it("merges a header edit with a concurrent body edit and preserves YAML comments", () => {
@@ -33,6 +34,8 @@ describe("collaborative frontmatter editing", () => {
     expect(mdKitYjsToMarkdown(Y.encodeStateAsUpdate(second))).toBe(
       `${prefix}Updated Body`,
     );
+
+    expect(readMdKitYjsMarkdown(second)).toBe(`${prefix}Updated Body`);
   });
 
   it("observes remote updates and removals independently of the body", () => {

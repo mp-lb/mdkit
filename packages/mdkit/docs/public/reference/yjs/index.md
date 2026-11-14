@@ -13,6 +13,7 @@ title: "yjs"
 | [mdKitYjsToMarkdown](functions/mdKitYjsToMarkdown.md) | - |
 | [getMdKitYjsFrontMatter](functions/getMdKitYjsFrontMatter.md) | Read the exact YAML prefix, including comments and whitespace. |
 | [observeMdKitYjsFrontMatter](functions/observeMdKitYjsFrontMatter.md) | Subscribe to local and remote metadata changes. Returns an unsubscribe function. |
+| [readMdKitYjsMarkdown](functions/readMdKitYjsMarkdown.md) | Serialize the current collaborative body and metadata without modifying either. |
 | [setMdKitYjsFrontMatter](functions/setMdKitYjsFrontMatter.md) | Update or remove metadata without replacing the collaborative document body. |
 
 ## References

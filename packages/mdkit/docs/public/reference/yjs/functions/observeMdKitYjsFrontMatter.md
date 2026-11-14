@@ -11,7 +11,7 @@ function observeMdKitYjsFrontMatter(
    fragmentName?: string): () => void;
 ```
 
-Defined in: packages/mdkit/src/yjs/observeMdKitYjsFrontMatter.ts:5
+Defined in: [packages/mdkit/src/yjs/observeMdKitYjsFrontMatter.ts:5](https://github.com/mp-lb/mdkit/blob/main/packages/mdkit/src/yjs/observeMdKitYjsFrontMatter.ts#L5)
 
 Subscribe to local and remote metadata changes. Returns an unsubscribe function.
 
