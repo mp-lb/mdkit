@@ -25,10 +25,15 @@ jobs:
           registry-url: https://registry.npmjs.org
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec eslint packages/scripts packages/mdkit/scripts
-      - run: pnpm --dir packages/scripts typecheck && pnpm --dir packages/scripts test
+      - run: pnpm --dir packages/scripts typecheck
       - run: pnpm --filter @mp-lb/mdkit release:check
       - run: pnpm --filter @mp-lb/mdkit ci:scripts-test && pnpm --filter @mp-lb/mdkit docs:check
       - name: Publish changed package builds
-        run: pnpm exec arcnet env run --consumer publish -- packages/scripts/node_modules/.bin/tsx packages/scripts/autoPublish.ts --github-output="$GITHUB_OUTPUT"
+        id: publish
+        run: pnpm exec arcnet env run --consumer publish -- pnpm exec arcnet packages publish --github-output="$GITHUB_OUTPUT"
         env:
           ARCNET_STANDARD_SECRETS_KEY: ${{ secrets.ARCNET_STANDARD_SECRETS_KEY }}
+      - name: Verify exact public versions
+        run: pnpm exec arcnet packages verify
+        env:
+          ARCNET_RELEASE_RESULT: ${{ steps.publish.outputs.release_report }}
